@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <link rel="stylesheet" href="splash.css">
+</head>
+<body>
+  <div id="splash-container">
+    <!-- Payette section -->
+    <div id="payette-section" style="position: relative; text-align: center;">
+      <img id="payette-bg" src="/public/payette.png" alt="Payette Background"> <!-- Payette Background -->
+      <img id="wood" src="/public/payettewood.png" alt="Wood Image" class="building"> <!-- Wood image -->
+      <img id="pen" src="/public/payettepen.png" alt="Pen Image" class="building"> <!-- Pen image -->
+
+      <!-- Left and right sensor areas -->
+      <div id="left-sensor" class="sensor"></div>
+      <div id="right-sensor" class="sensor"></div>
+    </div>
+    <!-- BG image full width and scrollable -->
+    <div id="bg-section">
+      <img id="bg-image" src="/public/BG.png" alt="BG Background">
+      
+      <!-- 13 building images with unique IDs for positioning and events -->
+      <img id="building1" src="/public/Building/1B.png" alt="Building 1" class="building">
+      <img id="building2" src="/public/Building/2B.png" alt="Building 2" class="building">
+      <img id="building3" src="/public/Building/3B.png" alt="Building 3" class="building">
+      <img id="building4" src="/public/Building/4B.png" alt="Building 4" class="building">
+      <img id="building5" src="/public/Building/5B.png" alt="Building 5" class="building">
+      <img id="building6" src="/public/Building/6B.png" alt="Building 6" class="building">
+      <img id="building7" src="/public/Building/7B.png" alt="Building 7" class="building">
+      <img id="building8" src="/public/Building/8B.png" alt="Building 8" class="building">
+      <img id="building9" src="/public/Building/9B.png" alt="Building 9" class="building">
+      <img id="building10" src="/public/Building/WPHB.png" alt="Building 10" class="building">
+      <img id="building11" src="/public/Building/232B.png" alt="Building 11" class="building">
+      <img id="building12" src="/public/Building/TakedaB.png" alt="Building 12" class="building">
+      <!-- <img id="building13" src="/public/Building/HilcoB.png" alt="Building 13" class="building"> -->
+    </div>
+    <!-- Loading overlay -->
+    <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fffcf5; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+      Loading...
+    </div>
+
+  </div>
+  <script src="splash.js"></script>
+</body>
+</html>

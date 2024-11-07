@@ -1,0 +1,25 @@
+﻿Number,Group,Software,App,Weight,Project Name,Project Type,DescriptionPath,relatedID,URL
+1,Design Visualization,Unity(C#),AR Mockup APP,6,TJU,University,/public/ToolText/1.txt,,
+2,Design Visualization,Unity(C#),AR Mockup APP,6,Hilco;National Coast Guard Museum;232 A street,Lab;Museum,/public/ToolText/2.txt,11,
+3,Design Visualization,Unity(C#),Virtual Mockup,7,White Plain Hospital,Hospital,/public/ToolText/3.txt,10,
+4,Building Science,JavaScript;React,Kaleidoscope,5,,Web,/public/ToolText/4.txt,,https://www.payette.com/kaleidoscope/
+5,Building Science,JavaScript;Python,Solar Comfort Tool,5,,Web,/public/ToolText/5.txt,,https://payette.github.io/Solar-Comfort-Tool/
+6,Building Science,Grasshopper;Human UI,LBC Daylighting Tool,4,Takeda,Lab;Office,/public/ToolText/6.txt,12,
+7,Building Science,Grasshopper;Human UI,Shadow Analysis,4,Dana-Farber Cancer Institute,Hospital,/public/ToolText/7.txt,,
+8,Space Strategy,Dynamo,Color space,3,Notre Dame,University,/public/ToolText/8.txt,,
+9,Space Strategy,Grasshopper;Human UI,MassIt,5,JHU,University,/public/ToolText/9.txt,,
+10,Space Strategy,JavaScript,Pulse,3,White Plain Hospital,Hospital,/public/ToolText/10.txt,,https://engine.payette.com/pulse
+11,Space Strategy,PowerBI,Data Visualization,1,JHU;Notre Dame,Lab;Office,/public/ToolText/11.txt,,
+12,Space Strategy,Tableau,Data Visualization,1,Salem State,Lab;Office,/public/ToolText/12.txt,,
+13,Computational Design,Grasshopper,Random Panel Set,1,TJU;Brandies;Hilco,Hospital;Lab,/public/ToolText/13.txt,,
+14,Computational Design,Grasshopper,Panel Perforation,4,TJU;Dana-Farber Cancer Institute,Hospital;Lab,/public/ToolText/14.txt,,
+15,Computational Design,Grasshopper,Gradient Brick,3,Brightleaf,Office;Lab,/public/ToolText/15.txt,,
+16,Computational Design,Grasshopper,Ware Fin,2,Harvard Kempner,Office;Lab,/public/ToolText/16.txt,,
+17,Computational Design,Grasshopper,Generative Design,7,Dana-Farber Cancer Institute,Hospital,/public/ToolText/17.txt,,
+18,Computational Design,Grasshopper,Facade Fins,5,Johns Hopkins University,University,/public/ToolText/18.txt,,
+19,Computational Design,Grasshopper,Grasshopper Courses,4,,,/public/ToolText/19.txt,,
+20,Project Management,Power Automate,Power Automate Workflow,4,1165 Norwood;60 Oxford;DPH,Lab,/public/ToolText/20.txt,,
+21,Project Management,Python,PDF Keywords Hunter,3,60 Oxford,Web,/public/ToolText/21.txt,,
+22,Computational Design,Rhino.Inside,Rhino.Inside Script,4,,,/public/ToolText/22.txt,,
+23,Computational Design,Grasshopper,Random Block Set,1,Hilco,Lab,/public/ToolText/23.txt,,
+24,Computational Design,Grasshopper,Graph Mapper,3,60 Oxford,Office,/public/ToolText/24.txt,,

@@ -1,0 +1,1 @@
+The Graph mapper is the most commonly used data control component in Grasshopper. It can be used to remap a bunch of input values onto a new set of values. Essentially, the input goes onto the X axis and re-mapped using the curve onto the Y axis.

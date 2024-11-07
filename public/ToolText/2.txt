@@ -1,0 +1,2 @@
+Display the architectural model or the actual size of the building on the Building Size;
+Switch between different design options.

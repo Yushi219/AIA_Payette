@@ -1,0 +1,3 @@
+Complex projects and communication filled with intricate details can slow us down. When submittal emails arrive from other companies, they contain critical data that often require manual data entry. But what if we could change that?
+
+Power Automate, is a transformative tool capable of automating tasks across all Microsoft software, thereby revolutionizing our interaction with these tools. Using the script we've developed, Power Automate can automatically update essential submittal email details like the Submittal Number, Revision Number, Description, Receive Date, and Due Date in your team's Excel files. And with automatic reminders, you'll stay informed and ahead of your tasks. 

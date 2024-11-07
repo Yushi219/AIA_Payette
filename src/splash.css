@@ -1,0 +1,163 @@
+/* Ensure full height for html and body to allow scrolling */
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    background-color: #ffffff;
+}
+
+/* Container for the entire splash page */
+#splash-container {
+    width: 100vw;
+    overflow: hidden;
+}
+
+/* Section for the Payette image, horizontally centered */
+#payette-section {
+    text-align: center;
+    margin-bottom: 0px;
+    padding-top: 0px;
+    position: relative;
+}
+
+/* Payette image styles */
+#payette-bg {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+/* Wood and Pen images */
+#wood, #pen {
+    width: 100%;
+    height: auto;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    visibility: hidden;
+    cursor: pointer;
+    z-index: 10; /* 确保 wood 和 pen 在页面的最前面 */
+}
+
+/* Left and right sensor areas for mouse detection */
+.sensor {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 50%;
+    background-color: transparent; /* Invisible, but interactive */
+    z-index: 5; /* Sensor区域比wood和pen的层级要低 */
+}
+
+#left-sensor {
+    left: 0; /* Left side */
+}
+
+#right-sensor {
+    right: 0; /* Right side */
+}
+
+/* Section for the BG image */
+#bg-section {
+    position: relative;
+    width: 100vw;
+    height: auto;
+}
+
+/* BG image */
+#bg-image {
+    width: 100%;
+    height: auto;
+}
+
+/* Styles for all building images */
+.building {
+    position: absolute;
+    visibility: hidden;
+}
+
+
+/* Individual position and size adjustments for each building */
+#building1 {
+    left: 31.35%;
+    top: 11%;
+    width: 18.0%;
+}
+
+#building2 {
+    left: 53.8%;
+    top: 41.5%;
+    width: 19.2%;
+}
+
+#building3 {
+    left: 57.3%;
+    top: 36.95%;
+    width: 34.2%;
+}
+
+#building4 {
+    left: 24.0%;
+    top: 44.2%;
+    width: 24%;
+}
+
+#building5 {
+    left: 8.1%;
+    top: 40.1%;
+    width: 17%;
+}
+
+#building6 {
+    left: 30.5%;
+    top: 30.3%;
+    width: 17%;
+}
+
+#building7 {
+    left: 37.5%;
+    top: 22.6%;
+    width: 21%;
+}
+
+#building8 {
+    left: 10.8%;
+    top: 10.9%;
+    width: 15.1%;
+}
+
+#building9 {
+    left: 54.5%;
+    top: 7.2%;
+    width: 28.5%;
+}
+
+#building10 {
+    left: 17.6%;
+    top: 71%;
+    width: 27.4%;
+}
+
+#building11 {
+    left: 77.1%;
+    top: 26%;
+    width: 17%;
+}
+
+#building12 {
+    left: 54.9%;
+    top: 13.9%;
+    width: 17.5%;
+}
+
+#building13 {
+    left: 83%;
+    top: 32.6%;
+    width: 9.4%;
+}
+
+

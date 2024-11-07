@@ -1,0 +1,1 @@
+Crawl global weather data, improve algorithms, and use JavaScript to create web pages

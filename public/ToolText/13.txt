@@ -1,0 +1,1 @@
+Due to manufacturer restrictions, sometimes the panels used for the facade have fixed size requirements. So how would we randomly place the panels according to the given size? Check out the following video~
