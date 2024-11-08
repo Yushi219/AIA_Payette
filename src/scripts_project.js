@@ -48,11 +48,11 @@ document.addEventListener('DOMContentLoaded', function() {
   let isSearchActive = false;
 
   // Define images and GIFs
-  const standingStart = '/public/S1.png';
-  const standingEnd = '/public/S3.png';
-  const centeredImage = '/public/S2.png';
-  const movingRightGif = '/public/R.gif';
-  const movingLeftGif = '/public/L.gif';
+  const standingStart = 'public/S1.png';
+  const standingEnd = 'public/S3.png';
+  const centeredImage = 'public/S2.png';
+  const movingRightGif = 'public/R.gif';
+  const movingLeftGif = 'public/L.gif';
 
   // Function to set the person image based on scroll direction
   function setPersonImage(scrollAmount) {
@@ -180,7 +180,7 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   async function loadProjectsData() {
-    const projects = await loadCSVData('/public/ProjectInfo.csv');
+    const projects = await loadCSVData('public/ProjectInfo.csv');
     console.log('Loaded CSV Projects:', projects);
 
     // Sort projects by time in descending order
@@ -195,7 +195,7 @@ document.addEventListener('DOMContentLoaded', function() {
         type: project.Type ? project.Type.split(';').map(tag => tag.trim()) : [],    // Safeguard for Type
         status: project.Status ? project.Status.split(';').map(tag => tag.trim()) : [], // Safeguard for Status
         descriptionPath: project['DescriptionPath'] || '',
-        imageFolderPath: `/public/Project/${project.Number || index + 1}`,
+        imageFolderPath: `public/Project/${project.Number || index + 1}`,
         relatedID: project.relatedID || '',
         URL: project.URL || '',
         LEED: project.LEED || '',
@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
   async function getImageSectionPath(projectNumber) {
     const extensions = ['jpg'];  // 仅检查一种文件格式
     for (const ext of extensions) {
-        const imagePath = `/public/Project/${projectNumber}/Section${projectNumber}.${ext}`;
+        const imagePath = `public/Project/${projectNumber}/Section${projectNumber}.${ext}`;
         try {
             const response = await fetch(imagePath, { method: 'HEAD' });
             if (response.ok) {
@@ -294,7 +294,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     // 若文件不存在，返回默认占位图像
-    return '/public/Building/default-placeholder.png';
+    return 'public/Building/default-placeholder.png';
   }
 
 

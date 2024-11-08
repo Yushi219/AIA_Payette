@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', function() {
   
   // Load project data and associate each project with its folder path
   async function loadProjectsData() {
-    const projects = await loadCSVData('/public/ToolInfo.csv');
+    const projects = await loadCSVData('public/ToolInfo.csv');
     console.log('Loaded CSV Projects:', projects);
     return projects.map((project, index) => ({
       number: project.Number || index + 1,
@@ -90,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
       projectName: project['Project Name'] ? project['Project Name'].split(';').map(tag => tag.trim()) : [],
       projectType: project['Project Type'] ? project['Project Type'].split(';').map(tag => tag.trim()) : [],
       descriptionPath: project.DescriptionPath || '',
-      imageFolderPath: `/public/Tool/${project.Number || index + 1}`,
+      imageFolderPath: `public/Tool/${project.Number || index + 1}`,
       relatedID: project.relatedID || '', 
       url: project.URL || '', 
     })).sort((a, b) => b.weight - a.weight);
