@@ -191,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
         area: project.Area || '',
         address: project.Address || '',
         time: project.Time || '',
-        scale: project.Scale ? project.Scale.split(';').map(tag => tag.trim()) : [], // Safeguard in case Scale is missing
+        leedfilter: project.Leedfilter ? project.Leedfilter.split(';').map(tag => tag.trim()) : [], // Safeguard in case LeedFilter is missing
         type: project.Type ? project.Type.split(';').map(tag => tag.trim()) : [],    // Safeguard for Type
         status: project.Status ? project.Status.split(';').map(tag => tag.trim()) : [], // Safeguard for Status
         descriptionPath: project['DescriptionPath'] || '',
@@ -256,13 +256,13 @@ document.addEventListener('DOMContentLoaded', function() {
     
   // Get relevant categories to disable others
   function getRelevantCategories(projects, filters) {
-      const relevant = { scale: new Set(), status: new Set(), projectType: new Set() };
+      const relevant = { leedfilter: new Set(), status: new Set(), projectType: new Set() };
       const filteredProjects = filterProjects(projects, filters);
       
       filteredProjects.forEach(project => {
-          // Check if scale exists and is an array before iterating
-          if (Array.isArray(project.scale)) {
-              project.scale.forEach(tag => relevant.scale.add(tag));
+          // Check if LeedFilter exists and is an array before iterating
+          if (Array.isArray(project.leedfilter)) {
+              project.leedfilter.forEach(tag => relevant.leedfilter.add(tag));
           }
           
           // Check if status exists and is an array before iterating
@@ -655,10 +655,10 @@ document.addEventListener('DOMContentLoaded', function() {
   async function main() {
     
     const projects = await loadProjectsData();
-    const filters = { scale: [], type: [], status: [] };
+    const filters = { leedfilter: [], type: [], status: [] };
 
-    // Ensure the scale, type, and status lists exist before processing
-    const scaleCategories = getFilteredTags(projects, 'scale');
+    // Ensure the leedfilter, type, and status lists exist before processing
+    const leedfilterCategories = getFilteredTags(projects, 'leedfilter');
     const typeCategories = getFilteredTags(projects, 'type');
     const statusCategories = getFilteredTags(projects, 'status');  // Make sure status is defined and checked
 
@@ -668,10 +668,10 @@ document.addEventListener('DOMContentLoaded', function() {
         hideLoadingOverlay()
         const relevant = getRelevantCategories(projects, filters);
         
-        createCategoryList(document.getElementById('scale-list'), scaleCategories, (scale, add) => {
-            filters.scale = add ? [scale] : [];
+        createCategoryList(document.getElementById('leed-list'), leedfilterCategories, (leedfilter, add) => {
+            filters.leedfilter = add ? [leedfilter] : [];
             updateProjects();
-        }, filters.scale[0], scaleCategories.filter(cat => !relevant.scale.has(cat)));
+        }, filters.leedfilter[0], leedfilterCategories.filter(cat => !relevant.leedfilter.has(cat)));
 
         createCategoryList(document.getElementById('status-list'), statusCategories, (status, add) => {
             filters.status = add ? [status] : [];
