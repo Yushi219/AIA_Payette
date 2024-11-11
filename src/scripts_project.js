@@ -281,72 +281,92 @@ document.addEventListener('DOMContentLoaded', function() {
 
     
   async function getImageSectionPath(projectNumber) {
-    const extensions = ['jpg'];  // 仅检查一种文件格式
-    for (const ext of extensions) {
-        const imagePath = `public/Project/${projectNumber}/Section${projectNumber}.${ext}`;
-        try {
-            const response = await fetch(imagePath, { method: 'HEAD' });
-            if (response.ok) {
-                return imagePath; // 找到文件即返回路径
-            }
-        } catch (error) {
-            console.error(`Error checking image for ${projectNumber}:`, error);
-        }
-    }
-    // 若文件不存在，返回默认占位图像
-    return 'public/Building/default-placeholder.png';
-  }
-
-
-  // Get the correct image path
-  async function getImagePath(imageFolderPath) {
-    const extensions = ['png', 'jpg', 'jpeg', 'gif'];
-    
-    for (const ext of extensions) {
-      const path = `${imageFolderPath}/Main.${ext}`;
-      const exists = await imageExists(path);
-      
-      if (exists) {
-        return path; // 找到存在的文件路径后立即返回
-      }
-    }
-    
-    return ''; // 如果没有找到任何格式，返回空字符串
-  }
-
-  // Check if the image file exists
-  async function imageExists(imageUrl) {
     try {
-      const response = await fetch(imageUrl, { method: 'HEAD' });
-      return response.ok; // 仅返回文件是否存在的布尔值
-    } catch {
-      return false; // 捕获异常，不打印任何错误日志
+      const response = await fetch(`public/Project/${projectNumber}/file-list.json`);
+      if (!response.ok) {
+        throw new Error(`Failed to load file list for project ${projectNumber}`);
+      }
+  
+      const fileList = await response.json();
+  
+      // 查找特定命名的 Section 文件
+      const sectionFile = fileList.find(file =>
+        file.startsWith(`Section${projectNumber}.`) && file.match(/\.(jpg|png|jpeg|gif)$/i)
+      );
+  
+      if (sectionFile) {
+        return `public/Project/${projectNumber}/${sectionFile}`;
+      }
+  
+      // 如果没有找到 Section 文件，返回默认占位图像
+      return 'public/Building/default-placeholder.png';
+    } catch (error) {
+      console.error(`Error fetching section image for project ${projectNumber}:`, error);
+      return 'public/Building/default-placeholder.png';
     }
   }
+  
 
-  
-  
-  // Get all project media files
-  async function getProjectMedia(folderPath) {
-    const extensions = ['png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm'];
-    const mediaFiles = [];
-  
-    for (const ext of extensions) {
-      for (let i = 1; i <= 30; i++) {
-        const path = `${folderPath}/${i}.${ext}`;
-        if (await imageExists(path)) {
-          mediaFiles.push(path);
-        }
+  async function getImagePath(imageFolderPath) {
+    try {
+      const response = await fetch(`${imageFolderPath}/file-list.json`);
+      if (!response.ok) {
+        throw new Error(`Failed to load file list from ${imageFolderPath}`);
       }
-    }
   
-    return mediaFiles
-      .map(file =>
+      const fileList = await response.json();
+  
+      // 优先查找 Main 文件
+      const mainFile = fileList.find(file =>
+        file.startsWith('Main.') && file.match(/\.(png|jpg|jpeg|gif)$/i)
+      );
+  
+      if (mainFile) {
+        return `${imageFolderPath}/${mainFile}`;
+      }
+  
+      // 如果没有 Main 文件，返回空字符串
+      return '';
+    } catch (error) {
+      console.error('Error fetching main image:', error);
+      return '';
+    }
+  }
+  
+  async function getProjectMedia(folderPath) {
+    try {
+      const response = await fetch(`${folderPath}/file-list.json`);
+      if (!response.ok) {
+        throw new Error(`Failed to load file list from ${folderPath}`);
+      }
+  
+      const fileList = await response.json();
+      const extensions = ['png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm'];
+  
+      // 过滤符合条件的文件：以数字开头且文件扩展名符合要求
+      const mediaFiles = fileList.filter(file => {
+        const ext = file.split('.').pop().toLowerCase();
+        const isNumbered = /^[0-9]/.test(file); // 以数字开头
+        return extensions.includes(ext) && isNumbered;
+      });
+  
+      // 按文件名中的数字顺序排序
+      mediaFiles.sort((a, b) => {
+        const numA = parseInt(a.match(/^\d+/)?.[0], 10) || 0; // 提取 a 开头的数字
+        const numB = parseInt(b.match(/^\d+/)?.[0], 10) || 0; // 提取 b 开头的数字
+        return numA - numB;
+      });
+  
+      // 生成 HTML
+      return mediaFiles.map(file =>
         file.endsWith('.mp4') || file.endsWith('.webm')
-          ? `<video controls><source src="${file}" type="video/mp4"></video>`
-          : `<img src="${file}" alt="Project Media" />`
-      )
-      .join('');
+          ? `<video controls><source src="${folderPath}/${file}" type="video/mp4"></video>`
+          : `<img src="${folderPath}/${file}" alt="Project Media" />`
+      ).join('');
+    } catch (error) {
+      console.error('Error fetching project media:', error);
+      return '';
+    }
   }
   
   
@@ -435,18 +455,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
 
-  // Get the correct image path
-  async function getMainImagePath(imageFolderPath) {
-    const extensions = ['png', 'jpg', 'jpeg', 'gif'];
-    for (const ext of extensions) {
-      const path = `${imageFolderPath}/Main.${ext}`;
-      if (await imageExists(path)) {
-        return path;
-      }
-    }
-    return '';
-  }
-    
 
 /////////////////
   // Example function to add navigation bar based on related ID
@@ -499,7 +507,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const header = document.querySelector('header');
 
     const description = await loadDescription(project.descriptionPath);
-    const mainImageSrc = await getMainImagePath(project.imageFolderPath);
+    const mainImageSrc = await getImagePath(project.imageFolderPath);
     const projectMedia = await getProjectMedia(project.imageFolderPath);
 
     const closeButtonHTML = `

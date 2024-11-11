@@ -158,54 +158,67 @@ document.addEventListener('DOMContentLoaded', function() {
     return relevant;
   }
   
-  // Get the correct image path
-  async function getImagePath(imageFolderPath) {
-    const extensions = ['png', 'jpg', 'jpeg', 'gif'];
-    
-    for (const ext of extensions) {
-      const path = `${imageFolderPath}/Main.${ext}`;
-      const exists = await imageExists(path);
-      
-      if (exists) {
-        return path; // 找到存在的文件路径后立即返回
-      }
-    }
-    
-    return ''; // 如果没有找到任何格式，返回空字符串
-  }
-
-  // Check if the image file exists
-  async function imageExists(imageUrl) {
-    try {
-      const response = await fetch(imageUrl, { method: 'HEAD' });
-      return response.ok; // 仅返回文件是否存在的布尔值
-    } catch {
-      return false; // 捕获异常，不打印任何错误日志
-    }
-  }
-
-  
-  // Get all project media files
   async function getProjectMedia(folderPath) {
-    const extensions = ['png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm'];
-    const mediaFiles = [];
-  
-    for (const ext of extensions) {
-      for (let i = 1; i <= 30; i++) {
-        const path = `${folderPath}/${i}.${ext}`;
-        if (await imageExists(path)) {
-          mediaFiles.push(path);
-        }
+    try {
+      const response = await fetch(`${folderPath}/file-list.json`);
+      if (!response.ok) {
+        throw new Error(`Failed to load file list from ${folderPath}`);
       }
-    }
   
-    return mediaFiles
-      .map(file =>
+      const fileList = await response.json();
+      const extensions = ['png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm'];
+  
+      // 过滤符合条件的文件：以数字开头且不包含 'Main'
+      const mediaFiles = fileList.filter(file => {
+        const ext = file.split('.').pop().toLowerCase();
+        const isNumbered = /^[0-9]/.test(file); // 以数字开头
+        const isNotMain = !file.startsWith('Main');
+        return extensions.includes(ext) && isNumbered && isNotMain;
+      });
+  
+      // 按文件名中的数字顺序排序
+      mediaFiles.sort((a, b) => {
+        const numA = parseInt(a.match(/^\d+/)?.[0], 10) || 0; // 提取 a 开头的数字
+        const numB = parseInt(b.match(/^\d+/)?.[0], 10) || 0; // 提取 b 开头的数字
+        return numA - numB;
+      });
+  
+      // 生成 HTML
+      return mediaFiles.map(file =>
         file.endsWith('.mp4') || file.endsWith('.webm')
-          ? `<video controls><source src="${file}" type="video/mp4"></video>`
-          : `<img src="${file}" alt="Project Media" />`
-      )
-      .join('');
+          ? `<video controls><source src="${folderPath}/${file}" type="video/mp4"></video>`
+          : `<img src="${folderPath}/${file}" alt="Project Media" />`
+      ).join('');
+    } catch (error) {
+      console.error('Error fetching file list:', error);
+      return ''; // 遇到错误时返回空字符串
+    }
+  }
+  
+  
+  
+  async function getImagePath(imageFolderPath) {
+    try {
+      const response = await fetch(`${imageFolderPath}/file-list.json`);
+      if (!response.ok) {
+        throw new Error(`Failed to load file list from ${imageFolderPath}`);
+      }
+  
+      const fileList = await response.json();
+  
+      // 优先查找 Main 文件
+      const mainFile = fileList.find(file => file.startsWith('Main.') && file.match(/\.(png|jpg|jpeg|gif)$/i));
+      if (mainFile) {
+        return `${imageFolderPath}/${mainFile}`;
+      }
+  
+      // 如果没有 Main 文件，返回第一个图片文件
+      const firstImage = fileList.find(file => file.match(/\.(png|jpg|jpeg|gif)$/i));
+      return firstImage ? `${imageFolderPath}/${firstImage}` : '';
+    } catch (error) {
+      console.error('Error fetching main image:', error);
+      return ''; // 返回空字符串以避免中断逻辑
+    }
   }
   
   
