@@ -441,12 +441,21 @@ document.addEventListener('DOMContentLoaded', function() {
     }).replace(/\n/g, '<br>'); // 替换换行符为HTML换行
   }
   
-  
+  // Base path for GitHub Pages deployment
+  const basePath = '/Payette-AIA-Tour-App';
+
   async function loadDescription(descriptionPath) {
     try {
-      const response = await fetch(descriptionPath);
+      // 确保 descriptionPath 包含基础路径
+      const fullPath = `${basePath}/${descriptionPath}`;
+      const response = await fetch(fullPath);
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch description from ${fullPath}`);
+      }
+
       let text = await response.text();
-      // 转换文本中的链接到HTML超链接
+      // 转换文本中的链接到 HTML 超链接
       text = convertTextToHTML(text);
       return text;
     } catch (error) {
@@ -514,7 +523,12 @@ document.addEventListener('DOMContentLoaded', function() {
       <button class="close-button" style="position: fixed; right: 20px; top: 15px; z-index: 1001;" onclick="redirectToSplash()">✖</button>
     `;
 
-    const tags = [...(project.status || []), ...(project.type || []), ...(project.scale || [])];
+    let urlLink = '';
+    if (project.URL) {
+        urlLink = `<a href="${project.URL}" target="_blank" class="tool-url-link" style="text-decoration: underline; font-size: 14px;font-style: normal; color:  #333129; display: block; margin-bottom: 10px;">${project.URL}</a>`;
+    }
+
+    const tags = [ (project.ShortS || [])];
 
     let youtubeEmbed = '';
     if (youtubeVideos[project.number]) {
@@ -563,6 +577,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div class="details-content">
         <div class="details-sidebar">
           <h3>${project.name}</h3>
+          ${urlLink} <!-- 在此处插入 URL 链接 -->
           <div class="tags">${tags.map(tag => `<div class="tag">${tag}</div>`).join('')}</div>
           <p>${description.replace(/\n/g, '<br>')}</p>
         </div>
