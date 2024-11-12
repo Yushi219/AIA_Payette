@@ -35,7 +35,7 @@
   display: flex;
   flex-direction: column; /* 垂直布局 */
   justify-content: space-between; /* 分配文字和图片的空间 */
-  border-bottom: 2px solid rgb(160, 160, 160); /* 添加底部灰色线条 */
+  border-bottom: 1px solid rgb(160, 160, 160); /* 添加底部灰色线条 */
   padding: 0; /* 移除多余的内边距 */
   padding-left: 60px; 
 }
