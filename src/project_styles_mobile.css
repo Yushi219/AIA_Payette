@@ -90,13 +90,13 @@
     height: auto; /* 保持图片比例 */
     max-height: calc(100% - 30%); /* 图片高度占卡片的70%，从底部对齐 */
     object-fit: cover; /* 确保图片填充整个宽度 */
-    margin-bottom: 30px;
+    margin-bottom: 40px;
   }
 
   /* Project card text content */
   .project-card .project-info {
-    height: 40%; /* 文本区域占卡片的30%高度 */
-    padding: 0px;
+    height: 30%; /* 文本区域占卡片的30%高度 */
+    padding: -10px;
     font-family: 'Cabin', sans-serif;
     color: #333129;
     display: flex;
