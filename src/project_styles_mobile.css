@@ -25,99 +25,87 @@
   }
 
 
-/* Container for the person image, positioned at the bottom of the project card */
+/* Project list container settings */
+.project-list {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: scroll;
+  position: relative;
+  height: 100vh; /* 占满整个视窗高度 */
+  padding: 0; /* 移除所有内边距 */
+  box-sizing: border-box; /* 确保内边距计算正确 */
+  gap: 0; /* 移除卡片间的间距 */
+}
+
+/* Project card container */
+.project-card {
+  flex: 0 0 calc(100% / 3); /* 每行显示3张卡片，宽度均等 */
+  overflow: hidden;
+  background-color: #fffcf5;
+  text-align: left;
+  height: 100%; /* 卡片高度与视窗高度一致 */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* 顶部文字和底部图片空间分配 */
+  box-sizing: border-box;
+}
+
+/* Project card text content */
+.project-card .project-info {
+  flex: 0 0 auto;
+  height: auto;
+  padding: 10px; /* 保证有内边距 */
+  font-family: 'Cabin', sans-serif;
+  color: #333129;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start; /* 确保文字从顶部开始对齐 */
+  box-sizing: border-box; /* 包括内边距在内的高度 */
+}
+
+.project-card .project-info h4 {
+  font-size: 14px;
+  margin: 5px 0;
+  font-weight: bold;
+  color: #333129;
+}
+
+.project-card .project-info h5 {
+  font-size: 10px;
+  margin: 3px 0;
+  font-weight: normal;
+  color: #666666;
+}
+
+/* Project card image settings */
+.project-card img {
+  width: 100%;
+  height: auto; /* 保持图片比例 */
+  max-height: 70%; /* 图片占卡片高度的70% */
+  object-fit: cover; /* 确保图片填充整个宽度 */
+  margin-top: auto; /* 将图片推到底部 */
+}
+
+/* Container for the person image */
 .person-container {
-  position: absolute;
-  bottom: 0vh;  /* Adjusted relative to viewport height for more responsiveness */
+  position: fixed; /* 固定在窗口底部 */
+  bottom: 0; /* 与窗口底部对齐 */
   left: 0;
-  width: 12vw;  /* Scales with the screen width */
+  width: 12vw; /* 随窗口宽度缩放 */
   z-index: 10;
-  transition: left 0.5s ease, opacity 0.5s ease;  /* Smooth transition */
+  transition: left 0.5s ease, opacity 0.5s ease; /* 平滑移动效果 */
 }
 
 /* Main person image settings */
 #person-image {
   position: absolute;
-  bottom: 0vh; /* Relative to viewport height */
-  width: 12vw;  /* Scales based on screen width */
-  max-width: 180px; /* Ensures it doesn’t get too large */
-  min-width: 120px; /* Sets a minimum size for small screens */
+  bottom: 0; /* 紧贴视窗底部 */
+  width: 12vw; /* 按视窗宽度缩放 */
+  max-width: 180px; /* 限制最大宽度 */
+  min-width: 120px; /* 限制最小宽度 */
   z-index: 10;
-  transition: opacity 0.3s ease, width 0.3s ease; /* Adds width scaling transition */
   display: block;
 }
-
-/* Centered image configuration for search or filter mode */
-.centered-person {
-  position: fixed;
-  left: 50vw; /* Centers horizontally */
-  top: -10vh; /* Centers vertically */
-  transform: translate(-50%, -50%);
-  width: 8vw; /* Scales to 8% of viewport width */
-  max-width: 120px; /* Limit maximum size */
-  min-width: 80px; /* Sets a minimum size */
-  z-index: 100; /* Ensures it stays on top */
-}
-
-  /* Project list container settings */
-  .project-list {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: scroll;
-    position: relative;
-    height: 100vh; /* 占满整个视窗高度 */
-    padding-left: 0; /* 移除左侧间距 */
-    box-sizing: border-box; /* 确保内边距计算正确 */
-    gap: 0; /* 移除卡片间的间距 */
-    padding-left: 60px; 
-  }
-
-  /* Project card container */
-  .project-card {
-    flex: 0 0 calc(100% / 3); /* 每行显示3张卡片，宽度均等 */
-    overflow: hidden;
-    background-color: #fffcf5;
-    text-align: left;
-    height: 100%; /* 卡片高度与视窗高度一致 */
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end; /* 确保内容从底部对齐 */
-  }
-
-  /* Project card image settings */
-  .project-card img {
-    width: 100%;
-    height: auto; /* 保持图片比例 */
-    max-height: calc(100% - 30%); /* 图片高度占卡片的70%，从底部对齐 */
-    object-fit: cover; /* 确保图片填充整个宽度 */
-    margin-bottom: 40px;
-  }
-
-  /* Project card text content */
-  .project-card .project-info {
-    height: 30%; /* 文本区域占卡片的30%高度 */
-    padding: -10px;
-    font-family: 'Cabin', sans-serif;
-    color: #333129;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start; /* 确保文字从顶部开始对齐 */
-    box-sizing: border-box; /* 包括内边距在内的高度 */
-  }
-
-  .project-card .project-info h4 {
-    font-size: 14px;
-    margin: 5px 0;
-    font-weight: bold;
-    color: #333129;
-  }
-
-  .project-card .project-info h5 {
-    font-size: 10px;
-    margin: 3px 0;
-    font-weight: normal;
-    color: #666666;
-  }
 
 
   .tags {
