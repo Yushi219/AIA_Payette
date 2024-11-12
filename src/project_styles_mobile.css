@@ -30,7 +30,7 @@
   overflow: hidden;
   background-color: #fffcf5;
   text-align: left;
-  height: 80%; /* 设置卡片高度占满父容器 */
+  height: 60%; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
   flex-direction: column; /* 垂直布局 */
@@ -58,7 +58,7 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   position: relative;
-  height: calc(100vh - 60px); /* 调整视口高度 */
+  height: calc(100vh - 10px); /* 调整视口高度 */
   gap: 0; /* 移除卡片之间的间距 */
   align-items: stretch; /* 确保卡片高度一致 */
   padding-left: 60px; 
@@ -382,7 +382,7 @@
     display: flex;
     flex-direction: column; /* 垂直布局 */
     align-items: center;
-    gap: 80px; /* 增加按钮间的间距 */
+    gap: 60px; /* 增加按钮间的间距 */
     margin-top: 10px; /* 添加顶部间距 */
   }
   
