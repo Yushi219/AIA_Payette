@@ -1,32 +1,92 @@
-
-
 document.addEventListener('DOMContentLoaded', function() { 
 
-  
+  const filterOverlay = document.getElementById("filter-overlay");
+  const typeList = document.getElementById("type-list");
+  const leedList = document.getElementById("leed-list");
+  const statusList = document.getElementById("status-list");
+
+  const filters = {
+    type: new Set(),
+    leed: new Set(),
+    status: new Set(),
+  };
+
+  // 初始化过滤器列表项点击事件
+  function initializeFilters(container, filterSet) {
+    container.addEventListener("click", (e) => {
+      const target = e.target;
+      if (target.tagName === "LI") {
+        if (filterSet.has(target.textContent)) {
+          filterSet.delete(target.textContent);
+          target.classList.remove("active");
+        } else {
+          filterSet.add(target.textContent);
+          target.classList.add("active");
+        }
+      }
+    });
+  }
+
+  initializeFilters(typeList, filters.type);
+  initializeFilters(leedList, filters.leed);
+  initializeFilters(statusList, filters.status);
+
+  // 显示过滤窗口
+  document.getElementById("menu-toggle").addEventListener("click", () => {
+    filterOverlay.classList.toggle("hidden");
+  });
+
+  // 关闭过滤窗口时保持激活状态
+  filterOverlay.addEventListener("click", (e) => {
+    if (e.target === filterOverlay) {
+      filterOverlay.classList.add("hidden");
+    }
+  });
+
+  // 生成过滤项（示例数据）
+  const exampleData = {
+    type: ["Science", "Healthcare", "Office"],
+    leed: ["Gold", "Platinum", "Silver", "Net Zero"],
+    status: ["Completed", "Active"],
+  };
+
+  function createFilterItems(container, items) {
+    container.innerHTML = ""; // 清空之前的项
+    items.forEach((item) => {
+      const li = document.createElement("li");
+      li.textContent = item;
+      if (filters[container.id.replace("-list", "")].has(item)) {
+        li.classList.add("active"); // 保持激活状态
+      }
+      container.appendChild(li);
+    });
+  }
+
+  createFilterItems(typeList, exampleData.type);
+  createFilterItems(leedList, exampleData.leed);
+  createFilterItems(statusList, exampleData.status);
+
+  // Dashboard按钮跳转逻辑
+  const projectDashboardBtn = document.getElementById('project-dashboard-btn');
+  const computationalDashboardBtn = document.getElementById('computational-dashboard-btn');
+
+  projectDashboardBtn.addEventListener('click', () => {
+    const mode = localStorage.getItem('viewMode') || 'desktop';
+    const url = mode === 'mobile' ? 'project_index_mobile.html' : 'project_index.html';
+    window.location.href = url;
+  });
+
+  computationalDashboardBtn.addEventListener('click', () => {
+    const mode = localStorage.getItem('viewMode') || 'desktop';
+    const url = mode === 'mobile' ? 'computational_index_mobile.html' : 'computational_index.html';
+    window.location.href = url;
+  });
+
   // 设置人物初始位置为起始点
     const minLeft = 10; // 起始位置为 20vw
     personImage.style.left = `calc(${minLeft}vw)`;  // 初始位置为 20vw
     //personImage.src = imageStill[0]; // 设置为 S1 图片
 
-    const computationalBtn = document.getElementById('computational-dashboard-btn');
-    const projectBtn = document.getElementById('project-dashboard-btn');
-  
-    // 从 URL 获取 dashboard 参数
-    const urlParams = new URLSearchParams(window.location.search);
-    let currentDashboard = urlParams.get('dashboard') || 'project'; // Default to Project Dashboard
-  
-  
-    // 点击按钮跳转到相应的 index 页面
-    computationalBtn.addEventListener('click', () => {
-      // showLoadingOverlay();
-      window.location.href = 'computational_index.html';  // 跳转到 Computational Design Dashboard 页面
-    });
-  
-    projectBtn.addEventListener('click', () => {
-      // showLoadingOverlay();
-      window.location.href = 'project_index.html';  // 跳转到 Project Dashboard 页面
-    });
-  
 
   });
 
@@ -479,7 +539,7 @@ document.addEventListener('DOMContentLoaded', function() {
     projectTab.textContent = '项目详情';
     projectTab.classList.add(isTool ? 'inactive' : 'active');
     projectTab.onclick = () => {
-        window.location.href = `project_index.html?id=${currentID}&related=${relatedID}`;
+        window.location.href = `project_index_mobile.html?id=${currentID}&related=${relatedID}`;
     };
 
     // 创建工具开发标签
@@ -501,7 +561,7 @@ document.addEventListener('DOMContentLoaded', function() {
   const relatedID = urlParams.get('related'); // 获取关联页面 ID 参数
 
   // 默认设置为项目详情页
-  const isTool = currentID && window.location.pathname.includes('project_index.html');
+  const isTool = currentID && window.location.pathname.includes('project_index_mobile.html');
 
   // 如果存在关联 ID，则在详情页上添加导航栏
   if (relatedID && currentID) {
@@ -548,16 +608,16 @@ document.addEventListener('DOMContentLoaded', function() {
     const urlParams = new URLSearchParams(window.location.search);
     const relatedID = urlParams.get('related');
     const currentID = project.number;
-    const isTool = window.location.pathname.includes('project_index.html');
+    const isTool = window.location.pathname.includes('project_index_mobile.html');
 
     // 创建导航栏
     const navBarHTML = `
       <div class="fixed-header">
-        <div class="back-button" onclick="window.location.href='project_index.html'">< Dashboard</div>
+        <div class="back-button" onclick="window.location.href='project_index_mobile.html'">< Dashboard</div>
         
         <div class="center-nav-bar">
             <span class="custom-nav-item ${isTool ? 'active' : 'inactive'}" 
-                  onclick="window.location.href='project_index.html?id=${currentID}${relatedID ? `&related=${relatedID}` : ''}'">
+                  onclick="window.location.href='project_index_mobile.html?id=${currentID}${relatedID ? `&related=${relatedID}` : ''}'">
                 Project Info
             </span>
             ${relatedID ? `
@@ -598,7 +658,7 @@ document.addEventListener('DOMContentLoaded', function() {
     } else {
       document.querySelector('.back-button').addEventListener('click', () => {
         // Reset the URL and return to the project index page
-        window.location.href = 'project_index.html';
+        window.location.href = 'project_index_mobile.html';
       });
     }
   }
@@ -642,7 +702,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const relatedID = project.relatedID;  // 从项目数据中获取相关 ID
 
         // 根据是否存在 relatedID 构造 URL
-        const baseURL = window.location.pathname.includes('project_index.html') ? 'project_index.html' : 'computational_index.html';
+        const baseURL = window.location.pathname.includes('project_index_mobile.html') ? 'project_index_mobile.html' : 'computational_index.html';
         const url = relatedID ? `${baseURL}?id=${currentID}&related=${relatedID}` : `${baseURL}?id=${currentID}`;
 
         // 显示详情页并更新 URL

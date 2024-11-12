@@ -3,39 +3,40 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Dashboard</title> <!-- Generic title since we will switch titles dynamically -->
-  <link rel="stylesheet" href="src/project_styles.css">
+  <title>Mobile Dashboard</title> <!-- 标题已调整 -->
+  <link rel="stylesheet" href="src/project_styles_mobile.css"> <!-- 使用单独的样式文件 -->
   <link href="https://fonts.googleapis.com/css2?family=Cabin:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.0/papaparse.min.js"></script>
 </head>
-<body>
+<body class="mobile-layout">
   <header>
-
-    <!-- Toggle between dashboards -->
-    <div id="dashboard-switch" class="titles">
-        <h1 id="project-dashboard-btn" class="active">Project Dashboard</h1> <!-- Set Project Dashboard as active -->
-        <h1 id="computational-dashboard-btn" class="inactive">Computational Design Dashboard</h1>
-    </div>
-
-    <!-- Search bar and filters -->
-    <div class="search-bar">
+    <div class="side-menu">
+      <button id="menu-toggle" class="menu-btn">☰</button>
+      <div class="menu-content">
+        <button id="project-dashboard-btn" class="dashboard-btn active">Project Dashboard</button>
+        <button id="computational-dashboard-btn" class="dashboard-btn inactive">Computational Design Dashboard</button>
+      </div>
+    </div>    
+    
+    <!-- 过滤器和搜索框 -->
+    <div id="filter-overlay" class="filter-overlay hidden">
+      <div class="filter-container">
+        <input type="text" id="search-input" placeholder="Search..." />
+        <div class="category-filter" id="type-categories">
+          <h3>Type</h3>
+          <ul id="type-list"></ul>
+        </div>
         <div class="category-filter" id="leed-categories">
           <h3>LEED</h3>
           <ul id="leed-list"></ul>
         </div>
-      
         <div class="category-filter" id="status-categories">
-            <h3>STATUS</h3>
-            <ul id="status-list"></ul>
-        </div>   
-        <div class="category-filter" id="type-categories">
-          <h3>TYPE</h3>
-          <ul id="type-list"></ul>
-        </div class="search-bar">
-        <input type="text" id="search-input" placeholder="Search..." />
+          <h3>Status</h3>
+          <ul id="status-list"></ul>
+        </div>
       </div>
-  
-  
+    </div>
+
     <button class="close-button">X</button>
   </header>
 
@@ -52,7 +53,7 @@
   <div class="details-container" id="details-container" style="display: none;"></div>
 
   <!-- JavaScript file to handle interactions -->
-  <script src="src/scripts_project.js"></script>
+  <script src="src/scripts_project_mobile.js"></script>
 
   <!-- Loading overlay -->
   <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fffcf5; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">

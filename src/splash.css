@@ -160,4 +160,32 @@ body, html {
     width: 9.4%;
 }
 
-
+/* //////////////////////////// */
+/* 按钮容器 */
+#mode-selection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px; /* 与地图的间距 */
+    padding: 20px 0;
+  }
+  
+  /* 按钮样式 */
+  #mode-selection button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #333129;
+    color: #ffffff;
+    border: none;
+    border-radius: 5px;
+    margin: 0 10px; /* 按钮之间的间距 */
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
+  }
+  
+  /* 悬停效果 */
+  #mode-selection button:hover {
+    background-color: #b0aca1; /* 浅灰色背景 */
+    color: #333129; /* 文字颜色变深 */
+}
+  
