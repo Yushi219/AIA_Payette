@@ -90,7 +90,7 @@
     height: auto; /* 保持图片比例 */
     max-height: calc(100% - 30%); /* 图片高度占卡片的70%，从底部对齐 */
     object-fit: cover; /* 确保图片填充整个宽度 */
-    align-self: flex-end; /* 确保图片对齐卡片底部 */
+    margin-bottom: 30px;
   }
 
   /* Project card text content */
@@ -113,7 +113,7 @@
   }
 
   .project-card .project-info h5 {
-    font-size: 12px;
+    font-size: 8px;
     margin: 3px 0;
     font-weight: normal;
     color: #666666;
