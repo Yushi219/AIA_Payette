@@ -87,7 +87,7 @@
   max-height: 70%; /* 图片占卡片高度的70% */
   object-fit: cover; /* 确保图片填充整个宽度 */
   margin-top: auto; /* 将图片推到底部 */
-  transform: translateY(-40px); /* 向上移动20px */
+  transform: translateY(-60px); /* 向上移动20px */
   position: relative; /* 确保 transform 生效 */
 }
 
