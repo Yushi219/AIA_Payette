@@ -102,7 +102,7 @@ document.addEventListener('DOMContentLoaded', function() {
     overlay.style.display = 'none';
   }
 
-////////////////////////////////////////
+  ////////////////////////////////////////
   // Updated People Move Interaction
   const projectList = document.getElementById('project-list');
   const personImage = document.getElementById('person-image');
@@ -117,97 +117,112 @@ document.addEventListener('DOMContentLoaded', function() {
   const movingRightGif = 'public/R.gif';
   const movingLeftGif = 'public/L.gif';
 
+  // Variables to track touch position
+  let startX = 0;
+  let lastScrollLeft = 0;
+
   // Function to set the person image based on scroll direction
-  function setPersonImage(scrollAmount) {
-      if (scrollAmount > 0) { // Scrolling right
-          personImage.src = movingRightGif;
-      } else if (scrollAmount < 0) { // Scrolling left
-          personImage.src = movingLeftGif;
-      }
+  function setPersonImage(scrollDirection) {
+    if (scrollDirection > 0) { // Scrolling right
+      personImage.src = movingRightGif;
+    } else if (scrollDirection < 0) { // Scrolling left
+      personImage.src = movingLeftGif;
+    }
   }
 
   // Function to stop movement and reset image to a standing position
   function stopPersonMovement() {
-      const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
-      if (projectList.scrollLeft <= 0) {
-          personImage.src = standingStart; // Reset to S1 at the leftmost edge
-      } else if (projectList.scrollLeft >= maxScrollLeft) {
-          personImage.src = standingEnd; // Set to S3 at the rightmost edge
-      }
+    const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+    if (projectList.scrollLeft <= 0) {
+      personImage.src = standingStart; // Reset to S1 at the leftmost edge
+    } else if (projectList.scrollLeft >= maxScrollLeft) {
+      personImage.src = standingEnd; // Set to S3 at the rightmost edge
+    }
   }
 
-  // Event listener for scroll
-  projectList.addEventListener('wheel', (event) => {
-      if (isFilterActive || isSearchActive) return; // Ignore scroll when filter or search is active
+  // Adjust person's position based on scroll percentage
+  function updatePersonPosition() {
+    const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+    const scrollPercentage = projectList.scrollLeft / maxScrollLeft;
 
-      const scrollAmount = event.deltaY;
-      const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
-      const scrollPercentage = projectList.scrollLeft / maxScrollLeft;
+    const minLeft = 10; // Start position (10vw)
+    const maxLeft = 80; // End position (80vw)
+    const adjustedLeft = minLeft + (maxLeft - minLeft) * scrollPercentage;
 
-      // Calculate adjusted left position for personImage based on scroll percentage
-      const minLeft = 10; // Start position (10vw)
-      const maxLeft = 80; // End position (80vw)
-      const adjustedLeft = minLeft + (maxLeft - minLeft) * scrollPercentage;
-      personImage.style.left = `calc(${adjustedLeft}vw)`;
+    personImage.style.left = `calc(${adjustedLeft}vw)`;
+  }
 
-      // Start the appropriate GIF based on scroll direction
-      if ((scrollAmount > 0 && projectList.scrollLeft < maxScrollLeft) ||
-          (scrollAmount < 0 && projectList.scrollLeft > 0)) {
-          setPersonImage(scrollAmount);
-      }
+  // Event listener for touchstart
+  projectList.addEventListener('touchstart', (event) => {
+    startX = event.touches[0].clientX;
+    lastScrollLeft = projectList.scrollLeft;
+  });
 
-      // Stop movement and reset at boundaries
-      if (projectList.scrollLeft === 0 || projectList.scrollLeft === maxScrollLeft) {
-          stopPersonMovement();
-      }
+  // Event listener for touchmove
+  projectList.addEventListener('touchmove', (event) => {
+    if (isFilterActive || isSearchActive) return; // Ignore when filter or search is active
+
+    const touchX = event.touches[0].clientX;
+    const deltaX = startX - touchX; // Calculate touch movement
+    projectList.scrollLeft = lastScrollLeft + deltaX;
+
+    // Detect scroll direction and update GIF
+    if (deltaX > 0) {
+      setPersonImage(1); // Right
+    } else if (deltaX < 0) {
+      setPersonImage(-1); // Left
+    }
+
+    updatePersonPosition(); // Update person's position
   });
 
   // Event listener for scroll stop
   projectList.addEventListener('scroll', () => {
-      const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
-      if (projectList.scrollLeft <= 0 || projectList.scrollLeft >= maxScrollLeft) {
-          stopPersonMovement();
-      }
+    const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+    if (projectList.scrollLeft <= 0 || projectList.scrollLeft >= maxScrollLeft) {
+      stopPersonMovement();
+    }
   });
 
   // Function to activate centered person image (S2.png)
   function activateCenteredPersonImage() {
-      isFilterActive = true;
-      isSearchActive = true;
-      personImage.src = centeredImage;
-      personImage.classList.add('centered-person');
-      personImage.style.opacity = 1;
+    isFilterActive = true;
+    isSearchActive = true;
+    personImage.src = centeredImage;
+    personImage.classList.add('centered-person');
+    personImage.style.opacity = 1;
   }
 
   // Function to deactivate centered image and restore movement
   function deactivateCenteredPersonImage() {
-      isFilterActive = false;
-      isSearchActive = false;
-      personImage.classList.remove('centered-person');
-      stopPersonMovement();
+    isFilterActive = false;
+    isSearchActive = false;
+    personImage.classList.remove('centered-person');
+    stopPersonMovement();
   }
 
   // Search input event handler
   searchInput.addEventListener('input', (event) => {
-      if (event.target.value.length > 0) {
-          activateCenteredPersonImage();
-      } else {
-          deactivateCenteredPersonImage();
-      }
+    if (event.target.value.length > 0) {
+      activateCenteredPersonImage();
+    } else {
+      deactivateCenteredPersonImage();
+    }
   });
 
   // Filter click event listeners
   document.querySelectorAll('.category-filter li').forEach(filter => {
-      filter.addEventListener('click', () => {
-          const activeFilters = Array.from(document.querySelectorAll('.category-filter li.active'));
-          if (activeFilters.length > 0) {
-              activateCenteredPersonImage();
-          } else {
-              deactivateCenteredPersonImage();
-          }
-      });
+    filter.addEventListener('click', () => {
+      const activeFilters = Array.from(document.querySelectorAll('.category-filter li.active'));
+      if (activeFilters.length > 0) {
+        activateCenteredPersonImage();
+      } else {
+        deactivateCenteredPersonImage();
+      }
+    });
   });
-/////////////////////////////////////////
+  /////////////////////////////////////////
+
 
   // 定义跳转函数
   function redirectToSplash() {
