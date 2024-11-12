@@ -35,6 +35,7 @@
   padding: 0; /* 移除所有内边距 */
   box-sizing: border-box; /* 确保内边距计算正确 */
   gap: 0; /* 移除卡片间的间距 */
+  padding-left: 60px; 
 }
 
 /* Project card container */
@@ -68,6 +69,7 @@
   margin: 5px 0;
   font-weight: bold;
   color: #333129;
+  z-index: 5;
 }
 
 .project-card .project-info h5 {
@@ -75,6 +77,7 @@
   margin: 3px 0;
   font-weight: normal;
   color: #666666;
+  z-index: 5;
 }
 
 /* Project card image settings */
@@ -84,7 +87,10 @@
   max-height: 70%; /* 图片占卡片高度的70% */
   object-fit: cover; /* 确保图片填充整个宽度 */
   margin-top: auto; /* 将图片推到底部 */
+  transform: translateY(-40px); /* 向上移动20px */
+  position: relative; /* 确保 transform 生效 */
 }
+
 
 /* Container for the person image */
 .person-container {
