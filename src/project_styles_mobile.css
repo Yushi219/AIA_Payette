@@ -25,30 +25,42 @@
   }
 
 
-/* Project list container settings */
-.project-list {
-  display: flex;
-  flex-wrap: nowrap;
-  overflow-x: scroll;
-  position: relative;
-  height: 100vh; /* 占满整个视窗高度 */
-  padding: 0; /* 移除所有内边距 */
-  box-sizing: border-box; /* 确保内边距计算正确 */
-  gap: 0; /* 移除卡片间的间距 */
-  padding-left: 60px; 
-}
-
-/* Project card container */
 .project-card {
-  flex: 0 0 calc(100% / 3); /* 每行显示3张卡片，宽度均等 */
+  flex: 0 0 calc(100% / 4); /* 每行显示4张卡片 */
   overflow: hidden;
   background-color: #fffcf5;
   text-align: left;
-  height: 100%; /* 卡片高度与视窗高度一致 */
+  height: 80%; /* 设置卡片高度占满父容器 */
+  position: relative;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between; /* 顶部文字和底部图片空间分配 */
-  box-sizing: border-box;
+  flex-direction: column; /* 垂直布局 */
+  justify-content: space-between; /* 分配文字和图片的空间 */
+  border-bottom: 2px solid rgb(160, 160, 160); /* 添加底部灰色线条 */
+  padding: 0; /* 移除多余的内边距 */
+  padding-left: 60px; 
+}
+
+
+.project-card img {
+  width: 100%; /* 图片占满卡片宽度 */
+  height: auto; /* 保持图片比例 */
+  max-height: none; /* 移除高度限制 */
+  object-fit: cover; /* 确保图片填充 */
+  position: absolute; /* 绝对定位 */
+  bottom: 0; /* 图片贴住卡片底部 */
+  left: 0; /* 居左对齐 */
+}
+
+
+
+.project-list {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  position: relative;
+  height: calc(100vh - 10px); /* 调整视口高度 */
+  gap: 0; /* 移除卡片之间的间距 */
+  align-items: stretch; /* 确保卡片高度一致 */
 }
 
 /* Project card text content */
@@ -79,18 +91,6 @@
   color: #666666;
   z-index: 5;
 }
-
-/* Project card image settings */
-.project-card img {
-  width: 100%;
-  height: auto; /* 保持图片比例 */
-  max-height: 70%; /* 图片占卡片高度的70% */
-  object-fit: cover; /* 确保图片填充整个宽度 */
-  margin-top: auto; /* 将图片推到底部 */
-  transform: translateY(-60px); /* 向上移动20px */
-  position: relative; /* 确保 transform 生效 */
-}
-
 
 /* Container for the person image */
 .person-container {
