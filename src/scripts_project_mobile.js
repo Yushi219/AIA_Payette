@@ -109,24 +109,20 @@ document.addEventListener('DOMContentLoaded', function() {
   const searchInput = document.getElementById('search-input');
   let isFilterActive = false;
   let isSearchActive = false;
+  let lastScrollLeft = 0; // 上一次的滚动位置
 
   // Define images and GIFs
   const standingStart = 'public/S1.png';
   const standingEnd = 'public/S3.png';
-  const centeredImage = 'public/S2.png';
   const movingRightGif = 'public/R.gif';
   const movingLeftGif = 'public/L.gif';
 
-  // Variables to track touch position
-  let startX = 0;
-  let lastScrollLeft = 0;
-
   // Function to set the person image based on scroll direction
-  function setPersonImage(scrollDirection) {
-    if (scrollDirection > 0) { // Scrolling right
-      personImage.src = movingRightGif;
-    } else if (scrollDirection < 0) { // Scrolling left
-      personImage.src = movingLeftGif;
+  function setPersonImage(direction) {
+    if (direction > 0) {
+      personImage.src = movingRightGif; // Moving right
+    } else if (direction < 0) {
+      personImage.src = movingLeftGif; // Moving left
     }
   }
 
@@ -137,6 +133,8 @@ document.addEventListener('DOMContentLoaded', function() {
       personImage.src = standingStart; // Reset to S1 at the leftmost edge
     } else if (projectList.scrollLeft >= maxScrollLeft) {
       personImage.src = standingEnd; // Set to S3 at the rightmost edge
+    } else {
+      personImage.src = standingStart; // Standing in between
     }
   }
 
@@ -152,76 +150,48 @@ document.addEventListener('DOMContentLoaded', function() {
     personImage.style.left = `calc(${adjustedLeft}vw)`;
   }
 
-  // Event listener for touchstart
-  projectList.addEventListener('touchstart', (event) => {
-    startX = event.touches[0].clientX;
-    lastScrollLeft = projectList.scrollLeft;
-  });
-
-  // Event listener for touchmove
-  projectList.addEventListener('touchmove', (event) => {
+  // Event listener for scroll
+  projectList.addEventListener('scroll', () => {
     if (isFilterActive || isSearchActive) return; // Ignore when filter or search is active
 
-    const touchX = event.touches[0].clientX;
-    const deltaX = startX - touchX; // Calculate touch movement
-    projectList.scrollLeft = lastScrollLeft + deltaX;
+    const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+    const direction = projectList.scrollLeft - lastScrollLeft; // 滚动方向
 
-    // Detect scroll direction and update GIF
-    if (deltaX > 0) {
-      setPersonImage(1); // Right
-    } else if (deltaX < 0) {
-      setPersonImage(-1); // Left
+    // Check if the current scroll position extends beyond visible bounds
+    if (projectList.scrollLeft > 0 && projectList.scrollLeft < maxScrollLeft) {
+      setPersonImage(direction); // Set the correct GIF based on direction
+      updatePersonPosition(); // Update position relative to list
     }
 
-    updatePersonPosition(); // Update person's position
-  });
-
-  // Event listener for scroll stop
-  projectList.addEventListener('scroll', () => {
-    const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+    // Stop movement if at the edges
     if (projectList.scrollLeft <= 0 || projectList.scrollLeft >= maxScrollLeft) {
       stopPersonMovement();
     }
+
+    lastScrollLeft = projectList.scrollLeft; // Update last scroll position
   });
 
-  // Function to activate centered person image (S2.png)
-  function activateCenteredPersonImage() {
-    isFilterActive = true;
-    isSearchActive = true;
-    personImage.src = centeredImage;
-    personImage.classList.add('centered-person');
-    personImage.style.opacity = 1;
-  }
-
-  // Function to deactivate centered image and restore movement
-  function deactivateCenteredPersonImage() {
-    isFilterActive = false;
-    isSearchActive = false;
-    personImage.classList.remove('centered-person');
+  // Stop movement on touchend (for touch devices)
+  projectList.addEventListener('touchend', () => {
     stopPersonMovement();
-  }
+  });
 
   // Search input event handler
   searchInput.addEventListener('input', (event) => {
     if (event.target.value.length > 0) {
-      activateCenteredPersonImage();
+      isFilterActive = true;
+      isSearchActive = true;
+      personImage.src = standingStart;
+      personImage.classList.add('centered-person');
     } else {
-      deactivateCenteredPersonImage();
+      isFilterActive = false;
+      isSearchActive = false;
+      personImage.classList.remove('centered-person');
+      stopPersonMovement();
     }
   });
+  ////////////////////////////////////////
 
-  // Filter click event listeners
-  document.querySelectorAll('.category-filter li').forEach(filter => {
-    filter.addEventListener('click', () => {
-      const activeFilters = Array.from(document.querySelectorAll('.category-filter li.active'));
-      if (activeFilters.length > 0) {
-        activateCenteredPersonImage();
-      } else {
-        deactivateCenteredPersonImage();
-      }
-    });
-  });
-  /////////////////////////////////////////
 
 
   // 定义跳转函数
