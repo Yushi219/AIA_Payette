@@ -28,7 +28,7 @@
 /* Container for the person image, positioned at the bottom of the project card */
 .person-container {
   position: absolute;
-  bottom: 1vh;  /* Adjusted relative to viewport height for more responsiveness */
+  bottom: 0vh;  /* Adjusted relative to viewport height for more responsiveness */
   left: 0;
   width: 12vw;  /* Scales with the screen width */
   z-index: 10;
@@ -38,7 +38,7 @@
 /* Main person image settings */
 #person-image {
   position: absolute;
-  bottom: 1vh; /* Relative to viewport height */
+  bottom: 0vh; /* Relative to viewport height */
   width: 12vw;  /* Scales based on screen width */
   max-width: 180px; /* Ensures it doesn’t get too large */
   min-width: 120px; /* Sets a minimum size for small screens */
@@ -95,8 +95,8 @@
 
   /* Project card text content */
   .project-card .project-info {
-    height: 30%; /* 文本区域占卡片的30%高度 */
-    padding: 10px;
+    height: 40%; /* 文本区域占卡片的30%高度 */
+    padding: 0px;
     font-family: 'Cabin', sans-serif;
     color: #333129;
     display: flex;
@@ -113,7 +113,7 @@
   }
 
   .project-card .project-info h5 {
-    font-size: 8px;
+    font-size: 10px;
     margin: 3px 0;
     font-weight: normal;
     color: #666666;
