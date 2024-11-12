@@ -37,7 +37,7 @@
   justify-content: space-between; /* 分配文字和图片的空间 */
   border-bottom: 1px solid rgb(160, 160, 160); /* 添加底部灰色线条 */
   padding: 0; /* 移除多余的内边距 */
-  padding-left: 60px; 
+
 }
 
 
@@ -58,9 +58,10 @@
   flex-wrap: nowrap;
   overflow-x: auto;
   position: relative;
-  height: calc(100vh - 10px); /* 调整视口高度 */
+  height: calc(100vh - 60px); /* 调整视口高度 */
   gap: 0; /* 移除卡片之间的间距 */
   align-items: stretch; /* 确保卡片高度一致 */
+  padding-left: 60px; 
 }
 
 /* Project card text content */
