@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const map = document.getElementById('map');
   let scale = 1.2; // 初始缩放比例
   let translateX = 0; // X方向平移
-  let translateY = 4 * window.innerHeight / 100; // Y方向平移
+  let translateY = 0; // Y方向平移
   let isDragging = false; // 是否正在拖拽
   let startX, startY; // 鼠标初始位置
 
@@ -127,6 +127,7 @@ document.addEventListener('DOMContentLoaded', function () {
   ////////////////////////////////////
   const desktopModeBtn = document.getElementById('desktop-mode-btn');
   const mobileLandscapeModeBtn = document.getElementById('mobile-landscape-mode-btn');
+  const payetteL = document.getElementById('payetteL');
 
 
 
@@ -260,6 +261,8 @@ document.addEventListener('DOMContentLoaded', function () {
     buildings.forEach(building => {
       toggleVisibility(event, building);
     });
+    toggleVisibility(event, payetteL);
+    
   });
 
   // 根据鼠标位置切换建筑图片显示状态

@@ -76,7 +76,7 @@ body, html {
     position: absolute;
     top: 0;
     left: 0;
-    transform: translate(0, 4vh) scale(1.2); /* 初始缩放和位移 */
+    transform: translate(0, 0) scale(1.2); /* 初始缩放和位移 */
     transform-origin: center center; /* 初始变换中心为中心点，后续由JS动态调整 */
     transition: transform 0.1s ease; /* 平滑变换，可选 */
 }
@@ -95,6 +95,13 @@ body, html {
     cursor: pointer; /* 鼠标样式 */
 }
   
+
+#PL {
+    
+    left: 55.785%;
+    top: 19.30%;
+    width: 7%;
+}
   
 /* Individual position and size adjustments for each building */
 #building1 {
