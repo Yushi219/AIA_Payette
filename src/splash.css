@@ -61,79 +61,94 @@ body, html {
     right: 0; /* Right side */
 }
 
-/* Section for the BG image */
-#bg-section {
+/* 容器样式 */
+#map-container {
     position: relative;
-    width: 100vw;
-    height: auto;
+    width: 100%; /* 全宽 */
+    height: auto; /* 高度根据内容调整 */
+    overflow: hidden; /* 隐藏溢出内容 */
+    cursor: grab; /* 初始鼠标样式 */
+    background-color: #f0f0f0; /* 背景颜色，可选 */
 }
-
-/* BG image */
-#bg-image {
-    width: 100%;
-    height: auto;
-}
-
-/* Styles for all building images */
-.building {
+  
+  /* 地图样式 */
+#map {
     position: absolute;
-    visibility: hidden;
+    top: 0;
+    left: 0;
+    transform: translate(0, 4vh) scale(1.2); /* 初始缩放和位移 */
+    transform-origin: center center; /* 初始变换中心为中心点，后续由JS动态调整 */
+    transition: transform 0.1s ease; /* 平滑变换，可选 */
 }
-
-
+  
+  /* 地图图片样式 */
+#map img:first-child {
+    width: 100%; /* 图片宽度填充父容器 */
+    height: auto; /* 高度按比例调整 */
+    display: block; /* 避免图片下方出现空白间隙 */
+}
+  
+  /* 如果有建筑标记（如额外图片），统一样式 */
+.building {
+    position: absolute; /* 使用绝对定位 */
+    transform-origin: center center; /* 缩放中心 */
+    cursor: pointer; /* 鼠标样式 */
+}
+  
+  
 /* Individual position and size adjustments for each building */
 #building1 {
-    left: 34.6%;
-    top: 20.9%;
-    width: 22.1%;
+    left: 39.785%;
+    top: 14.30%;
+    width: 9.3%;
 }
 
 #building2 {
-    left: 62.1%;
-    top: 58.3%;
-    width: 24.0%;
+    left: 51.20%;
+    top: 66.45%;
+    width: 9.9%;
 }
 
 #building3 {
-    left: 66.35%;
-    top: 48.7%;
-    width: 33.1%;
+    left: 53.05%;
+    top: 52.98%;
+    width: 13.8%;
 }
 
 #building4 {
-    left: 24.95%;
-    top: 61.45%;
-    width: 30.15%;
+    left: 35.98%;
+    top: 70.9%;
+    width: 12.40%;
 }
 
 #building5 {
-    left: 6.00%;
-    top: 56.6%;
-    width: 20.7%;
+    left: 27.87%;
+    top: 63.9%;
+    width: 8.8%;
 }
 
 #building6 {
-    left: 33.6%;
-    top: 44.65%;
-    width: 20.55%;
+    left: 39.38%;
+    top: 47.08%;
+    width: 8.85%;
 }
 
 #building7 {
-    left: 42.05%;
-    top: 35.10%;
-    width: 25.8%;
+    left: 42.71%;
+    top: 33.80%;
+    width: 11.05%;
 }
 
 #building8 {
-    left: 9.3%;
-    top: 20.75%;
-    width: 18.6%;
+    left: 29.25%;
+    top: 14.1%;
+    width: 7.85%;
 }
 
 #building9 {
-    left: 62.85%;
-    top: 16.15%;
-    width: 35.2%;
+    left: 52.42%;
+    top: 8.85%;
+    width: 14.90%;
 }
 
 
@@ -166,7 +181,6 @@ body, html {
     background-color: #b0aca1; /* 浅灰色背景 */
     color: #333129; /* 文字颜色变深 */
 }
-  
 
 
 /*old buildingmap Individual position and size adjustments for each building
