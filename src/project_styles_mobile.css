@@ -98,7 +98,7 @@
   position: fixed; /* 固定在窗口底部 */
   bottom: 0; /* 与窗口底部对齐 */
   left: 0;
-  width: 12vw; /* 随窗口宽度缩放 */
+  width: 10vw; /* 随窗口宽度缩放 */
   z-index: 10;
   transition: left 0.5s ease, opacity 0.5s ease; /* 平滑移动效果 */
 }
@@ -107,7 +107,7 @@
 #person-image {
   position: absolute;
   bottom: 0; /* 紧贴视窗底部 */
-  width: 12vw; /* 按视窗宽度缩放 */
+  width: 10vw; /* 按视窗宽度缩放 */
   max-width: 180px; /* 限制最大宽度 */
   min-width: 120px; /* 限制最小宽度 */
   z-index: 10;
