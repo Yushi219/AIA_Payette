@@ -266,7 +266,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //////////////////////////////////////////////////
 //Mobile Mode Move Map
   // 移动端地图逻辑
-  const MIN_SCALE = isDesktop ? 1.2 : 2; // 桌面和移动端的最小缩放比例
+  const MIN_SCALE = 2.5; // 桌面和移动端的最小缩放比例
   const MAX_SCALE = 6; // 最大缩放比例
   let initialDistance = 0; // 双指缩放初始距离
   let initialScale = 1; // 双指缩放初始比例
