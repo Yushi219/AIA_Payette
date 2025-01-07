@@ -284,15 +284,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 限制平移范围，确保地图边缘贴合容器
   function limitTranslation() {
-      const rect = map.getBoundingClientRect();
-      const containerRect = mapContainer.getBoundingClientRect();
+    const rect = map.getBoundingClientRect();
+    const containerRect = mapContainer.getBoundingClientRect();
 
-      const maxTranslateX = Math.max(0, (rect.width - containerRect.width) / 2);
-      const maxTranslateY = Math.max(0, (rect.height - containerRect.height) / 2  + 150);
+    // 计算容器的额外高度偏移
+    const extraHeightOffset = 150; // 容器高度增加的偏移量
+    const defaultTranslateY = 315; // 默认的初始 translateY 偏移量
 
-      translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
-      translateY = Math.max(-maxTranslateY+315, Math.min(maxTranslateY, translateY));
+    const maxTranslateX = Math.max(0, (rect.width - containerRect.width) / 2);
+    const maxTranslateY = Math.max(0, (rect.height - containerRect.height) / 2 + extraHeightOffset);
+
+    // 限制平移范围
+    translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
+    translateY = Math.max(-maxTranslateY + defaultTranslateY, Math.min(maxTranslateY, translateY));
   }
+
 
 
   // 触摸开始事件

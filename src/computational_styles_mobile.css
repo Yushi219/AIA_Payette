@@ -29,7 +29,7 @@ h1 {
   overflow: hidden;
   background-color: #fffcf5;
   text-align: left;
-  top: 10%; /* 距离顶部20% */
+  top: 5%; /* 距离顶部20% */
   height: 80%; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
