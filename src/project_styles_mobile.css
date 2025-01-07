@@ -492,7 +492,7 @@
 
 /* 左侧内容区域 */
 #filter-container {
-  background: rgba(255, 252, 245, 0.85); /* 背景颜色 */
+  background: rgba(255, 252, 245, 0.9); /* 背景颜色 */
   width: 85%; /* 占屏幕80%宽度 */
   height: 100%; /* 占满屏幕高度 */
   padding: 20px;
@@ -570,7 +570,7 @@
 
 /* 搜索框的样式调整 */
 .filter-container input#search-input {
-  margin-top: 30px; /* 往下移动搜索框 */
+  margin-top: 0px; /* 往下移动搜索框 */
   padding: 10px;
   width: calc(100% - 20px); /* 宽度适应父容器 */
   border: 1px solid #ccc;

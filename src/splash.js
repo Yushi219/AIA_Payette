@@ -231,6 +231,57 @@ document.addEventListener('DOMContentLoaded', function () {
     map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
   });
 
+  // 监听触摸事件
+  mapContainer.addEventListener('touchstart', (event) => {
+    if (event.touches.length === 1) { // 单指触摸拖拽
+      isDragging = true;
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
+      mapContainer.style.cursor = 'grabbing';
+    } else if (event.touches.length === 2) { // 双指触摸缩放
+      isDragging = false; // 停止拖拽模式
+      initialDistance = getDistance(event.touches);
+      initialScale = scale;
+    }
+  });
+
+  mapContainer.addEventListener('touchmove', (event) => {
+    if (isDragging && event.touches.length === 1) { // 单指拖拽
+      const dx = event.touches[0].clientX - startX;
+      const dy = event.touches[0].clientY - startY;
+
+      translateX += dx / scale;
+      translateY += dy / scale;
+
+      limitTranslation();
+
+      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
+    } else if (event.touches.length === 2) { // 双指缩放
+      const currentDistance = getDistance(event.touches);
+      const scaleChange = currentDistance / initialDistance;
+
+      scale = Math.min(Math.max(initialScale * scaleChange, 1.2), 5); // 限制缩放比例
+
+      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
+  });
+
+  mapContainer.addEventListener('touchend', (event) => {
+    if (event.touches.length === 0) {
+      isDragging = false;
+      mapContainer.style.cursor = 'grab';
+    }
+  });
+
+  // 计算两点之间的距离（用于双指缩放）
+  function getDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
 
   ////////////////////////////////////
 
