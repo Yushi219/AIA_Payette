@@ -30,7 +30,7 @@ h1 {
   background-color: #fffcf5;
   text-align: left;
   top: 10%; /* 距离顶部20% */
-  height: 70%; /* 设置卡片高度占满父容器 */
+  height: 80%; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
   flex-direction: column; /* 垂直布局 */
@@ -60,7 +60,7 @@ h1 {
   height: calc(100vh - 20px); /* 调整视口高度 */
   gap: 0; /* 移除卡片之间的间距 */
   align-items: stretch; /* 确保卡片高度一致 */
-  padding-left: 60px; 
+  padding-left: 40px; 
 }
 
 /* Project card text content */

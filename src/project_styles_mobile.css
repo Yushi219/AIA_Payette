@@ -61,7 +61,7 @@
   height: calc(100vh - 20px); /* 调整视口高度 */
   gap: 0; /* 移除卡片之间的间距 */
   align-items: stretch; /* 确保卡片高度一致 */
-  padding-left: 60px; 
+  padding-left: 40px; 
 }
 
 /* Project card text content */
