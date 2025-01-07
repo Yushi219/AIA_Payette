@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() { 
 
-  const filterOverlay = document.getElementById("filter-overlay");
+  const filterOverlay = document.getElementById('filter-overlay');
+  const filterCloseArea = document.getElementById('filter-close-area');
+  const menuToggleButton = document.getElementById('menu-toggle');
   const typeList = document.getElementById("type-list");
   const leedList = document.getElementById("leed-list");
   const statusList = document.getElementById("status-list");
@@ -41,6 +43,16 @@ document.addEventListener('DOMContentLoaded', function() {
     if (e.target === filterOverlay) {
       filterOverlay.classList.add("hidden");
     }
+  });
+
+  // 打开过滤器窗口
+  menuToggleButton.addEventListener('click', () => {
+    filterOverlay.style.transform = 'translateX(0)'; // 滑动显示
+  });
+
+  // 点击右侧灰色区域关闭过滤器窗口
+  filterCloseArea.addEventListener('click', () => {
+    filterOverlay.style.transform = 'translateX(-100%)'; // 滑动隐藏
   });
 
   // 生成过滤项（示例数据）
@@ -532,7 +544,7 @@ document.addEventListener('DOMContentLoaded', function() {
     toolTab.textContent = '工具开发';
     toolTab.classList.add(isTool ? 'active' : 'inactive');
     toolTab.onclick = () => {
-        window.location.href = `computational_index.html?id=${relatedID}&related=${currentID}`;
+        window.location.href = `computational_index_mobile.html?id=${relatedID}&related=${currentID}`;
     };
 
     navBar.appendChild(projectTab);
@@ -598,7 +610,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // 创建导航栏
     const navBarHTML = `
       <div class="fixed-header">
-        <div class="back-button" onclick="window.location.href='project_index_mobile.html'">< Dashboard</div>
+        <div class="detailBack-button" onclick="window.location.href='project_index_mobile.html'"><</div>
         
         <div class="center-nav-bar">
             <span class="custom-nav-item ${isTool ? 'active' : 'inactive'}" 
@@ -607,13 +619,13 @@ document.addEventListener('DOMContentLoaded', function() {
             </span>
             ${relatedID ? `
             <span class="custom-nav-item ${!isTool ? 'active' : 'inactive'}" 
-                  onclick="window.location.href='computational_index.html?id=${relatedID}&related=${currentID}'">
+                  onclick="window.location.href='computational_index_mobile.html?id=${relatedID}&related=${currentID}'">
                 Computational Tool
             </span>
             ` : ''}
         </div>
         
-        <button class="close-button" onclick="redirectToSplash()">✖</button>
+        <button class="detailClose-button" onclick="redirectToSplash()">✖</button>
       </div>
     `;
 
@@ -649,56 +661,29 @@ document.addEventListener('DOMContentLoaded', function() {
   }
 
   async function animateToDetails(project, card) {
-    const mainContainer = document.getElementById('main-container');
     const detailsContainer = document.getElementById('details-container');
+    const mainContainer = document.getElementById('main-container');
     const header = document.querySelector('header');
-    const thumbnailImg = card.querySelector('img');
-    const rect = thumbnailImg.getBoundingClientRect();
-
+  
+    // 隐藏主页面
     header.style.display = 'none';
     mainContainer.style.display = 'none';
-
-    const mainImageSrc = await getImagePath(project.imageFolderPath); // 确保路径存在
-    const expandedImage = document.createElement('img');
-    expandedImage.src = mainImageSrc;
-    expandedImage.className = 'transition-image';
-    expandedImage.style.position = 'fixed';
-    expandedImage.style.top = `${rect.top}px`;
-    expandedImage.style.left = `${rect.left}px`;
-    expandedImage.style.width = `${rect.width}px`;
-    expandedImage.style.height = `${rect.height}px`;
-    expandedImage.style.objectFit = 'cover';
-    expandedImage.style.zIndex = '10000';
-    expandedImage.style.transition = 'all 0.8s ease';
-
-    document.body.appendChild(expandedImage);
-
-    // 延迟执行扩展动画
-    setTimeout(() => {
-        expandedImage.style.top = '0';
-        expandedImage.style.left = '0';
-        expandedImage.style.width = '100vw';
-        expandedImage.style.height = '100vh';
-    }, 50); // 微小延迟
-
-    // transitionend 事件监听器，确保动画结束后执行后续操作
-    expandedImage.addEventListener('transitionend', async () => {
-        const currentID = project.number; 
-        const relatedID = project.relatedID;  // 从项目数据中获取相关 ID
-
-        // 根据是否存在 relatedID 构造 URL
-        const baseURL = window.location.pathname.includes('project_index_mobile.html') ? 'project_index_mobile.html' : 'computational_index.html';
-        const url = relatedID ? `${baseURL}?id=${currentID}&related=${relatedID}` : `${baseURL}?id=${currentID}`;
-
-        // 显示详情页并更新 URL
-        await displayProjectDetails(project);
-        history.pushState({ projectId: project.number }, `Project ${project.number}`, url);
-        detailsContainer.style.display = 'block';
-        detailsContainer.scrollTo(0, 0);
-        expandedImage.remove(); // 移除 expandedImage 元素
-    });
+  
+    // 直接显示详情页
+    const currentID = project.number; 
+    const relatedID = project.relatedID;  // 从项目数据中获取相关 ID
+  
+    // 检查是否有 relatedID 并生成 URL
+    const baseURL = window.location.pathname.includes('computational_index_mobile.html') ? 'computational_index_mobile.html' : 'project_index_mobile.html';
+    const url = relatedID ? `${baseURL}?id=${currentID}&related=${relatedID}` : `${baseURL}?id=${currentID}`;
+  
+    // 显示详情页并更新 URL
+    await displayProjectDetails(project, true); // 跳过动画
+    history.pushState({ projectId: project.number }, `Project ${project.number}`, url);
+    detailsContainer.style.display = 'block';
+    detailsContainer.scrollTo(0, 0);
   }
-
+  
   
   async function main() {
     

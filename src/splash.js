@@ -10,93 +10,108 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 调整地图容器和显示范围
   function adjustContainerHeight(mode) {
-      if (mapImage && mapImage.naturalWidth > 0 && mapImage.naturalHeight > 0) {
-          const imageWidth = mapImage.naturalWidth; // 图片实际宽度
-          const imageHeight = mapImage.naturalHeight; // 图片实际高度
+    if (mapImage && mapImage.naturalWidth > 0 && mapImage.naturalHeight > 0) {
+      const imageWidth = mapImage.naturalWidth; // 图片实际宽度
+      const imageHeight = mapImage.naturalHeight; // 图片实际高度
 
-          if (mode === 'mobile') {
-              // 设置显示范围比例
-              const startRatio = 1 / 4; // 开始比例
-              const endRatio = 3 / 4; // 结束比例
-              const visibleRatio = endRatio - startRatio; // 可见范围比例
+      if (mode === 'mobile') {
+        const containerWidth = window.innerWidth; // 容器宽度为屏幕宽度
+        const scale1 = containerWidth / (imageWidth * 0.5); // 缩放比例
+        scale = 3;
 
-              const containerWidth = window.innerWidth; // 容器宽度为屏幕宽度
-              scale1 = containerWidth / (visibleRatio * imageWidth); // 计算缩放比例
-              scale = 3;
+        // 设置容器高度为缩放后的图片高度
+        const scaledHeight = imageHeight * scale1 + 150;
+        mapContainer.style.width = `${containerWidth}px`;
+        mapContainer.style.height = `${scaledHeight}px`;
 
-              // 设置容器高度为缩放后的图片高度
-              const scaledHeight = imageHeight * scale1 + 150; // 缩放后的地图高度
-              mapContainer.style.width = `${containerWidth}px`;
-              mapContainer.style.height = `${scaledHeight}px`;
-
-              // 调整地图平移以居中显示目标范围
-              translateX = 0; // 水平方向平移到目标起点
-              translateY = 150; // 垂直方向保持不变
-              map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-          } else {
-              // Desktop mode: 恢复默认布局
-              const aspectRatio = imageHeight / imageWidth;
-              mapContainer.style.height = `${mapContainer.offsetWidth * aspectRatio}px`;
-              mapContainer.style.width = ''; // 宽度默认
-              scale = 1.2;
-              translateX = 0;
-              translateY = 0;
-              map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-          }
+        translateX = 0;
+        translateY = 150;
+        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      } else {
+        const aspectRatio = imageHeight / imageWidth;
+        mapContainer.style.height = `${mapContainer.offsetWidth * aspectRatio}px`;
+        scale = 1.2;
+        translateX = 0;
+        translateY = 0;
+        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
       }
+    }
   }
 
   // 更新模式样式
   function updateModeUI(mode) {
-      if (mode === 'mobile') {
-          document.body.classList.add('mobile-mode');
-          document.body.classList.remove('desktop-mode');
-          mobileLandscapeModeBtn.style.backgroundColor = 'gray';
-          desktopModeBtn.style.backgroundColor = '';
-      } else {
-          document.body.classList.add('desktop-mode');
-          document.body.classList.remove('mobile-mode');
-          desktopModeBtn.style.backgroundColor = 'gray';
-          mobileLandscapeModeBtn.style.backgroundColor = '';
-      }
+    if (mode === 'mobile') {
+      document.body.classList.add('mobile-mode');
+      document.body.classList.remove('desktop-mode');
+      mobileLandscapeModeBtn.style.backgroundColor = 'gray';
+      desktopModeBtn.style.backgroundColor = '';
+    } else {
+      document.body.classList.add('desktop-mode');
+      document.body.classList.remove('mobile-mode');
+      desktopModeBtn.style.backgroundColor = 'gray';
+      mobileLandscapeModeBtn.style.backgroundColor = '';
+    }
 
-      // 调整地图容器高度
-      adjustContainerHeight(mode);
+    adjustContainerHeight(mode);
   }
 
-  // 设置默认模式
+  // 自动检测屏幕宽度并设置默认模式
   function setDefaultMode() {
-      const mode = window.innerWidth < 900 ? 'mobile' : 'desktop';
-      localStorage.setItem('viewMode', mode);
-      updateModeUI(mode);
+    const currentMode = localStorage.getItem('viewMode');
+    const detectedMode = window.innerWidth < 1000 ? 'mobile' : 'desktop';
+    
+    // 如果检测到的模式和当前模式不同，则更新并提示
+    if (currentMode !== detectedMode) {
+        localStorage.setItem('viewMode', detectedMode);
+        updateModeUI(detectedMode);
+        alert(`Switched to ${detectedMode === 'mobile' ? 'Mobile' : 'Desktop'} Mode`);
+    } else {
+        // 如果模式未变更，仅更新 UI
+        updateModeUI(detectedMode);
+    }
   }
 
-  // 绑定按钮点击事件
+
+  // 检查图片加载完成
+  function ensureImageLoaded() {
+    if (mapImage.complete && mapImage.naturalWidth > 0) {
+      const mode = localStorage.getItem('viewMode') || (window.innerWidth < 1000 ? 'mobile' : 'desktop');
+      adjustContainerHeight(mode);
+    } else {
+      mapImage.onload = function () {
+        const mode = localStorage.getItem('viewMode') || (window.innerWidth < 1000 ? 'mobile' : 'desktop');
+        adjustContainerHeight(mode);
+      };
+    }
+  }
+
+  // 切换模式按钮事件
   desktopModeBtn.addEventListener('click', () => {
-      localStorage.setItem('viewMode', 'desktop');
-      updateModeUI('desktop');
-      alert('Switched to Desktop Mode');
+    localStorage.setItem('viewMode', 'desktop');
+    updateModeUI('desktop');
+    alert('Switched to Desktop Mode');
   });
 
   mobileLandscapeModeBtn.addEventListener('click', () => {
-      localStorage.setItem('viewMode', 'mobile');
-      updateModeUI('mobile');
-      alert('Switched to Mobile Mode');
+    localStorage.setItem('viewMode', 'mobile');
+    updateModeUI('mobile');
+    alert('Switched to Mobile Mode');
   });
 
-  // 图片加载完成后设置高度
-  if (mapImage) {
-      mapImage.onload = function () {
-          const mode = localStorage.getItem('viewMode') || (window.innerWidth < 900 ? 'mobile' : 'desktop');
-          adjustContainerHeight(mode);
-      };
-  }
+  // 页面加载时强制调整高度
+  window.onload = function () {
+    ensureImageLoaded();
+  };
 
   // 监听窗口大小变化，动态调整模式和容器高度
   window.addEventListener('resize', function () {
-      const mode = window.innerWidth < 900 ? 'mobile' : 'desktop';
+    const mode = window.innerWidth < 1000 ? 'mobile' : 'desktop';
+    if (localStorage.getItem('viewMode') !== mode) {
       localStorage.setItem('viewMode', mode);
       updateModeUI(mode);
+    } else {
+      adjustContainerHeight(mode);
+    }
   });
 
   // 页面加载时设置默认模式

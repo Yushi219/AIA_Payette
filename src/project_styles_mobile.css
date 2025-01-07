@@ -6,7 +6,6 @@
     color: #333129;
     margin: 0;
     padding: 0;
-    overflow: hidden; /* 防止页面滚动条 */
   }
   
   h1, h2, h3, h4, h5, h6, p, ul, li, div, a {
@@ -26,11 +25,12 @@
 
 
 .project-card {
-  flex: 0 0 calc(100% / 3); /* 每行显示4张卡片 */
+  flex: 0 0 calc(100% / 1.5); /* 每行显示4张卡片 */
   overflow: hidden;
   background-color: #fffcf5;
   text-align: left;
-  height: 80%; /* 设置卡片高度占满父容器 */
+  top: 10%; /* 距离顶部20% */
+  height: 70%; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
   flex-direction: column; /* 垂直布局 */
@@ -141,12 +141,13 @@
   }
   
   .details-header {
-    height: 100vh;
+    height: 400px; /* 封面图固定高度 */
     background-size: cover;
     background-position: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 20px;
   }
   
   .details-header h2{
@@ -157,25 +158,28 @@
   
   .details-content {
     display: flex;
+    flex-direction: column; /* 垂直排列 */
     padding: 20px;
-    flex: 1;
+    gap: 0px; /* 内容之间的间距 */
+    font-family: 'Cabin', sans-serif;
+    color: #333129;
+    overflow: auto; /* 启用滚动 */
   }
   
+  
   .details-sidebar {
-    flex: 0 0 20%;
-    background-color: #e0e0e0; /* 浅灰色背景 */
+    background-color: #e0e0e0; /* 灰色背景 */
     padding: 20px;
-    margin-right: 20px;
-    position: sticky;
-    top: 0;
-    height: 100vh;
+    margin-bottom: 20px; /* 与下方内容的间距 */
     display: flex;
     flex-direction: column;
-    justify-content: center; /* 垂直居中 */
+    justify-content: flex-start; /* 从顶部开始对齐内容 */
     overflow-wrap: break-word; /* 确保文本在必要时可以断行 */
-    word-wrap: break-word; /* 较旧的浏览器可能需要这个 */
-    overflow: hidden; /* 防止内容溢出 */
+    word-wrap: break-word; /* 兼容较旧的浏览器 */
+
+    position: relative; /* 取消固定，允许滚动 */
   }
+  
   
   /* 定义在详情侧边栏内所有超链接的基本样式 */
   .details-sidebar a {
@@ -202,13 +206,13 @@
     flex-direction: column;
     gap: 20px;
     overflow-y: auto;
-    padding: 10px;
+    padding: 0px;
   }
   
   .details-gallery img,
   .details-gallery video {
     width: 100%;
-    max-width: 80%;
+    max-width: 100%;
     margin: 0 auto;
   }
   
@@ -253,13 +257,54 @@
     border: none;
   }
   
+  /* Close button positioning */
+  .detailClose-button {
+    color: #666666; /* 默认文本颜色 */
+    background: transparent; /* 透明背景 */
+    width: 30px;
+    height: 30px;
+    border-radius: 5px; /* 轻微倒角 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    border: 2px solid transparent; /* 初始无边框 */
+    right: 0px; /* Close 按钮靠右 */
+  }
 
+  /* Back button positioning */
+  .detailBack-button {
+    color: #666666; /* 默认文本颜色 */
+    background: transparent; /* 透明背景 */
+    width: 30px;
+    height: 30px;
+    border-radius: 5px; /* 轻微倒角 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 28px;
+    font-weight: bold;
+    border: 2px solid transparent; /* 初始无边框 */
+    left: 0px; /* Back 按钮靠左 */
+
+  }
+
+  /* Hover effect for both buttons */
+  .detailClose-button:hover, .detailBack-button:hover {
+    color: white; /* 悬停时的文本颜色 */
+    background-color: #666666; /* 悬停时的背景颜色 */
+    border-radius: 5px; /* 保持圆角 */
+  }
 
 
   /* Close button style */
   .close-button, .back-button {
     position: fixed; /* 固定位置 */
-    top: 7px; /* 调整顶部间距 */
+    bottom: 10px; /* 调整底部间距 */
+    left: 0px; /* 调整左侧间距 */
     color: #666666; /* 默认文本颜色 */
     background: transparent; /* 透明背景 */
     width: 40px;
@@ -275,6 +320,7 @@
     transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
     border: 2px solid transparent; /* 初始无边框 */
   }
+
 
   /* Close button positioning */
   .close-button {
@@ -356,7 +402,7 @@
     position: fixed;
     top: 0;
     left: 0;
-    width: 60px; /* 确保足够宽度 */
+    width: 40px; /* 确保足够宽度 */
     height: 100%;
     background-color: #fffcf5;
     display: flex;
@@ -382,8 +428,8 @@
     display: flex;
     flex-direction: column; /* 垂直布局 */
     align-items: center;
-    gap: 60px; /* 增加按钮间的间距 */
-    margin-top: 10px; /* 添加顶部间距 */
+    gap: 150px; /* 增加按钮间的间距 */
+    margin-top: 20px; /* 添加顶部间距 */
   }
   
   /* 通用按钮样式 */
@@ -393,12 +439,12 @@
     border: 0px solid transparent; /* 去掉默认边框 */
     border-radius: 10px; /* 圆角边框 */
     font-family: 'Cabin', sans-serif; /* 统一字体 */
-    font-size: 14px; /* 默认字体大小 */
+    font-size: 16px; /* 默认字体大小 */
     padding: 10px 15px; /* 内边距 */
     cursor: pointer;
     text-align: center;
     transition: color 0.3s ease, background-color 0.3s ease, border-bottom 0.3s ease;
-    width: auto; /* 根据内容自适应宽度 */
+    width: 180px; /* 固定宽度，确保文字显示为一行 */
     color: #b0aca1; /* 默认字体颜色（inactive 状态） */
     border-bottom: 2px solid transparent; /* 默认边框（inactive 状态） */
   }
@@ -431,20 +477,47 @@
   }
 
 
-/* 过滤器和搜索框覆盖层 */
-.filter-overlay {
+/* 过滤器覆盖层 */
+#filter-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* 右边背景透明率50% */
-  z-index: 1001;
   display: flex;
-  justify-content: flex-start; /* 靠左对齐 */
-  align-items: center;
-  pointer-events: none; /* 阻止覆盖左侧分页栏 */
+  transform: translateX(-100%); /* 隐藏在左侧 */
+  transition: transform 0.5s ease; /* 添加滑动动画 */
+  z-index: 1001;
 }
+
+/* 左侧内容区域 */
+#filter-container {
+  background: rgba(255, 252, 245, 0.85); /* 背景颜色 */
+  width: 85%; /* 占屏幕80%宽度 */
+  height: 100%; /* 占满屏幕高度 */
+  padding: 20px;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2); /* 添加阴影 */
+  overflow-y: auto; /* 支持滚动 */
+}
+
+/* 右侧灰色点击区域 */
+#filter-close-area {
+  width: 15%; /* 占屏幕20%宽度 */
+  height: 100%; /* 占满屏幕高度 */
+  background-color: rgba(0, 0, 0, 0.5); /* 灰色背景透明度 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+/* 关闭按钮样式 */
+#filter-close-area .close-icon {
+  font-size: 24px;
+  color: #ffffff; /* 白色关闭图标 */
+  font-weight: bold;
+}
+
 
 .filter-overlay.hidden {
   display: none;
@@ -458,7 +531,7 @@
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  margin-left: 60px; /* 靠左距离边缘留空 */
+  margin-left: 40px; /* 靠左距离边缘留空 */
   z-index: 1002; /* 确保过滤窗口在分页栏之上 */
   pointer-events: auto; /* 确保过滤窗口可交互 */
   overflow-y: auto; /* 添加垂直滚动 */
