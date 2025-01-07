@@ -69,6 +69,7 @@ body, html {
     overflow: hidden; /* 隐藏溢出内容 */
     cursor: grab; /* 初始鼠标样式 */
     background-color: #f0f0f0; /* 背景颜色，可选 */
+    touch-action: none; /* 禁用默认触摸行为 */
 }
   
   /* 地图样式 */
@@ -159,37 +160,71 @@ body, html {
 }
 
 
-
-/* //////////////////////////// */
-/* 按钮容器 */
+/* 容器样式 */
 #mode-selection {
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 20px; /* 与地图的间距 */
-    padding: 20px 0;
+    margin: 20px 0;
   }
   
-  /* 按钮样式 */
-  #mode-selection button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #333129;
-    color: #ffffff;
-    border: none;
-    border-radius: 5px;
-    margin: 0 10px; /* 按钮之间的间距 */
+  .toggle-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 160px;
+    height: 30px;
+    border-radius: 25px;
+    background: linear-gradient(to right, #b4b4b4, #ffffff); /* 初始背景渐变 */
+
     cursor: pointer;
-    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
+    padding: 5px;
   }
   
-  /* 悬停效果 */
-  #mode-selection button:hover {
-    background-color: #b0aca1; /* 浅灰色背景 */
-    color: #333129; /* 文字颜色变深 */
-}
+  /* 圆圈样式 */
+  #toggle-circle {
+    position: absolute;
+    top: 2.5px;
+    left: 130px; /* 初始圆圈位置（右侧） */
+    width: 35px;
+    height: 35px;
+    background-color: #b4b4b4;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  }
+  
+  #toggle-icon {
+    width: 24px;
+    height: 24px;
+  }
+  
+    /* 文本样式 */
+    .toggle-label {
+        font-family: 'Cabin', sans-serif;
+        font-size: 16px;
+        font-weight: bold;
+        transition: color 0.3s ease, opacity 0.3s ease;
+    }
 
+    #desktop-label {
+        color: #ffffff; /* 默认字体为白色 */
+        margin-left: 15px;
+        opacity: 1; /* 默认不透明 */
+    }
 
+    #mobile-label {
+        color: #ffffff; /* 默认字体为白色 */
+        margin-right: 15px;
+        opacity: 0; /* 默认透明 */
+    }
+
+  
+  
 /*old buildingmap Individual position and size adjustments for each building
 #building1 {
     left: 31.38%;

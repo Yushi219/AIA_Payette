@@ -1,118 +1,159 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const desktopModeBtn = document.getElementById('desktop-mode-btn');
-  const mobileLandscapeModeBtn = document.getElementById('mobile-landscape-mode-btn');
+  const toggleCircle = document.getElementById('toggle-circle');
+  const toggleIcon = document.getElementById('toggle-icon');
+  const desktopLabel = document.getElementById('desktop-label');
+  const mobileLabel = document.getElementById('mobile-label');
+  const modeSelection = document.querySelector('.toggle-container');
   const mapContainer = document.getElementById('map-container');
   const map = document.getElementById('map');
   const mapImage = document.querySelector('#map img:first-child');
+
   let scale = 1; // 初始缩放比例
   let translateX = 0; // X方向平移
   let translateY = 0; // Y方向平移
+  let isDesktop = true; // 默认模式为桌面
+
+  function initMode() {
+    // 根据屏幕宽度或保存的模式动态设置 isDesktop
+    const savedMode = localStorage.getItem('viewMode');
+    if (savedMode) {
+      isDesktop = savedMode === 'desktop';
+    } else {
+      isDesktop = window.innerWidth >= 1000; // 自动判断：大于等于 1000 为桌面模式
+    }
+  
+    updateToggleUI(); // 更新 UI
+    adjustContainerHeight(); // 调整地图容器高度
+  }
+
+  function toggleMode() {
+    isDesktop = !isDesktop; // 切换模式
+    updateToggleUI(); // 更新 UI
+    adjustContainerHeight(); // 调整地图容器高度
+  
+    const mode = isDesktop ? 'desktop' : 'mobile';
+    alert(`Switched to ${mode.charAt(0).toUpperCase() + mode.slice(1)} Mode`);
+  }
+  
+  // 页面加载时初始化
+  window.onload = function () {
+    ensureImageLoaded();
+    setDefaultMode();
+  };
+    
+  initMode();
 
   // 调整地图容器和显示范围
-  function adjustContainerHeight(mode) {
-    if (mapImage && mapImage.naturalWidth > 0 && mapImage.naturalHeight > 0) {
-      const imageWidth = mapImage.naturalWidth; // 图片实际宽度
-      const imageHeight = mapImage.naturalHeight; // 图片实际高度
-
-      if (mode === 'mobile') {
-        const containerWidth = window.innerWidth; // 容器宽度为屏幕宽度
-        const scale1 = containerWidth / (imageWidth * 0.5); // 缩放比例
-        scale = 3;
-
-        // 设置容器高度为缩放后的图片高度
-        const scaledHeight = imageHeight * scale1 + 150;
-        mapContainer.style.width = `${containerWidth}px`;
-        mapContainer.style.height = `${scaledHeight}px`;
-
-        translateX = 0;
-        translateY = 150;
-        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-      } else {
-        const aspectRatio = imageHeight / imageWidth;
-        mapContainer.style.height = `${mapContainer.offsetWidth * aspectRatio}px`;
-        scale = 1.2;
-        translateX = 0;
-        translateY = 0;
-        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-      }
+  function adjustContainerHeight() {
+    // 如果图片未完全加载，则等待加载完成
+    if (!mapImage.complete || mapImage.naturalWidth === 0 || mapImage.naturalHeight === 0) {
+      mapImage.onload = function () {
+        adjustContainerHeight(); // 图片加载完成后重新调整
+      };
+      return;
     }
-  }
-
-  // 更新模式样式
-  function updateModeUI(mode) {
-    if (mode === 'mobile') {
-      document.body.classList.add('mobile-mode');
-      document.body.classList.remove('desktop-mode');
-      mobileLandscapeModeBtn.style.backgroundColor = 'gray';
-      desktopModeBtn.style.backgroundColor = '';
+  
+    const imageWidth = mapImage.naturalWidth;
+    const imageHeight = mapImage.naturalHeight;
+  
+    if (isDesktop) {
+      // 桌面模式
+      const aspectRatio = imageHeight / imageWidth;
+      mapContainer.style.height = `${mapContainer.offsetWidth * aspectRatio}px`;
+      scale = 1.2;
+      translateX = 0;
+      translateY = 0;
+      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     } else {
-      document.body.classList.add('desktop-mode');
-      document.body.classList.remove('mobile-mode');
-      desktopModeBtn.style.backgroundColor = 'gray';
-      mobileLandscapeModeBtn.style.backgroundColor = '';
+      // 移动模式
+      const containerWidth = window.innerWidth;
+      const scale1 = containerWidth / (imageWidth * 0.5);
+      scale = 3;
+  
+      const scaledHeight = imageHeight * scale1 + 150;
+      mapContainer.style.width = `${containerWidth}px`;
+      mapContainer.style.height = `${scaledHeight}px`;
+  
+      translateX = 0;
+      translateY = 150;
+      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
 
-    adjustContainerHeight(mode);
   }
+  
 
-  // 自动检测屏幕宽度并设置默认模式
-  function setDefaultMode() {
-    const currentMode = localStorage.getItem('viewMode');
-    const detectedMode = window.innerWidth < 1000 ? 'mobile' : 'desktop';
-    
-    // 如果检测到的模式和当前模式不同，则更新并提示
-    if (currentMode !== detectedMode) {
-        localStorage.setItem('viewMode', detectedMode);
-        updateModeUI(detectedMode);
-        alert(`Switched to ${detectedMode === 'mobile' ? 'Mobile' : 'Desktop'} Mode`);
+
+  function updateToggleUI() {
+    if (isDesktop) {
+      toggleCircle.style.left = '130px'; // 圆圈移动到右侧
+      modeSelection.style.background = 'linear-gradient(to right, #b4b4b4, #ffffff)'; // 深到浅背景
+      toggleIcon.src = 'public/desktop.png'; // 图标更新为 Desktop
+      desktopLabel.style.color = '#ffffff'; // Desktop 文本变白
+      desktopLabel.style.opacity = '1'; // Desktop 文本可见
+      mobileLabel.style.color = '#ffffff'; // Mobile 文本为白色
+      mobileLabel.style.opacity = '0'; // Mobile 文本隐藏
     } else {
-        // 如果模式未变更，仅更新 UI
-        updateModeUI(detectedMode);
+      toggleCircle.style.left = '5px'; // 圆圈移动到左侧
+      modeSelection.style.background = 'linear-gradient(to left, #b4b4b4, #ffffff)'; // 浅到深背景
+      toggleIcon.src = 'public/mobile.png'; // 图标更新为 Mobile
+      desktopLabel.style.color = '#ffffff'; // Desktop 文本为白色
+      desktopLabel.style.opacity = '0'; // Desktop 文本隐藏
+      mobileLabel.style.color = '#ffffff'; // Mobile 文本变白
+      mobileLabel.style.opacity = '1'; // Mobile 文本可见
     }
+  
+    // 调整地图容器大小
+    adjustContainerHeight();
+  
+    localStorage.setItem('viewMode', isDesktop ? 'desktop' : 'mobile'); // 保存模式
   }
+  
+
+
+  // 点击切换事件
+  modeSelection.addEventListener('click', toggleMode);
+
+
+////////////////////////////////
 
 
   // 检查图片加载完成
   function ensureImageLoaded() {
     if (mapImage.complete && mapImage.naturalWidth > 0) {
-      const mode = localStorage.getItem('viewMode') || (window.innerWidth < 1000 ? 'mobile' : 'desktop');
-      adjustContainerHeight(mode);
+      adjustContainerHeight();
     } else {
       mapImage.onload = function () {
-        const mode = localStorage.getItem('viewMode') || (window.innerWidth < 1000 ? 'mobile' : 'desktop');
-        adjustContainerHeight(mode);
+        adjustContainerHeight();
       };
     }
   }
+  
 
-  // 切换模式按钮事件
-  desktopModeBtn.addEventListener('click', () => {
-    localStorage.setItem('viewMode', 'desktop');
-    updateModeUI('desktop');
-    alert('Switched to Desktop Mode');
+
+  // 监听窗口大小变化，动态调整模式
+  window.addEventListener('resize', function () {
+    adjustContainerHeight(isDesktop ? 'desktop' : 'mobile');
   });
 
-  mobileLandscapeModeBtn.addEventListener('click', () => {
-    localStorage.setItem('viewMode', 'mobile');
-    updateModeUI('mobile');
-    alert('Switched to Mobile Mode');
-  });
 
-  // 页面加载时强制调整高度
-  window.onload = function () {
-    ensureImageLoaded();
-  };
+  // 自动检测屏幕宽度并设置默认模式
+  function setDefaultMode() {
+    const detectedMode = window.innerWidth < 1000 ? 'mobile' : 'desktop';
+    isDesktop = detectedMode === 'desktop'; // 更新全局变量
+    updateToggleUI(); // 更新按钮和页面样式
+    adjustContainerHeight(); // 自动检测模式后调整地图容器大小
+  }
+  
+
+
+
+
 
   // 监听窗口大小变化，动态调整模式和容器高度
   window.addEventListener('resize', function () {
-    const mode = window.innerWidth < 1000 ? 'mobile' : 'desktop';
-    if (localStorage.getItem('viewMode') !== mode) {
-      localStorage.setItem('viewMode', mode);
-      updateModeUI(mode);
-    } else {
-      adjustContainerHeight(mode);
-    }
+    adjustContainerHeight();
   });
+
 
   // 页面加载时设置默认模式
   setDefaultMode();
@@ -133,14 +174,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 监听窗口大小变化，动态调整容器高度
   window.addEventListener('resize', adjustContainerHeight);
 
-  window.addEventListener('pageshow', function () {
-    const mapContainer = document.getElementById('map-container');
-    const mapImage = document.querySelector('#map img:first-child');
-    
-    // 重新调整容器高度
-    const aspectRatio = mapImage.naturalHeight / mapImage.naturalWidth;
-    mapContainer.style.height = `${mapContainer.offsetWidth * aspectRatio}px`;
-  });  
+
 
 
 
@@ -231,22 +265,57 @@ document.addEventListener('DOMContentLoaded', function () {
     map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
   });
 
-  // 监听触摸事件
+//////////////////////////////////////////////////
+  // 保留原来的 isDragging 变量，不重复声明
+  startX = 0; // 初始化单指拖拽的 X 坐标
+  startY = 0; // 初始化单指拖拽的 Y 坐标
+  let initialDistance = 0; // 双指缩放的初始距离
+  let initialScale = 1; // 双指缩放的初始比例
+
+
+  // 禁用默认触摸行为
+  mapContainer.style.touchAction = 'none';
+
+  // 计算双指之间的距离
+  function getDistance(touches) {
+    const dx = touches[0].clientX - touches[1].clientX;
+    const dy = touches[0].clientY - touches[1].clientY;
+    return Math.sqrt(dx * dx + dy * dy);
+  }
+
+  // 限制平移范围
+  function limitTranslation() {
+    const rect = map.getBoundingClientRect();
+    const containerRect = mapContainer.getBoundingClientRect();
+
+    const maxTranslateX = Math.max(0, (rect.width - containerRect.width) / 2);
+    const maxTranslateY = Math.max(0, (rect.height - containerRect.height) / 2);
+
+    translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
+    translateY = Math.max(-maxTranslateY, Math.min(maxTranslateY, translateY));
+  }
+
+  // 触摸开始事件
   mapContainer.addEventListener('touchstart', (event) => {
-    if (event.touches.length === 1) { // 单指触摸拖拽
+    if (event.touches.length === 1) {
+      // 单指拖拽
       isDragging = true;
       startX = event.touches[0].clientX;
       startY = event.touches[0].clientY;
-      mapContainer.style.cursor = 'grabbing';
-    } else if (event.touches.length === 2) { // 双指触摸缩放
+    } else if (event.touches.length === 2) {
+      // 双指缩放
       isDragging = false; // 停止拖拽模式
       initialDistance = getDistance(event.touches);
       initialScale = scale;
     }
   });
 
+  // 触摸移动事件
   mapContainer.addEventListener('touchmove', (event) => {
-    if (isDragging && event.touches.length === 1) { // 单指拖拽
+    event.preventDefault(); // 阻止默认滚动行为
+
+    if (event.touches.length === 1 && isDragging) {
+      // 单指拖拽逻辑
       const dx = event.touches[0].clientX - startX;
       const dy = event.touches[0].clientY - startY;
 
@@ -259,120 +328,109 @@ document.addEventListener('DOMContentLoaded', function () {
 
       startX = event.touches[0].clientX;
       startY = event.touches[0].clientY;
-    } else if (event.touches.length === 2) { // 双指缩放
+    } else if (event.touches.length === 2) {
+      // 双指缩放逻辑
       const currentDistance = getDistance(event.touches);
       const scaleChange = currentDistance / initialDistance;
 
-      scale = Math.min(Math.max(initialScale * scaleChange, 1.2), 5); // 限制缩放比例
+      scale = Math.min(Math.max(initialScale * scaleChange, 1), 5); // 限制缩放比例
 
       map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
   });
 
+  // 触摸结束事件
   mapContainer.addEventListener('touchend', (event) => {
     if (event.touches.length === 0) {
       isDragging = false;
-      mapContainer.style.cursor = 'grab';
     }
   });
 
-  // 计算两点之间的距离（用于双指缩放）
-  function getDistance(touches) {
-    const dx = touches[0].clientX - touches[1].clientX;
-    const dy = touches[0].clientY - touches[1].clientY;
-    return Math.sqrt(dx * dx + dy * dy);
-  }
 
   ////////////////////////////////////
-
-
   // 跳转到相应的 Dashboard
   const wood = document.getElementById('wood'); // Wood image
   const pen = document.getElementById('pen'); // Pen image
 
-  // Left and right sensor areas
+  // 左右传感器区域
   const leftSensor = document.getElementById('left-sensor');
   const rightSensor = document.getElementById('right-sensor');
 
-  wood.addEventListener('click', function () {
-    const mode = localStorage.getItem('viewMode') || 'desktop';
-    const url = mode === 'mobile' ? 'computational_index_mobile.html' : 'computational_index.html';
-    window.location.href = url; // 跳转到 Computational Design Dashboard
-  });
+  // 动态跳转逻辑
+  function navigateToDashboard(type) {
+    const url = isDesktop
+      ? (type === 'computational' ? 'computational_index.html' : 'project_index.html')
+      : (type === 'computational' ? 'computational_index_mobile.html' : 'project_index_mobile.html');
+    window.location.href = url; // 跳转到对应页面
+  }
 
-  pen.addEventListener('click', function () {
-    const mode = localStorage.getItem('viewMode') || 'desktop';
-    const url = mode === 'mobile' ? 'project_index_mobile.html' : 'project_index.html';
-    window.location.href = url; // 跳转到 Project Dashboard
-  });
+  // 点击事件绑定
+  wood.addEventListener('click', () => navigateToDashboard('computational')); // 点击 Wood 跳转到 Computational Design Dashboard
+  pen.addEventListener('click', () => navigateToDashboard('project')); // 点击 Pen 跳转到 Project Dashboard
 
-  // Initialize all building elements and hide them initially
+  // 初始化所有建筑元素并隐藏
   const buildings = [];
   for (let i = 0; i <= 12; i++) {
     const building = document.getElementById(`building${i}`);
     if (building) {
-      building.style.visibility = 'hidden'; // Start hidden
+      building.style.visibility = 'hidden'; // 初始隐藏
       buildings.push(building);
     }
   }
 
-  // 鼠标进入左边区域时显示 pen
+  // 鼠标进入左侧区域时显示 Pen
   leftSensor.addEventListener('mouseenter', function () {
     pen.style.visibility = 'visible';
-    wood.style.visibility = 'hidden'; // 隐藏 wood
+    wood.style.visibility = 'hidden'; // 隐藏 Wood
   });
 
-  // 鼠标进入右边区域时显示 wood
+  // 鼠标进入右侧区域时显示 Wood
   rightSensor.addEventListener('mouseenter', function () {
     wood.style.visibility = 'visible';
-    pen.style.visibility = 'hidden'; // 隐藏 pen
+    pen.style.visibility = 'hidden'; // 隐藏 Pen
   });
 
-  // 当鼠标离开整个 payette section 时重置图片的显示状态
+  // 鼠标离开 Payette 区域时重置图片显示状态
   document.getElementById('payette-section').addEventListener('mouseleave', function () {
     wood.style.visibility = 'hidden';
     pen.style.visibility = 'hidden';
   });
 
+  // 为建筑物绑定跳转逻辑
   buildings.forEach((building, index) => {
     if (building) {
       building.addEventListener('click', function () {
-        // Check if the current building has a related ID
+        // 检查是否有相关 ID
         let relatedID;
         if (index === 9) relatedID = 3;
         else if (index === 10) relatedID = 2;
         else if (index === 11) relatedID = 6;
 
-        const mode = localStorage.getItem('viewMode') || 'desktop';
-        const base = mode === 'mobile' ? 'project_index_mobile.html' : 'project_index.html';
+        const base = isDesktop ? 'project_index.html' : 'project_index_mobile.html';
         const url = relatedID
           ? `${base}?id=${index + 1}&related=${relatedID}`
           : `${base}?id=${index + 1}`;
-        window.location.href = url;
+        window.location.href = url; // 跳转到相应页面
         showLoadingOverlay();
       });
     }
   });
 
-  // Show loading overlay
+  // 显示加载动画
   function showLoadingOverlay() {
     const overlay = document.getElementById('loading-overlay');
     overlay.style.display = 'flex';
   }
 
-  // Hide loading overlay
+  // 隐藏加载动画
   function hideLoadingOverlay() {
     const overlay = document.getElementById('loading-overlay');
     overlay.style.display = 'none';
   }
 
-  // 鼠标移动时显示/隐藏建筑物图片
+  // 鼠标移动时动态显示/隐藏建筑物图片
   document.getElementById('splash-container').addEventListener('mousemove', function (event) {
-    buildings.forEach(building => {
-      toggleVisibility(event, building);
-    });
-    toggleVisibility(event, payetteL);
-    
+    buildings.forEach(building => toggleVisibility(event, building));
   });
 
   // 根据鼠标位置切换建筑图片显示状态
@@ -390,10 +448,9 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // 页面加载时设置默认模式
-  setDefaultMode();
-
+  // 页面加载时隐藏加载动画
   window.onload = function () {
     hideLoadingOverlay();
   };
+
 });
