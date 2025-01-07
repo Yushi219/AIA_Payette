@@ -95,7 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
       toggleCircle.style.left = '5px'; // 圆圈移动到左侧
       modeSelection.style.background = 'linear-gradient(to left, #b4b4b4, #ffffff)'; // 浅到深背景
-      toggleIcon.src = 'public/mobile.png'; // 图标更新为 Mobile
+      toggleIcon.src = 'public/Mobile.png'; // 图标更新为 Mobile
       desktopLabel.style.color = '#ffffff'; // Desktop 文本为白色
       desktopLabel.style.opacity = '0'; // Desktop 文本隐藏
       mobileLabel.style.color = '#ffffff'; // Mobile 文本变白
