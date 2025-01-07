@@ -270,6 +270,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const MAX_SCALE = 6; // 最大缩放比例
   let initialDistance = 0; // 双指缩放初始距离
   let initialScale = 1; // 双指缩放初始比例
+  let isTouching = false; // 是否正在触摸（防止移动过程中地图消失）
 
   // 禁用默认触摸行为
   mapContainer.style.touchAction = 'none';
@@ -293,69 +294,81 @@ document.addEventListener('DOMContentLoaded', function () {
       translateY = Math.max(-maxTranslateY+315, Math.min(maxTranslateY, translateY));
   }
 
+
   // 触摸开始事件
   mapContainer.addEventListener('touchstart', (event) => {
-      if (event.touches.length === 1) {
-          // 单指拖拽
-          isDragging = true;
-          startX = event.touches[0].clientX;
-          startY = event.touches[0].clientY;
-      } else if (event.touches.length === 2) {
-          // 双指缩放
-          isDragging = false; // 停止拖拽模式
-          initialDistance = getDistance(event.touches);
-          initialScale = scale;
-      }
+    isTouching = true; // 标记触摸开始
+    if (event.touches.length === 1) {
+        // 单指拖拽
+        isDragging = true;
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+    } else if (event.touches.length === 2) {
+        // 双指缩放
+        isDragging = false; // 停止拖拽模式
+        initialDistance = getDistance(event.touches);
+        initialScale = scale;
+    }
   });
 
   // 触摸移动事件
   mapContainer.addEventListener('touchmove', (event) => {
-      event.preventDefault(); // 阻止默认滚动行为
+    event.preventDefault(); // 阻止默认滚动行为
 
-      if (event.touches.length === 1 && isDragging) {
-          // 单指拖拽逻辑
-          const dx = event.touches[0].clientX - startX;
-          const dy = event.touches[0].clientY - startY;
+    if (event.touches.length === 1 && isDragging) {
+        // 单指拖拽逻辑
+        const dx = event.touches[0].clientX - startX;
+        const dy = event.touches[0].clientY - startY;
 
-          const moveSpeed = isDesktop ? 1.5 : 2.5; // 移动端速度稍快
-          translateX += (dx / scale) * moveSpeed;
-          translateY += (dy / scale) * moveSpeed;
+        const moveSpeed = 2; // 调整单指移动速度
+        translateX += (dx / scale) * moveSpeed;
+        translateY += (dy / scale) * moveSpeed;
 
-          limitTranslation();
+        limitTranslation();
 
-          map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
 
-          startX = event.touches[0].clientX;
-          startY = event.touches[0].clientY;
-      } else if (event.touches.length === 2) {
-          // 双指缩放逻辑
-          const currentDistance = getDistance(event.touches);
-          const scaleChange = currentDistance / initialDistance;
+        startX = event.touches[0].clientX;
+        startY = event.touches[0].clientY;
+    } else if (event.touches.length === 2) {
+        // 双指缩放逻辑
+        const currentDistance = getDistance(event.touches);
+        const scaleChange = currentDistance / initialDistance;
 
-          scale = Math.min(Math.max(initialScale * scaleChange, MIN_SCALE), MAX_SCALE); // 限制缩放比例
+        // 调整缩放速度（降低缩放敏感度）
+        const zoomSpeed = 0.8; // 缩放速度系数
+        scale = Math.min(Math.max(initialScale * Math.pow(scaleChange, zoomSpeed), MIN_SCALE), MAX_SCALE);
 
-          // 更新平移值以保持缩放中心
-          const rect = map.getBoundingClientRect();
-          const containerRect = mapContainer.getBoundingClientRect();
-          const centerX = (rect.left + rect.right) / 2;
-          const centerY = (rect.top + rect.bottom) / 2;
-          const offsetX = centerX - containerRect.left;
-          const offsetY = centerY - containerRect.top;
+        // 更新平移值以保持缩放中心
+        const rect = map.getBoundingClientRect();
+        const containerRect = mapContainer.getBoundingClientRect();
+        const centerX = (rect.left + rect.right) / 2;
+        const centerY = (rect.top + rect.bottom) / 2;
+        const offsetX = centerX - containerRect.left;
+        const offsetY = centerY - containerRect.top;
 
-          translateX -= (offsetX / scale) * (scaleChange - 1);
-          translateY -= (offsetY / scale) * (scaleChange - 1);
+        translateX -= (offsetX / scale) * (scaleChange - 1);
+        translateY -= (offsetY / scale) * (scaleChange - 1);
 
-          limitTranslation();
+        limitTranslation();
 
-          map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-      }
+        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    }
   });
 
   // 触摸结束事件
   mapContainer.addEventListener('touchend', (event) => {
-      if (event.touches.length === 0) {
-          isDragging = false;
-      }
+    if (event.touches.length === 0) {
+        isDragging = false;
+        isTouching = false; // 触摸结束，标记为非触摸状态
+    }
+  });
+
+  // 防止地图移动过程中消失的问题
+  mapContainer.addEventListener('touchcancel', () => {
+    isTouching = false;
+    isDragging = false;
+    map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
   });
 
 
