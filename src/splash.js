@@ -87,7 +87,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (isDesktop) {
       toggleCircle.style.left = '130px'; // 圆圈移动到右侧
       modeSelection.style.background = 'linear-gradient(to right, #b4b4b4, #ffffff)'; // 深到浅背景
-      toggleIcon.src = 'public/desktop.png'; // 图标更新为 Desktop
+      toggleIcon.src = 'public/Desktop.png'; // 图标更新为 Desktop
       desktopLabel.style.color = '#ffffff'; // Desktop 文本变白
       desktopLabel.style.opacity = '1'; // Desktop 文本可见
       mobileLabel.style.color = '#ffffff'; // Mobile 文本为白色
