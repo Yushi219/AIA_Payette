@@ -267,7 +267,7 @@ document.addEventListener('DOMContentLoaded', function () {
 //Mobile Mode Move Map
   // 移动端地图逻辑
   const MIN_SCALE = 3; // 桌面和移动端的最小缩放比例
-  const MAX_SCALE = 6; // 最大缩放比例
+  const MAX_SCALE = 8; // 最大缩放比例
   let initialDistance = 0; // 双指缩放初始距离
   let initialScale = 1; // 双指缩放初始比例
   let isTouching = false; // 是否正在触摸（防止移动过程中地图消失）
@@ -320,47 +320,56 @@ document.addEventListener('DOMContentLoaded', function () {
   // 触摸移动事件
   mapContainer.addEventListener('touchmove', (event) => {
     event.preventDefault(); // 阻止默认滚动行为
-
+  
     if (event.touches.length === 1 && isDragging) {
-        // 单指拖拽逻辑
-        const dx = event.touches[0].clientX - startX;
-        const dy = event.touches[0].clientY - startY;
-
-        const moveSpeed = 2; // 调整单指移动速度
-        translateX += (dx / scale) * moveSpeed;
-        translateY += (dy / scale) * moveSpeed;
-
-        limitTranslation();
-
-        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-
-        startX = event.touches[0].clientX;
-        startY = event.touches[0].clientY;
+      // 单指拖拽逻辑
+      const dx = event.touches[0].clientX - startX;
+      const dy = event.touches[0].clientY - startY;
+  
+      const moveSpeed = 2; // 调整单指移动速度
+      translateX += (dx / scale) * moveSpeed;
+      translateY += (dy / scale) * moveSpeed;
+  
+      limitTranslation();
+  
+      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+  
+      startX = event.touches[0].clientX;
+      startY = event.touches[0].clientY;
     } else if (event.touches.length === 2) {
-        // 双指缩放逻辑
-        const currentDistance = getDistance(event.touches);
-        const scaleChange = currentDistance / initialDistance;
-
-        // 调整缩放速度（降低缩放敏感度）
-        const zoomSpeed = 0.8; // 缩放速度系数
-        scale = Math.min(Math.max(initialScale * Math.pow(scaleChange, zoomSpeed), MIN_SCALE), MAX_SCALE);
-
-        // 更新平移值以保持缩放中心
-        const rect = map.getBoundingClientRect();
-        const containerRect = mapContainer.getBoundingClientRect();
-        const centerX = (rect.left + rect.right) / 2;
-        const centerY = (rect.top + rect.bottom) / 2;
-        const offsetX = centerX - containerRect.left;
-        const offsetY = centerY - containerRect.top;
-
-        translateX -= (offsetX / scale) * (scaleChange - 1);
-        translateY -= (offsetY / scale) * (scaleChange - 1);
-
-        limitTranslation();
-
-        map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      // 双指缩放逻辑
+      const currentDistance = getDistance(event.touches);
+      const scaleChange = currentDistance / initialDistance;
+  
+      // 调整缩放速度（降低缩放敏感度）
+      const zoomSpeed = 0.8; // 缩放速度系数
+      const newScale = Math.min(Math.max(initialScale * Math.pow(scaleChange, zoomSpeed), MIN_SCALE), MAX_SCALE);
+  
+      // 计算两个触点的中心作为缩放中心
+      const touchCenterX = (event.touches[0].clientX + event.touches[1].clientX) / 2;
+      const touchCenterY = (event.touches[0].clientY + event.touches[1].clientY) / 2;
+  
+      const containerRect = mapContainer.getBoundingClientRect();
+      const mapRect = map.getBoundingClientRect();
+  
+      const relativeCenterX = touchCenterX - containerRect.left;
+      const relativeCenterY = touchCenterY - containerRect.top;
+  
+      const offsetX = relativeCenterX - (mapRect.left - containerRect.left + mapRect.width / 2);
+      const offsetY = relativeCenterY - (mapRect.top - containerRect.top + mapRect.height / 2);
+  
+      // 调整平移值以保持缩放中心为触点中心
+      translateX -= (offsetX / scale) * (newScale - scale);
+      translateY -= (offsetY / scale) * (newScale - scale);
+  
+      scale = newScale;
+  
+      limitTranslation();
+  
+      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
   });
+  
 
   // 触摸结束事件
   mapContainer.addEventListener('touchend', (event) => {
