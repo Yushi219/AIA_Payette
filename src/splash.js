@@ -24,7 +24,9 @@ document.addEventListener('DOMContentLoaded', function () {
   
     updateToggleUI(); // 更新 UI
     adjustContainerHeight(); // 调整地图容器高度
+
   }
+
 
   function toggleMode() {
     isDesktop = !isDesktop; // 切换模式
@@ -147,8 +149,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 
-
-
   // 监听窗口大小变化，动态调整模式和容器高度
   window.addEventListener('resize', function () {
     adjustContainerHeight();
@@ -177,7 +177,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   // 限制平移范围，确保地图边缘贴合容器
-  function limitTranslation() {
+  function DlimitTranslation() {
+
     const rect = map.getBoundingClientRect();
     const containerRect = mapContainer.getBoundingClientRect();
 
@@ -190,6 +191,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 鼠标按下时开启拖拽模式
   mapContainer.addEventListener('mousedown', (event) => {
+    if (!isDesktop) return; // 如果不是桌面模式，退出
     if (event.button !== 0) return; // 仅响应左键
     event.preventDefault();
     isDragging = true;
@@ -201,6 +203,7 @@ document.addEventListener('DOMContentLoaded', function () {
   const moveSpeed = 1.5; // 添加一个速率系数，默认值为 1
 
   mapContainer.addEventListener('mousemove', (event) => {
+    if (!isDesktop || !isDragging) return; // 如果不是桌面模式或未拖拽，退出
     if (!isDragging) return;
   
     const dx = event.clientX - startX; // 鼠标移动的X距离
@@ -209,7 +212,7 @@ document.addEventListener('DOMContentLoaded', function () {
     translateX += (dx / scale) * moveSpeed; // 调整X方向平移速率
     translateY += (dy / scale) * moveSpeed; // 调整Y方向平移速率
   
-    limitTranslation();
+    DlimitTranslation();
   
     map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
   
@@ -220,6 +223,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 鼠标松开时停止拖拽
   mapContainer.addEventListener('mouseup', () => {
+    if (!isDesktop) return; // 如果不是桌面模式，退出
     isDragging = false;
     mapContainer.style.cursor = 'grab';
   });
@@ -232,6 +236,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 鼠标滚轮缩放地图
   mapContainer.addEventListener('wheel', function (event) {
+    if (!isDesktop) return; // 如果不是桌面模式，退出
     event.preventDefault();
 
     const zoomSpeed = 0.1;
@@ -257,7 +262,7 @@ document.addEventListener('DOMContentLoaded', function () {
     translateY -= (offsetY / oldScale) * (scale - oldScale);
 
     // 如果边缘触碰容器，则调整平移值
-    limitTranslation();
+    DlimitTranslation();
 
     // 应用缩放和平移
     map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
@@ -283,7 +288,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // 限制平移范围，确保地图边缘贴合容器
-  function limitTranslation() {
+  function MlimitTranslation() {
     const rect = map.getBoundingClientRect();
     const containerRect = mapContainer.getBoundingClientRect();
 
@@ -303,6 +308,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 触摸开始事件
   mapContainer.addEventListener('touchstart', (event) => {
+    if (isDesktop) return; // 如果是桌面模式，退出
     isTouching = true; // 标记触摸开始
     if (event.touches.length === 1) {
         // 单指拖拽
@@ -319,6 +325,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 触摸移动事件
   mapContainer.addEventListener('touchmove', (event) => {
+    if (isDesktop) return; // 如果是桌面模式，退出
     event.preventDefault(); // 阻止默认滚动行为
   
     if (event.touches.length === 1 && isDragging) {
@@ -330,7 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
       translateX += (dx / scale) * moveSpeed;
       translateY += (dy / scale) * moveSpeed;
   
-      limitTranslation();
+      MlimitTranslation();
   
       map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
   
@@ -364,7 +371,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       scale = newScale;
   
-      limitTranslation();
+      MlimitTranslation();
   
       map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
@@ -373,6 +380,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 触摸结束事件
   mapContainer.addEventListener('touchend', (event) => {
+    if (isDesktop) return; // 如果是桌面模式，退出
     if (event.touches.length === 0) {
         isDragging = false;
         isTouching = false; // 触摸结束，标记为非触摸状态
