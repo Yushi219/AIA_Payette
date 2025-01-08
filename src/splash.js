@@ -396,33 +396,41 @@ document.addEventListener('DOMContentLoaded', function () {
 
   const projectButton = document.getElementById('project-dashboard');
   const computationalButton = document.getElementById('computational-dashboard');
-
-  // 动态跳转逻辑
+  
   function navigateToDashboard(type) {
     const url = isDesktop
       ? (type === 'computational' ? 'computational_index.html' : 'project_index.html')
       : (type === 'computational' ? 'computational_index_mobile.html' : 'project_index_mobile.html');
-    console.log(`Navigating to ${url}`); // 调试输出
-    window.location.href = url; // 跳转到对应页面
+    
+    console.log(`Navigating to: ${url}`);
+    window.location.href = url;
   }
-
-  // 通用按钮点击逻辑
+  
+  
   function buttonClick(event) {
-    const buttonId = event.target.id;
+    const buttonId = event.currentTarget.id; // 修复：使用 currentTarget 而非 target
+    console.log(`Button clicked: ${buttonId}`);
     if (buttonId === 'project-dashboard') {
       navigateToDashboard('project');
     } else if (buttonId === 'computational-dashboard') {
       navigateToDashboard('computational');
+    } else {
+      console.error('Unrecognized button clicked.');
     }
   }
-
-  // 绑定点击事件到按钮
+  
+  
+  
   if (projectButton && computationalButton) {
     projectButton.addEventListener('click', buttonClick);
     computationalButton.addEventListener('click', buttonClick);
+    console.log('Event listeners added successfully.');
   } else {
-    
+    console.error('Buttons not found!');
   }
+  
+
+
 
   // 监听窗口大小变化，动态调整模式
   window.addEventListener('resize', function () {
