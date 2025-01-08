@@ -148,13 +148,6 @@ document.addEventListener('DOMContentLoaded', function () {
   
 
 
-
-  // 监听窗口大小变化，动态调整模式和容器高度
-  window.addEventListener('resize', function () {
-    adjustContainerHeight();
-  });
-
-
   // 页面加载时设置默认模式
   setDefaultMode();
 
@@ -171,9 +164,6 @@ document.addEventListener('DOMContentLoaded', function () {
   mapImage.onload = function () {
     adjustContainerHeight(); // 页面加载时调整高度
   };
-
-  // 监听窗口大小变化，动态调整容器高度
-  window.addEventListener('resize', adjustContainerHeight);
 
 
   // 限制平移范围，确保地图边缘贴合容器
@@ -394,51 +384,33 @@ document.addEventListener('DOMContentLoaded', function () {
 
   ////////////////////////////////////
 
-  const projectButton = document.getElementById('project-dashboard');
-  const computationalButton = document.getElementById('computational-dashboard');
-  
-  function navigateToDashboard(type) {
-    const url = isDesktop
-      ? (type === 'computational' ? 'computational_index.html' : 'project_index.html')
-      : (type === 'computational' ? 'computational_index_mobile.html' : 'project_index_mobile.html');
-    
+  const dashboardButtons = document.getElementById("dashboard-buttons");
+
+  dashboardButtons.addEventListener("click", (event) => {
+    const buttonId = event.target.closest("button")?.id; // 找到点击的按钮 ID
+    if (!buttonId) return;
+
+    const isDesktop = window.innerWidth >= 1000;
+    let url;
+
+    if (buttonId === "project-dashboard") {
+      url = isDesktop
+        ? "project_index.html"
+        : "project_index_mobile.html";
+    } else if (buttonId === "computational-dashboard") {
+      url = isDesktop
+        ? "computational_index.html"
+        : "computational_index_mobile.html";
+    } else {
+      console.error("Unknown button clicked!");
+      return;
+    }
+
     console.log(`Navigating to: ${url}`);
     window.location.href = url;
-  }
-  
-  
-  function buttonClick(event) {
-    const buttonId = event.currentTarget.id; // 修复：使用 currentTarget 而非 target
-    console.log(`Button clicked: ${buttonId}`);
-    if (buttonId === 'project-dashboard') {
-      navigateToDashboard('project');
-    } else if (buttonId === 'computational-dashboard') {
-      navigateToDashboard('computational');
-    } else {
-      console.error('Unrecognized button clicked.');
-    }
-  }
-  
-  
-  
-  if (projectButton && computationalButton) {
-    projectButton.addEventListener('click', buttonClick);
-    computationalButton.addEventListener('click', buttonClick);
-    console.log('Event listeners added successfully.');
-  } else {
-    console.error('Buttons not found!');
-  }
-  
-
-
-
-  // 监听窗口大小变化，动态调整模式
-  window.addEventListener('resize', function () {
-    isDesktop = window.innerWidth >= 1000;
   });
   
-  
-  
+/////////////////////////////////  
 
   // 初始化所有建筑元素并隐藏
   const buildings = [];
