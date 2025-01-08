@@ -267,18 +267,7 @@ body, html {
         transform: scale(1.05); /* 悬停时稍微放大 */
       }
       
-        /* 手机模式下强制 Dashboard 前换行 */
-        @media (max-width: 1000px) {
-            .dashboard-button span::after {
-            content: ''; /* 添加换行 */
-            display: block;
-            }
-           
 
-        }
-  
-      
-      
       
 /*old buildingmap Individual position and size adjustments for each building
 #building1 {
