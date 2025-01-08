@@ -204,18 +204,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
   mapContainer.addEventListener('mousemove', (event) => {
     if (!isDesktop || !isDragging) return; // 如果不是桌面模式或未拖拽，退出
-    if (!isDragging) return;
-  
-    const dx = event.clientX - startX; // 鼠标移动的X距离
-    const dy = event.clientY - startY; // 鼠标移动的Y距离
-  
-    translateX += (dx / scale) * moveSpeed; // 调整X方向平移速率
-    translateY += (dy / scale) * moveSpeed; // 调整Y方向平移速率
-  
+    const dx = event.clientX - startX;
+    const dy = event.clientY - startY;
+    translateX += dx / scale;
+    translateY += dy / scale;
     DlimitTranslation();
-  
     map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-  
     startX = event.clientX;
     startY = event.clientY;
   });
@@ -343,6 +337,7 @@ document.addEventListener('DOMContentLoaded', function () {
   
       startX = event.touches[0].clientX;
       startY = event.touches[0].clientY;
+      console.log('move')
     } else if (event.touches.length === 2) {
       // 双指缩放逻辑
       const currentDistance = getDistance(event.touches);
@@ -374,6 +369,7 @@ document.addEventListener('DOMContentLoaded', function () {
       MlimitTranslation();
   
       map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      console.log('scale')
     }
   });
   
@@ -397,25 +393,44 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   ////////////////////////////////////
-  // 跳转到相应的 Dashboard
-  const wood = document.getElementById('wood'); // Wood image
-  const pen = document.getElementById('pen'); // Pen image
 
-  // 左右传感器区域
-  const leftSensor = document.getElementById('left-sensor');
-  const rightSensor = document.getElementById('right-sensor');
+  const projectButton = document.getElementById('project-dashboard');
+  const computationalButton = document.getElementById('computational-dashboard');
 
   // 动态跳转逻辑
   function navigateToDashboard(type) {
     const url = isDesktop
       ? (type === 'computational' ? 'computational_index.html' : 'project_index.html')
       : (type === 'computational' ? 'computational_index_mobile.html' : 'project_index_mobile.html');
+    console.log(`Navigating to ${url}`); // 调试输出
     window.location.href = url; // 跳转到对应页面
   }
 
-  // 点击事件绑定
-  wood.addEventListener('click', () => navigateToDashboard('computational')); // 点击 Wood 跳转到 Computational Design Dashboard
-  pen.addEventListener('click', () => navigateToDashboard('project')); // 点击 Pen 跳转到 Project Dashboard
+  // 通用按钮点击逻辑
+  function buttonClick(event) {
+    const buttonId = event.target.id;
+    if (buttonId === 'project-dashboard') {
+      navigateToDashboard('project');
+    } else if (buttonId === 'computational-dashboard') {
+      navigateToDashboard('computational');
+    }
+  }
+
+  // 绑定点击事件到按钮
+  if (projectButton && computationalButton) {
+    projectButton.addEventListener('click', buttonClick);
+    computationalButton.addEventListener('click', buttonClick);
+  } else {
+    
+  }
+
+  // 监听窗口大小变化，动态调整模式
+  window.addEventListener('resize', function () {
+    isDesktop = window.innerWidth >= 1000;
+  });
+  
+  
+  
 
   // 初始化所有建筑元素并隐藏
   const buildings = [];
@@ -427,23 +442,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 
-  // 鼠标进入左侧区域时显示 Pen
-  leftSensor.addEventListener('mouseenter', function () {
-    pen.style.visibility = 'visible';
-    wood.style.visibility = 'hidden'; // 隐藏 Wood
-  });
-
-  // 鼠标进入右侧区域时显示 Wood
-  rightSensor.addEventListener('mouseenter', function () {
-    wood.style.visibility = 'visible';
-    pen.style.visibility = 'hidden'; // 隐藏 Pen
-  });
-
-  // 鼠标离开 Payette 区域时重置图片显示状态
-  document.getElementById('payette-section').addEventListener('mouseleave', function () {
-    wood.style.visibility = 'hidden';
-    pen.style.visibility = 'hidden';
-  });
 
   // 为建筑物绑定跳转逻辑
   buildings.forEach((building, index) => {

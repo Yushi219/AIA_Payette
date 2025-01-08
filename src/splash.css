@@ -113,14 +113,14 @@ body, html {
 
 #building2 {
     left: 51.20%;
-    top: 66.45%;
-    width: 9.9%;
+    top: 66.40%;
+    width: 9.95%;
 }
 
 #building3 {
-    left: 53.05%;
-    top: 52.98%;
-    width: 13.8%;
+    left: 52.95%;
+    top: 52.80%;
+    width: 13.95%;
 }
 
 #building4 {
@@ -223,8 +223,63 @@ body, html {
         opacity: 0; /* 默认透明 */
     }
 
+    #dashboard-buttons {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 10px;
+        background-color: white; /* 背景白色 */
+      }
+      
+      .dashboard-button {
+        display: flex; /* 使用 flex 布局 */
+        align-items: center; /* 垂直居中对齐 */
+        color: #b4b4b4; /* 默认字体颜色为浅灰色 */
+        font-family: Arial, sans-serif;
+        font-weight: bold;
+        font-size: calc(12px + 0.5vw); /* 根据屏幕宽度调整字体大小 */
+        background-color: white; /* 按钮背景为白色 */
+        border: none; /* 去掉边框 */
+        cursor: pointer;
+        transition: color 0.3s, transform 0.3s; /* 平滑过渡效果 */
+        text-align: center; /* 文本居中 */
+        gap: 10px; /* 设置箭头与文字之间的间距 */
+      }
+      
+      .dashboard-button .icon {
+        flex-shrink: 0; /* 确保箭头不会因为文字换行而缩小 */
+      }
+      
+      .dashboard-button.left {
+        flex-direction: row; /* 左按钮：箭头在左边 */
+        text-align: left;
+        margin-left: 10px;
+      }
+      
+      .dashboard-button.right {
+        flex-direction: row; /* 右按钮：箭头在右边 */
+        text-align: right;
+        margin-right: 10px;
+      }
+      
+      .dashboard-button:hover {
+        color: #7d7d7d; /* 悬停时字体颜色为深灰色 */
+        transform: scale(1.05); /* 悬停时稍微放大 */
+      }
+      
+        /* 手机模式下强制 Dashboard 前换行 */
+        @media (max-width: 1000px) {
+            .dashboard-button span::after {
+            content: ''; /* 添加换行 */
+            display: block;
+            }
+           
+
+        }
   
-  
+      
+      
+      
 /*old buildingmap Individual position and size adjustments for each building
 #building1 {
     left: 31.38%;
