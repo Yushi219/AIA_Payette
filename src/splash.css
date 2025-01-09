@@ -79,7 +79,6 @@ body, html {
     left: 0;
     transform: translate(0, 0) scale(1.2); /* 初始缩放和位移 */
     transform-origin: center center; /* 初始变换中心为中心点，后续由JS动态调整 */
-    transition: transform 0.1s ease; /* 平滑变换，可选 */
 }
   
   /* 地图图片样式 */
