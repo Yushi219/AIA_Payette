@@ -240,9 +240,8 @@ body, html {
         background-color: white; /* 按钮背景为白色 */
         border: none; /* 去掉边框 */
         cursor: pointer;
-        transition: color 0.3s, transform 0.3s; /* 平滑过渡效果 */
         text-align: center; /* 文本居中 */
-        gap: 10px; /* 设置箭头与文字之间的间距 */
+        gap: 5px; /* 设置箭头与文字之间的间距 */
       }
       
       .dashboard-button .icon {
@@ -252,19 +251,42 @@ body, html {
       .dashboard-button.left {
         flex-direction: row; /* 左按钮：箭头在左边 */
         text-align: left;
-        margin-left: 10px;
+        margin-left: 5px;
       }
       
       .dashboard-button.right {
         flex-direction: row; /* 右按钮：箭头在右边 */
         text-align: right;
-        margin-right: 10px;
+        margin-right: 15px;
       }
       
       .dashboard-button:hover {
         color: #7d7d7d; /* 悬停时字体颜色为深灰色 */
-        transform: scale(1.05); /* 悬停时稍微放大 */
+        transform: scale(1.1); /* 悬停时稍微放大 */
       }
+
+      @media (max-width: 600px) {
+      
+        .dashboard-button {
+          font-size: 10px; /* 固定字体大小 */
+          gap: 5px; /* 减小箭头和文字间距 */
+          flex-direction: column; /* 垂直排列箭头和文字 */
+          text-align: center;
+          width: 100%; /* 占满父容器 */
+        }
+      
+      
+        .dashboard-button.left {
+          margin-left: 0; /* 移除左边距 */
+        }
+      
+        .dashboard-button.right {
+          margin-right: 0; /* 移除右边距 */
+        }
+      }
+      
+
+
       
 
       
