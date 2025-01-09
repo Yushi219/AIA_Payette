@@ -327,7 +327,6 @@ document.addEventListener('DOMContentLoaded', function () {
   
       startX = event.touches[0].clientX;
       startY = event.touches[0].clientY;
-      console.log('move')
     } else if (event.touches.length === 2) {
       // 双指缩放逻辑
       const currentDistance = getDistance(event.touches);
