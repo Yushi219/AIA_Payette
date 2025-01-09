@@ -72,12 +72,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const scale1 = containerWidth / (imageWidth * 0.5);
       scale = 3;
   
-      const scaledHeight = imageHeight * scale1 * 1.3;
+      const scaledHeight = imageHeight * scale1 + 150;
       mapContainer.style.width = `${containerWidth}px`;
       mapContainer.style.height = `${scaledHeight}px`;
   
       translateX = 0;
-      translateY = imageHeight * scale1 * 0.4;
+      translateY = 170;
       map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
 
@@ -275,19 +275,38 @@ document.addEventListener('DOMContentLoaded', function () {
   function MlimitTranslation() {
     const rect = map.getBoundingClientRect();
     const containerRect = mapContainer.getBoundingClientRect();
-
-    // // 计算容器的额外高度偏移
-    // const extraHeightOffset = 150; // 容器高度增加的偏移量
-    // const defaultTranslateY = 315; // 默认的初始 translateY 偏移量
-
+  
+    const extraHeightOffset = 150;
+    const defaultTranslateY = 315;
+  
     const maxTranslateX = Math.max(0, (rect.width - containerRect.width) / 2);
-    const maxTranslateY = Math.max(0, (rect.height - containerRect.height) / 2);
-
-    // 限制平移范围
-    translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
-    translateY = Math.max(-maxTranslateY, Math.min(maxTranslateY, translateY));
+    const maxTranslateY = Math.max(0, (rect.height - containerRect.height) / 2 + extraHeightOffset);
+  
+    const newTranslateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
+    const newTranslateY = Math.max(-maxTranslateY + defaultTranslateY, Math.min(maxTranslateY, translateY));
+  
+    // 仅在值发生变化时更新
+    if (newTranslateX !== translateX || newTranslateY !== translateY) {
+      translateX = newTranslateX;
+      translateY = newTranslateY;
+      console.log('限制后平移更新:', { translateX, translateY });
+    }
   }
 
+  let lastTransform = '';
+
+  function updateTransform() {
+    const transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+  
+    if (transform !== lastTransform) {
+      map.style.transform = transform;
+      lastTransform = transform;
+      console.log('更新 transform:', transform);
+    } else {
+      console.log('transform 未改变，不更新');
+    }
+  }
+  updateTransform(); // 替代直接设置 map.style.transform
 
 
   // 触摸开始事件
@@ -317,7 +336,7 @@ document.addEventListener('DOMContentLoaded', function () {
       const dx = event.touches[0].clientX - startX;
       const dy = event.touches[0].clientY - startY;
   
-      const moveSpeed = 2; // 调整单指移动速度
+      const moveSpeed = 1*scale; // 调整单指移动速度
       translateX += (dx / scale) * moveSpeed;
       translateY += (dy / scale) * moveSpeed;
   
