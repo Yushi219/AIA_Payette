@@ -72,12 +72,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const scale1 = containerWidth / (imageWidth * 0.5);
       scale = 3;
   
-      const scaledHeight = imageHeight * scale1 + 150;
+      const scaledHeight = imageHeight * scale1 * 1.3;
       mapContainer.style.width = `${containerWidth}px`;
       mapContainer.style.height = `${scaledHeight}px`;
   
       translateX = 0;
-      translateY = 150;
+      translateY = imageHeight * scale1 * 0.4;
       map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
     }
 
@@ -276,16 +276,16 @@ document.addEventListener('DOMContentLoaded', function () {
     const rect = map.getBoundingClientRect();
     const containerRect = mapContainer.getBoundingClientRect();
 
-    // 计算容器的额外高度偏移
-    const extraHeightOffset = 150; // 容器高度增加的偏移量
-    const defaultTranslateY = 315; // 默认的初始 translateY 偏移量
+    // // 计算容器的额外高度偏移
+    // const extraHeightOffset = 150; // 容器高度增加的偏移量
+    // const defaultTranslateY = 315; // 默认的初始 translateY 偏移量
 
     const maxTranslateX = Math.max(0, (rect.width - containerRect.width) / 2);
-    const maxTranslateY = Math.max(0, (rect.height - containerRect.height) / 2 + extraHeightOffset);
+    const maxTranslateY = Math.max(0, (rect.height - containerRect.height) / 2);
 
     // 限制平移范围
     translateX = Math.max(-maxTranslateX, Math.min(maxTranslateX, translateX));
-    translateY = Math.max(-maxTranslateY + defaultTranslateY, Math.min(maxTranslateY, translateY));
+    translateY = Math.max(-maxTranslateY, Math.min(maxTranslateY, translateY));
   }
 
 
