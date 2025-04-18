@@ -126,7 +126,7 @@
 /* Main person image settings */
 #person-image {
   position: absolute;
-  bottom: 10vh; /* Relative to viewport height */
+  bottom: 5vh; /* Relative to viewport height */
   width: 12vw;  /* Scales based on screen width */
   max-width: 180px; /* Ensures it doesn’t get too large */
   min-width: 120px; /* Sets a minimum size for small screens */
@@ -153,7 +153,7 @@
   background-color: #ffffff;
   text-align: left;
   top:0px;
-  height: 80%; /* 设置卡片高度占满父容器 */
+  height: 85%; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
   flex-direction: column; /* 垂直布局 */
