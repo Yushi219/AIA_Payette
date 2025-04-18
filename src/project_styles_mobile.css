@@ -298,18 +298,18 @@
   /* 左右箭头具体位置 */
   .left-nav {
     left: 15px;
-    bottom: 70px;
+    top: 50px;
   }
   
   .right-nav {
     right: 15px;
-    bottom: 70px;
+    top: 50px;
   }
 
   .center-nav {
     position: fixed; 
     left: 50%;
-    bottom: 75px;
+    top: 55px;
     transform: translateX(-50%);
     font-size: 14px;
     color: #999;
@@ -352,7 +352,7 @@
     z-index: 10;
     font-family: 'Cabin', sans-serif;
   
-    margin-top: -40px; /* ✅ 新增：上移一点，露出顶部 */
+    margin-top: -120px; /* ✅ 新增：上移一点，露出顶部 */
     border-top-left-radius: 12px; /* ✅ 可选：让上边缘更清晰 */
     border-top-right-radius: 12px;
     box-shadow: 0 -2px 6px rgba(0, 0, 0, 0.1); /* ✅ 可选：顶部阴影让它更像“浮起” */
