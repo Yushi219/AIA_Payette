@@ -76,7 +76,7 @@ body, html {
 
 #map-container {
     overflow-x: auto;
-    overflow-y: hidden;
+    overflow-y: hidden; 
     position: relative;
 }
   
