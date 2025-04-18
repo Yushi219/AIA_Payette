@@ -1,3 +1,0 @@
-Display the architectural model or the actual size of the building on the Model Size;
-Switch between different design options;
-Switch geometry colors.

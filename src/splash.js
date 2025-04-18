@@ -1,4 +1,24 @@
+function navigateTo(view) {
+  if (view === 'map') return; // 如果是 Boston Map，不跳转
+
+  const isDesktop = window.innerWidth >= 1000;
+  const base = isDesktop ? 'project_index.html' : 'project_index_mobile.html';
+  window.location.href = `${base}?view=${view}`; // 跳转并附带 view 参数
+}
+
+function updateActiveButton(viewType) {
+  const buttons = ['map', 'info', 'awards', 'leed'];
+  buttons.forEach(btn => {
+    const element = document.getElementById(`${btn}-btn`);
+    if (element) {
+      element.style.color = (btn === viewType) ? '#db1a54' : '#333129'; // 使用你指定的粉色
+    }
+  });
+}
+
 document.addEventListener('DOMContentLoaded', function () {
+  updateActiveButton('map'); 
+  
   const toggleCircle = document.getElementById('toggle-circle');
   const toggleIcon = document.getElementById('toggle-icon');
   const desktopLabel = document.getElementById('desktop-label');
@@ -28,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
 
+
   function toggleMode() {
     isDesktop = !isDesktop; // 切换模式
     updateToggleUI(); // 更新 UI
@@ -45,43 +66,61 @@ document.addEventListener('DOMContentLoaded', function () {
     
   initMode();
 
-  // 调整地图容器和显示范围
   function adjustContainerHeight() {
-    // 如果图片未完全加载，则等待加载完成
+    const mapImage = document.querySelector('#map img:first-child');
     if (!mapImage.complete || mapImage.naturalWidth === 0 || mapImage.naturalHeight === 0) {
-      mapImage.onload = function () {
-        adjustContainerHeight(); // 图片加载完成后重新调整
-      };
+      mapImage.onload = () => adjustContainerHeight();
       return;
     }
   
     const imageWidth = mapImage.naturalWidth;
     const imageHeight = mapImage.naturalHeight;
+    const aspectRatio = imageHeight / imageWidth;
   
     if (isDesktop) {
       // 桌面模式
-      const aspectRatio = imageHeight / imageWidth;
-      mapContainer.style.height = `${mapContainer.offsetWidth * aspectRatio}px`;
-      scale = 1.2;
-      translateX = 0;
-      translateY = 0;
-      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      const containerWidth = window.innerWidth;
+      const containerHeight = containerWidth * aspectRatio;
+  
+      mapContainer.style.width = `${containerWidth}px`;
+      mapContainer.style.height = `${containerHeight}px`;
+  
+      map.style.width = '100%';
+      map.style.height = '100%';
+      map.style.transform = 'none';
+  
+      mapContainer.scrollLeft = 0; // scroll 到最左侧
     } else {
       // 移动模式
+      const containerHeight = window.innerHeight * 0.8;
+      const aspectRatio = mapImage.naturalWidth / mapImage.naturalHeight;
+      const mapDisplayWidth = containerHeight * aspectRatio;
+    
+      // 容器宽度仍然是手机屏幕宽度
       const containerWidth = window.innerWidth;
-      const scale1 = containerWidth / (imageWidth * 0.5);
-      scale = 3;
-  
-      const scaledHeight = imageHeight * scale1 + 150;
+    
+      // 设置容器尺寸
+      mapContainer.style.height = `${containerHeight}px`;
       mapContainer.style.width = `${containerWidth}px`;
-      mapContainer.style.height = `${scaledHeight}px`;
-  
-      translateX = 0;
-      translateY = 170;
-      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      mapContainer.style.overflowX = 'auto';
+      mapContainer.style.overflowY = 'hidden';
+    
+      // 设置地图尺寸：高度固定，宽度自动等比例拉伸
+      map.style.height = '100%';
+      map.style.width = `${mapDisplayWidth}px`; // 关键：等比例放大
+      map.style.transform = 'none';
+    
+      // 自动滚动到地图中心
+      setTimeout(() => {
+        const scrollWidth = mapContainer.scrollWidth;
+        const visibleWidth = mapContainer.clientWidth;
+        const centerScroll = (scrollWidth - visibleWidth) / 2;
+        mapContainer.scrollLeft = centerScroll;
+      }, 50);
     }
-
-  }
+    
+  } 
+  
   
 
 
@@ -179,78 +218,44 @@ document.addEventListener('DOMContentLoaded', function () {
     translateY = Math.max(-maxTranslateY, Math.min(maxTranslateY, translateY));
   }
 
-  // 鼠标按下时开启拖拽模式
-  mapContainer.addEventListener('mousedown', (event) => {
-    if (!isDesktop) return; // 如果不是桌面模式，退出
-    if (event.button !== 0) return; // 仅响应左键
-    event.preventDefault();
-    isDragging = true;
-    startX = event.clientX;
-    startY = event.clientY;
-    mapContainer.style.cursor = 'grabbing';
-  });
 
-  const moveSpeed = 1.5; // 添加一个速率系数，默认值为 1
-
-  mapContainer.addEventListener('mousemove', (event) => {
-    if (!isDesktop || !isDragging) return; // 如果不是桌面模式或未拖拽，退出
-    const dx = event.clientX - startX;
-    const dy = event.clientY - startY;
-    translateX += dx / scale;
-    translateY += dy / scale;
-    DlimitTranslation();
-    map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-    startX = event.clientX;
-    startY = event.clientY;
-  });
-  
-
-  // 鼠标松开时停止拖拽
-  mapContainer.addEventListener('mouseup', () => {
-    if (!isDesktop) return; // 如果不是桌面模式，退出
-    isDragging = false;
-    mapContainer.style.cursor = 'grab';
-  });
-
-  // 鼠标移出容器时停止拖拽
-  mapContainer.addEventListener('mouseleave', () => {
-    isDragging = false;
-    mapContainer.style.cursor = 'grab';
-  });
-
-  // 鼠标滚轮缩放地图
+  // ✅ 桌面模式横向滚动地图（鼠标滚轮 => 向右滑动）
   mapContainer.addEventListener('wheel', function (event) {
-    if (!isDesktop) return; // 如果不是桌面模式，退出
-    event.preventDefault();
+    if (!isDesktop) return;
 
-    const zoomSpeed = 0.1;
-    const zoomIn = event.deltaY < 0;
-    const oldScale = scale;
-    scale = zoomIn ? scale + zoomSpeed : scale - zoomSpeed;
+    const maxScrollLeft = mapContainer.scrollWidth - mapContainer.clientWidth;
 
-    // 限制缩放比例
-    scale = Math.min(Math.max(scale, 1.2), 5);
-
-    // 获取鼠标在容器中的位置
-    const containerRect = mapContainer.getBoundingClientRect();
-    const mouseX = event.clientX - containerRect.left; // 鼠标相对容器的X坐标
-    const mouseY = event.clientY - containerRect.top; // 鼠标相对容器的Y坐标
-
-    // 转换鼠标位置为地图的缩放点
-    const rect = map.getBoundingClientRect();
-    const offsetX = mouseX - rect.left; // 鼠标相对地图的X偏移
-    const offsetY = mouseY - rect.top; // 鼠标相对地图的Y偏移
-
-    // 更新平移值，以保持鼠标位置为缩放中心
-    translateX -= (offsetX / oldScale) * (scale - oldScale);
-    translateY -= (offsetY / oldScale) * (scale - oldScale);
-
-    // 如果边缘触碰容器，则调整平移值
-    DlimitTranslation();
-
-    // 应用缩放和平移
-    map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+    if (
+      (event.deltaY > 0 && mapContainer.scrollLeft < maxScrollLeft) ||
+      (event.deltaY < 0 && mapContainer.scrollLeft > 0)
+    ) {
+      event.preventDefault(); // 阻止页面滚动
+      mapContainer.scrollLeft += event.deltaY;
+    }
   });
+
+  // ✅ 移动模式横向滑动地图（手指拖动 => 向右滑动）
+  let startTouchX = 0;
+  let startScrollLeft = 0;
+
+  mapContainer.addEventListener('touchstart', function (event) {
+    if (isDesktop || event.touches.length !== 1) return;
+    startTouchX = event.touches[0].clientX;
+    startScrollLeft = mapContainer.scrollLeft;
+  }, { passive: true });
+
+  mapContainer.addEventListener('touchmove', function (event) {
+    if (isDesktop || event.touches.length !== 1) return;
+    const touchX = event.touches[0].clientX;
+    const deltaX = startTouchX - touchX;
+    const maxScrollLeft = mapContainer.scrollWidth - mapContainer.clientWidth;
+
+    if ((deltaX > 0 && mapContainer.scrollLeft < maxScrollLeft) ||
+        (deltaX < 0 && mapContainer.scrollLeft > 0)) {
+      event.preventDefault(); // 阻止页面跟随拖动
+      mapContainer.scrollLeft = startScrollLeft + deltaX;
+    }
+  }, { passive: false });
 
 //////////////////////////////////////////////////
 //Mobile Mode Move Map
@@ -313,20 +318,7 @@ document.addEventListener('DOMContentLoaded', function () {
     event.preventDefault(); // 阻止默认滚动行为
   
     if (event.touches.length === 1 && isDragging) {
-      // 单指拖拽逻辑
-      const dx = event.touches[0].clientX - startX;
-      const dy = event.touches[0].clientY - startY;
-  
-      const moveSpeed = 1*scale; // 调整单指移动速度
-      translateX += (dx / scale) * moveSpeed;
-      translateY += (dy / scale) * moveSpeed;
-  
-      MlimitTranslation();
-  
-      map.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-  
-      startX = event.touches[0].clientX;
-      startY = event.touches[0].clientY;
+      return;
  
     } else if (event.touches.length === 2) {
       // 双指缩放逻辑
@@ -383,33 +375,14 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   ////////////////////////////////////
-
-  const dashboardButtons = document.getElementById("dashboard-buttons");
-
-  dashboardButtons.addEventListener("click", (event) => {
-    const buttonId = event.target.closest("button")?.id; // 找到点击的按钮 ID
-    if (!buttonId) return;
-
+  // 将 payette-section 当作按钮
+  const payetteSection = document.getElementById('payette-section');
+  payetteSection.addEventListener('click', () => {
     const isDesktop = window.innerWidth >= 1000;
-    let url;
-
-    if (buttonId === "project-dashboard") {
-      url = isDesktop
-        ? "project_index.html"
-        : "project_index_mobile.html";
-    } else if (buttonId === "computational-dashboard") {
-      url = isDesktop
-        ? "computational_index.html"
-        : "computational_index_mobile.html";
-    } else {
-      console.error("Unknown button clicked!");
-      return;
-    }
-
-    console.log(`Navigating to: ${url}`);
+    const url = isDesktop ? 'project_index.html' : 'project_index_mobile.html';
     window.location.href = url;
   });
-  
+
 /////////////////////////////////  
 
   // 初始化所有建筑元素并隐藏

@@ -1,2 +1,0 @@
-Automatically import department names and other information into Revit through Dynamo script or Ideate. Manage the colors of different types of rooms.
-It's easy to automatically generate rooms in Revit, but what if we want to generate thousands of rooms with room numbers from CAD at once? Check out the following video~

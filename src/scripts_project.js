@@ -1,4 +1,14 @@
+const urlParams = new URLSearchParams(window.location.search);
 
+function navigateTo(viewType) {
+  if (viewType === 'map') {
+    window.location.href = 'index.html';
+  } else {
+    const newUrl = new URL(window.location.href);
+    newUrl.searchParams.set('view', viewType);
+    window.location.href = newUrl.toString();
+  }
+}
 
 document.addEventListener('DOMContentLoaded', function() { 
 
@@ -8,27 +18,64 @@ document.addEventListener('DOMContentLoaded', function() {
     personImage.style.left = `calc(${minLeft}vw)`;  // 初始位置为 20vw
     //personImage.src = imageStill[0]; // 设置为 S1 图片
 
-    const computationalBtn = document.getElementById('computational-dashboard-btn');
     const projectBtn = document.getElementById('project-dashboard-btn');
   
     // 从 URL 获取 dashboard 参数
-    const urlParams = new URLSearchParams(window.location.search);
+    
     let currentDashboard = urlParams.get('dashboard') || 'project'; // Default to Project Dashboard
-  
-  
-    // 点击按钮跳转到相应的 index 页面
-    computationalBtn.addEventListener('click', () => {
-      // showLoadingOverlay();
-      window.location.href = 'computational_index.html';  // 跳转到 Computational Design Dashboard 页面
+    urlParams.get('id')
+    urlParams.get('view')
+    urlParams.get('dashboard')
+
+
+    let lastScrollLeft = 0;
+
+    projectList.addEventListener('scroll', () => {
+      const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+      const direction = projectList.scrollLeft - lastScrollLeft;
+    
+      if (projectList.scrollLeft > 0 && projectList.scrollLeft < maxScrollLeft) {
+        setPersonImage(direction);        // 设置行走方向
+        updatePersonPosition();          // 调整位置
+      }
+    
+      if (projectList.scrollLeft <= 0 || projectList.scrollLeft >= maxScrollLeft) {
+        stopPersonMovement();            // 到边缘时站立
+      }
+    
+      lastScrollLeft = projectList.scrollLeft;
     });
-  
-    projectBtn.addEventListener('click', () => {
-      // showLoadingOverlay();
-      window.location.href = 'project_index.html';  // 跳转到 Project Dashboard 页面
+    
+    projectList.addEventListener('touchend', () => {
+      stopPersonMovement();
     });
+    
   
 
   });
+
+  function updatePersonPosition() {
+    const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+    const scrollPercentage = projectList.scrollLeft / maxScrollLeft;
+  
+    const minLeft = 10;
+    const maxLeft = 80;
+    const adjustedLeft = minLeft + (maxLeft - minLeft) * scrollPercentage;
+  
+    personImage.style.left = `calc(${adjustedLeft}vw)`;
+  }
+  
+  function stopPersonMovement() {
+  const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
+  if (projectList.scrollLeft <= 0) {
+    personImage.src = standingStart;
+  } else if (projectList.scrollLeft >= maxScrollLeft) {
+    personImage.src = standingEnd;
+  } else {
+    personImage.src = standingStart;
+  }
+}
+
 
   // Show loading overlay
   function showLoadingOverlay() {
@@ -46,9 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Updated People Move Interaction
   const projectList = document.getElementById('project-list');
   const personImage = document.getElementById('person-image');
-  const searchInput = document.getElementById('search-input');
-  let isFilterActive = false;
-  let isSearchActive = false;
+
 
   // Define images and GIFs
   const standingStart = 'public/S1.png';
@@ -76,77 +121,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
   }
 
-  // Event listener for scroll
-  projectList.addEventListener('wheel', (event) => {
-      if (isFilterActive || isSearchActive) return; // Ignore scroll when filter or search is active
 
-      const scrollAmount = event.deltaY;
-      const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
-      const scrollPercentage = projectList.scrollLeft / maxScrollLeft;
-
-      // Calculate adjusted left position for personImage based on scroll percentage
-      const minLeft = 10; // Start position (10vw)
-      const maxLeft = 80; // End position (80vw)
-      const adjustedLeft = minLeft + (maxLeft - minLeft) * scrollPercentage;
-      personImage.style.left = `calc(${adjustedLeft}vw)`;
-
-      // Start the appropriate GIF based on scroll direction
-      if ((scrollAmount > 0 && projectList.scrollLeft < maxScrollLeft) ||
-          (scrollAmount < 0 && projectList.scrollLeft > 0)) {
-          setPersonImage(scrollAmount);
-      }
-
-      // Stop movement and reset at boundaries
-      if (projectList.scrollLeft === 0 || projectList.scrollLeft === maxScrollLeft) {
-          stopPersonMovement();
-      }
-  });
-
-  // Event listener for scroll stop
-  projectList.addEventListener('scroll', () => {
-      const maxScrollLeft = projectList.scrollWidth - projectList.clientWidth;
-      if (projectList.scrollLeft <= 0 || projectList.scrollLeft >= maxScrollLeft) {
-          stopPersonMovement();
-      }
-  });
-
-  // Function to activate centered person image (S2.png)
-  function activateCenteredPersonImage() {
-      isFilterActive = true;
-      isSearchActive = true;
-      personImage.src = centeredImage;
-      personImage.classList.add('centered-person');
-      personImage.style.opacity = 1;
-  }
-
-  // Function to deactivate centered image and restore movement
-  function deactivateCenteredPersonImage() {
-      isFilterActive = false;
-      isSearchActive = false;
-      personImage.classList.remove('centered-person');
-      stopPersonMovement();
-  }
-
-  // Search input event handler
-  searchInput.addEventListener('input', (event) => {
-      if (event.target.value.length > 0) {
-          activateCenteredPersonImage();
-      } else {
-          deactivateCenteredPersonImage();
-      }
-  });
-
-  // Filter click event listeners
-  document.querySelectorAll('.category-filter li').forEach(filter => {
-      filter.addEventListener('click', () => {
-          const activeFilters = Array.from(document.querySelectorAll('.category-filter li.active'));
-          if (activeFilters.length > 0) {
-              activateCenteredPersonImage();
-          } else {
-              deactivateCenteredPersonImage();
-          }
-      });
-  });
 /////////////////////////////////////////
 
   // 定义跳转函数
@@ -159,12 +134,25 @@ document.addEventListener('DOMContentLoaded', function() {
   const closeButton = document.querySelector('.close-button');
   if (closeButton) {
     closeButton.addEventListener('click', redirectToSplash);
+
+  }
+  
+
+  function goBackSmart() {
+    const previousPage = localStorage.getItem('previousPage');
+    localStorage.removeItem('previousPage');
+  
+    if (previousPage === 'dashboard') {
+      window.location.href = 'project_index.html';
+    } else if (document.referrer && document.referrer !== window.location.href) {
+      history.back();
+    } else {
+      window.location.href = 'index.html';
+    }
   }
   
   
-  const youtubeVideos = {
 
-  };
   
  // Load CSV data using PapaParse
  async function loadCSVData(csvFilePath) {
@@ -182,105 +170,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
-  async function loadProjectsData() {
-    const projects = await loadCSVData('public/ProjectInfo.csv');
-    console.log('Loaded CSV Projects:', projects);
 
-    // Sort projects by time in descending order
-    return projects.map((project, index) => ({
-        number: project.Number || index + 1,
-        name: project.Name || '',
-        building: project.Building || '',
-        area: project.Area || '',
-        address: project.Address || '',
-        time: project.Time || '',
-        leedfilter: project.Leedfilter ? project.Leedfilter.split(';').map(tag => tag.trim()) : [], // Safeguard in case LeedFilter is missing
-        type: project.Type ? project.Type.split(';').map(tag => tag.trim()) : [],    // Safeguard for Type
-        status: project.Status ? project.Status.split(';').map(tag => tag.trim()) : [], // Safeguard for Status
-        descriptionPath: project['DescriptionPath'] || '',
-        imageFolderPath: `public/Project/${project.Number || index + 1}`,
-        relatedID: project.relatedID || '',
-        URL: project.URL || '',
-        LEED: project.LEED || '',
-        ShortS: project.ShortS || '',
-    })).sort((a, b) => a.number - b.number);
-  }
-  
-  // Create category list for filtering
-  function createCategoryList(container, categories, onSelect, selectedCategory, disabledCategories = []) {
-    container.innerHTML = '';
-    categories.forEach(category => {
-      const li = document.createElement('li');
-      li.textContent = category;
-      if (selectedCategory === category) li.classList.add('active');
-      if (disabledCategories.includes(category)) {
-        li.classList.add('disabled');
-      } else {
-        li.addEventListener('click', () => {
-          const selected = document.querySelector(`#${container.id} li.active`);
-          if (selected && selected !== li) selected.classList.remove('active');
-          if (li.classList.contains('active')) {
-            li.classList.remove('active');
-            onSelect(category, false); // Remove filter
-          } else {
-            li.classList.add('active');
-            onSelect(category, true); // Add filter
-          }
-        });
-      }
-      container.appendChild(li);
-    });
-  }
-  
-    // Count tags and filter those with a frequency >= 1, sorted by frequency
-    function getFilteredTags(projects, tagField) {
-        const tagCount = {};
-        projects.forEach(project => {
-            if (Array.isArray(project[tagField])) {  // Ensure the tag field exists and is an array before accessing it
-                project[tagField].forEach(tag => {
-                    if (tag) tagCount[tag] = (tagCount[tag] || 0) + 1;
-                });
-            }
-        });
-        return Object.keys(tagCount)
-            .filter(tag => tagCount[tag] >= 1)
-            .sort((a, b) => tagCount[b] - tagCount[a]);
-    }
-
-  
-  // Filter projects based on multiple selected filters
-  function filterProjects(projects, filters) {
-    return projects.filter(project => {
-      return Object.keys(filters).every(key =>
-        filters[key].length === 0 || filters[key].some(filter => project[key].includes(filter))
-      );
-    });
-  }
-    
-  // Get relevant categories to disable others
-  function getRelevantCategories(projects, filters) {
-      const relevant = { leedfilter: new Set(), status: new Set(), projectType: new Set() };
-      const filteredProjects = filterProjects(projects, filters);
-      
-      filteredProjects.forEach(project => {
-          // Check if LeedFilter exists and is an array before iterating
-          if (Array.isArray(project.leedfilter)) {
-              project.leedfilter.forEach(tag => relevant.leedfilter.add(tag));
-          }
-          
-          // Check if status exists and is an array before iterating
-          if (Array.isArray(project.status)) {
-              project.status.forEach(tag => relevant.status.add(tag));
-          }
-          
-          // Check if projectType exists and is an array before iterating
-          if (Array.isArray(project.type)) {
-              project.type.forEach(tag => relevant.projectType.add(tag));
-          }
-      });
-      
-      return relevant;
-  }
 
     
   async function getImageSectionPath(projectNumber) {
@@ -309,72 +199,22 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  
 
-  async function getImagePath(imageFolderPath) {
+  
+  async function loadProjectInfoData() {
     try {
-      const response = await fetch(`${imageFolderPath}/file-list.json`);
-      if (!response.ok) {
-        throw new Error(`Failed to load file list from ${imageFolderPath}`);
-      }
-  
-      const fileList = await response.json();
-  
-      // 优先查找 Main 文件
-      const mainFile = fileList.find(file =>
-        file.startsWith('Main.') && file.match(/\.(png|jpg|jpeg|gif)$/i)
-      );
-  
-      if (mainFile) {
-        return `${imageFolderPath}/${mainFile}`;
-      }
-  
-      // 如果没有 Main 文件，返回空字符串
-      return '';
-    } catch (error) {
-      console.error('Error fetching main image:', error);
-      return '';
+      const response = await fetch('public/ProjectInfo.json');
+      if (!response.ok) throw new Error('Failed to load project info');
+      return await response.json();
+    } catch (e) {
+      console.error(e);
+      return {};
     }
   }
-  
-  async function getProjectMedia(folderPath) {
-    try {
-      const response = await fetch(`${folderPath}/file-list.json`);
-      if (!response.ok) {
-        throw new Error(`Failed to load file list from ${folderPath}`);
-      }
-  
-      const fileList = await response.json();
-      const extensions = ['png', 'jpg', 'jpeg', 'gif', 'mp4', 'webm'];
-  
-      // 过滤符合条件的文件：以数字开头且文件扩展名符合要求
-      const mediaFiles = fileList.filter(file => {
-        const ext = file.split('.').pop().toLowerCase();
-        const isNumbered = /^[0-9]/.test(file); // 以数字开头
-        return extensions.includes(ext) && isNumbered;
-      });
-  
-      // 按文件名中的数字顺序排序
-      mediaFiles.sort((a, b) => {
-        const numA = parseInt(a.match(/^\d+/)?.[0], 10) || 0; // 提取 a 开头的数字
-        const numB = parseInt(b.match(/^\d+/)?.[0], 10) || 0; // 提取 b 开头的数字
-        return numA - numB;
-      });
-  
-      // 生成 HTML
-      return mediaFiles.map(file =>
-        file.endsWith('.mp4') || file.endsWith('.webm')
-          ? `<video controls><source src="${folderPath}/${file}" type="video/mp4"></video>`
-          : `<img src="${folderPath}/${file}" alt="Project Media" />`
-      ).join('');
-    } catch (error) {
-      console.error('Error fetching project media:', error);
-      return '';
-    }
-  }
-  
-  
+    
   // Display the filtered projects
-  async function displayProjects(projects) {
+  async function displayProjects(projects, viewType = 'info') {
       const projectList = document.getElementById('project-list');
       projectList.innerHTML = '';  // Clear the list before rendering
 
@@ -382,30 +222,100 @@ document.addEventListener('DOMContentLoaded', function() {
       const minVisibleCards = 5;
       const totalVisibleWidth = cardWidth * minVisibleCards;
 
+      const infoData = await loadProjectInfoData();
+
       for (const project of projects) {
           const card = document.createElement('div');
           card.className = 'project-card';
           card.dataset.projectNumber = project.number;
 
           // Fetch the image based on the project number
-          const imagePath = await getImageSectionPath(project.number); // Use project.number here
+          const imagePath = `public/Project/Section${project.number}.jpg`;
+          const hoverImagePath = `public/Project/Section${project.number}R.jpg`;
+          const info = infoData[`Project${project.number}`]?.[0];
 
-          // Updated to display Time, Name, Building, and Address
+          // 构造 info 下部内容
+          let detailContent = '';
+      
+          if (viewType === 'info') {
+            detailContent = ''; // 已经改成用图片表示，无需再生成文字内容
+          } else if (viewType === 'awards') {
+            const awards = info?.Awards || [];
+            detailContent = awards.slice(0, 15).map(a => `
+              <h5>${a.AwardsYear} - ${a.Award}</h5>
+            `).join('');
+          } else if (viewType === 'leed') {
+            detailContent = `
+              <h5>${info?.LEEDStatus || ''}</h5>
+              <h5>${info?.EUI || ''}</h5>
+              <h5>${info?.Percent || ''}</h5>
+              <h5>${info?.Sentence || ''}</h5>
+            `;
+          }
+          
+      
+          let overlayImagePath = '';
+          let overlayStyle = '';
+          
+          if (viewType === 'awards') {
+            overlayImagePath = `public/Project/A${project.number}.png`;
+            overlayStyle = 'position: absolute; top: 260px; left: 50%; transform: translate(-50%, -50%); width: 600px; height: auto;';
+          } else if (viewType === 'leed') {
+            overlayImagePath = `public/Project/L${project.number}.png`;
+            overlayStyle = 'position: absolute; top: 260px; left: 50%; transform: translate(-50%, -50%); width: 500px; height: auto;';
+          } else {
+            overlayImagePath = `public/Project/Info${project.number}.png`;
+            overlayStyle = ''; // 默认 Info 不需位置控制
+          }
+          
+          
           card.innerHTML = `
-              <div class="project-info">
-                  <h4>${project.name}</h4>
-                  <h5>${project.building}</h5>
-                  <h5>${project.ShortS}</h5>
-                  <h5>${project.LEED}</h5>
-              </div>
-              <img src="${imagePath}" alt="${project.name}" />
-          `;
-
-          card.addEventListener('click', e => {
-              e.stopPropagation();
-              animateToDetails(project, card);
-          });
-
+          <div class="project-info">
+            <div class="image-stack" data-project="${project.number}" style="position: relative;">
+              <img class="info-overlay" src="${overlayImagePath}" style="${overlayStyle}" />
+              <img class="text-background" src="public/Project/T${project.number}.png" />
+              <img class="text-drip" src="public/Project/T${project.number}C.png" />
+            </div>
+          </div>
+          <img class="section-image"
+               src="${imagePath}" 
+               alt="${project.name}" />
+        `;
+        
+        
+        card.addEventListener('mouseenter', () => {
+          const stack = card.querySelector('.image-stack');
+          const infoImg = stack.querySelector('.info-overlay');
+          const dripImg = stack.querySelector('.text-drip');
+        
+          console.log('[Hover] Enter');
+          infoImg.style.opacity = '0';
+        
+          // 从上到下 reveal：clip 从完全裁掉到底部全显示
+          dripImg.style.clipPath = 'inset(0 0 0% 0)';
+        });
+        
+        card.addEventListener('mouseleave', () => {
+          const stack = card.querySelector('.image-stack');
+          const infoImg = stack.querySelector('.info-overlay');
+          const dripImg = stack.querySelector('.text-drip');
+        
+          console.log('[Hover] Leave');
+          infoImg.style.opacity = '1';
+        
+          // 再次裁切为完全隐藏
+          dripImg.style.clipPath = 'inset(0 0 100% 0)';
+        });
+        
+        card.addEventListener('click', async e => {
+          e.stopPropagation();
+          localStorage.setItem('previousPage', 'dashboard'); 
+          await displayProjectDetails(project, true);
+          history.pushState({ projectId: project.number }, `Project ${project.number}`, `?id=${project.number}&view=${viewType}`);
+        });
+        
+        
+      
           projectList.appendChild(card);
       }
 
@@ -470,125 +380,254 @@ document.addEventListener('DOMContentLoaded', function() {
 
 /////////////////
   // Example function to add navigation bar based on related ID
-  function addRelatedNavigation(currentID, relatedID, isTool) {
+  function addRelatedNavigation(currentID, relatedID) {
     const navBar = document.createElement('div');
     navBar.classList.add('related-nav-bar');
-
-    // 创建项目详情标签
+  
     const projectTab = document.createElement('span');
     projectTab.textContent = '项目详情';
-    projectTab.classList.add(isTool ? 'inactive' : 'active');
+    projectTab.classList.add('active');
     projectTab.onclick = () => {
-        window.location.href = `project_index.html?id=${currentID}&related=${relatedID}`;
+      window.location.href = `project_index.html?id=${currentID}&related=${relatedID}`;
     };
-
-    // 创建工具开发标签
-    const toolTab = document.createElement('span');
-    toolTab.textContent = '工具开发';
-    toolTab.classList.add(isTool ? 'active' : 'inactive');
-    toolTab.onclick = () => {
-        window.location.href = `computational_index.html?id=${relatedID}&related=${currentID}`;
-    };
-
+  
     navBar.appendChild(projectTab);
-    navBar.appendChild(toolTab);
     document.getElementById('details-container').prepend(navBar);
   }
+  
 
   // Check page type on load
-  const urlParams = new URLSearchParams(window.location.search);
   const currentID = urlParams.get('id');  // 获取当前页面 ID 参数
   const relatedID = urlParams.get('related'); // 获取关联页面 ID 参数
 
-  // 默认设置为项目详情页
-  const isTool = currentID && window.location.pathname.includes('project_index.html');
+
 
   // 如果存在关联 ID，则在详情页上添加导航栏
   if (relatedID && currentID) {
-    addRelatedNavigation(currentID, relatedID, isTool);
+    addRelatedNavigation(currentID, relatedID);
   }
 
 
-/////////////////
+//////////////////////////////////////////////////////////
+
+  async function loadPhotoTour(projectNumber, photoNumber = '1') {
+    currentProjectNumber = projectNumber;
+    photoNumber = photoNumber.toString();
+    
+    currentPhotoIndex = parseInt(photoNumber);
+    
+    
+
+    const tourImage = document.getElementById('tour-image');
+    const dotOverlay = document.getElementById('dot-overlay');
+
+    const csvPath = `public/Photo/${projectNumber}/PL.csv`;
+    const imagePath = `public/Photo/${projectNumber}/${photoNumber}.jpg`;
+
+    tourImage.style.opacity = 0;
+    tourImage.src = imagePath;
+
+    tourImage.onload = () => {
+      tourImage.style.opacity = 1;
+
+      const naturalWidth = tourImage.naturalWidth;
+      const naturalHeight = tourImage.naturalHeight;
+      const displayHeight = tourImage.clientHeight;
+      const displayWidth = (naturalWidth / naturalHeight) * displayHeight;
+      const imageLeft = (tourImage.parentElement.clientWidth - displayWidth) / 2;
+
+      dotOverlay.innerHTML = '';
+
+      fetch(csvPath)
+        .then(res => res.text())
+        .then(csvText => {
+          const data = Papa.parse(csvText, { header: true }).data;
+          const currentDots = data.filter(row => row.PhotoNumber === photoNumber);
+
+          currentDots.forEach(dot => {
+            const dotEl = document.createElement('div');
+            dotEl.classList.add('tour-dot');
+
+            const x = parseFloat(dot.X);
+            const y = parseFloat(dot.Y);
+
+            dotEl.style.left = `${imageLeft + displayWidth * x}px`;
+            dotEl.style.top = `${displayHeight * y}px`;
+
+            const gif = document.createElement('img');
+            gif.src = 'public/hand.gif';
+            gif.className = 'hand-gif';
+            dotEl.appendChild(gif);
+
+            dotEl.addEventListener('click', () => {
+              const targetPhoto = dot.CircleNumber.trim();
+              if (targetPhoto && targetPhoto !== currentPhotoIndex.toString()) {
+                photoHistory.push(currentPhotoIndex);
+                console.log('Jumping to photo:', targetPhoto);
+                loadPhotoTour(projectNumber, targetPhoto);
+              }
+            });
+            
+
+            dotOverlay.appendChild(dotEl);
+
+            const leftNav = document.querySelector('.left-nav');
+            if (leftNav) {
+              if (photoHistory.length === 0) {
+                leftNav.classList.add('disabled');
+              } else {
+                leftNav.classList.remove('disabled');
+              }
+            }
+
+          });
+
+          console.log('Current dots:', currentDots);
+
+          // 插入在这里！
+          let dotsVisible = true;
+          const toggleButton = document.getElementById('toggle-dots');
+          toggleButton.textContent = 'Hide Guide';
+    
+          toggleButton.addEventListener('click', () => {
+            dotsVisible = !dotsVisible;
+            const allDots = document.querySelectorAll('.tour-dot');
+    
+            allDots.forEach(dot => {
+              dot.style.display = dotsVisible ? 'block' : 'none';
+            });
+    
+            toggleButton.textContent = dotsVisible ? 'Hide Guide' : 'Show Guide';
+          });
+        });
+    };
+  }
+
+  let currentProjectNumber = null;
+  let currentPhotoIndex = 1;
+  let photoHistory = [];
+
   
+  function goToPrevPhoto() {
+    if (photoHistory.length > 0) {
+      const lastPhoto = photoHistory.pop();
+      loadPhotoTour(currentProjectNumber, lastPhoto.toString());
+    }
+  }
+  
+  
+  function goToNextPhoto() {
+    photoHistory.push(currentPhotoIndex);
+    currentPhotoIndex++;
+    loadPhotoTour(currentProjectNumber, currentPhotoIndex.toString());
+  }
+  
+  function toggleContent(button) {
+    const content = button.nextElementSibling;
+    content.classList.toggle('collapsed');
+    button.textContent = content.classList.contains('collapsed') ? '► ' + button.textContent.slice(2) : '▼ ' + button.textContent.slice(2);
+  }
+
+  function setupInfoOverlayScroll() {
+    const container = document.getElementById('details-container');
+    const overlay = document.getElementById('info-overlay');
+  
+    if (!container || !overlay) return;
+  
+  }
+
+  function toggleCollapse(button) {
+    const targetId = button.dataset.target;
+    const content = document.getElementById(targetId);
+  
+    if (!content) {
+      console.warn(`toggleCollapse error: element with id '${targetId}' not found.`);
+      return;
+    }
+  
+    const collapsed = content.classList.toggle('collapsed');
+    button.innerHTML = collapsed ? '▲' : '▼';
+  }
+  
+  
+  
+  
+// Add this new logic to your `displayProjectDetails` function, replacing the old sidebar/gallery logic
+
   async function displayProjectDetails(project, skipAnimation = false) {
-
-
     const mainContainer = document.getElementById('main-container');
     const detailsContainer = document.getElementById('details-container');
     const header = document.querySelector('header');
 
-    const description = await loadDescription(project.descriptionPath);
-    const mainImageSrc = await getImagePath(project.imageFolderPath);
-    const projectMedia = await getProjectMedia(project.imageFolderPath);
 
-    const closeButtonHTML = `
-      <button class="close-button" style="position: fixed; right: 20px; top: 15px; z-index: 1001;" onclick="redirectToSplash()">✖</button>
-    `;
 
-    let urlLink = '';
-    if (project.URL) {
-        urlLink = `<a href="${project.URL}" target="_blank" class="tool-url-link" style="text-decoration: underline; font-size: 14px;font-style: normal; color:  #333129; display: block; margin-bottom: 10px;">${project.URL}</a>`;
-    }
-
-    const tags = [ (project.ShortS || [])];
-
-    let youtubeEmbed = '';
-    if (youtubeVideos[project.number]) {
-        youtubeEmbed = youtubeVideos[project.number].map(videoId => {
-            const startTime = (project.number === "19" && videoId === "r2j1Fd_j618") ? "?start=2" : "";
-            return `<div class="aspect-ratio">
-                <iframe src="https://www.youtube.com/embed/${videoId}${startTime}" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-            </div>`;
-        }).join('');
-
-    }
-
-    // URL 参数解析
-    const urlParams = new URLSearchParams(window.location.search);
-    const relatedID = urlParams.get('related');
-    const currentID = project.number;
-    const isTool = window.location.pathname.includes('project_index.html');
-
-    // 创建导航栏
     const navBarHTML = `
-      <div class="fixed-header">
-        <div class="back-button" onclick="window.location.href='project_index.html'">< Dashboard</div>
-        
-        <div class="center-nav-bar">
-            <span class="custom-nav-item ${isTool ? 'active' : 'inactive'}" 
-                  onclick="window.location.href='project_index.html?id=${currentID}${relatedID ? `&related=${relatedID}` : ''}'">
-                Project Info
-            </span>
-            ${relatedID ? `
-            <span class="custom-nav-item ${!isTool ? 'active' : 'inactive'}" 
-                  onclick="window.location.href='computational_index.html?id=${relatedID}&related=${currentID}'">
-                Computational Tool
-            </span>
-            ` : ''}
-        </div>
-        
-        <button class="close-button" onclick="redirectToSplash()">✖</button>
-      </div>
+      <button class="close-button1" onclick="goBackSmart()">✖</button>
     `;
 
-    // 导航栏插入到详情页面顶部
-    detailsContainer.innerHTML = navBarHTML + `
-      <div class="details-header" style="background-image: url('${mainImageSrc}');">
-        <h2>${project.name}</h2>
-      </div>
-      <div class="details-content">
-        <div class="details-sidebar">
-          <h3>${project.name}</h3>
-          ${urlLink} <!-- 在此处插入 URL 链接 -->
-          <div class="tags">${tags.map(tag => `<div class="tag">${tag}</div>`).join('')}</div>
-          <p>${description.replace(/\n/g, '<br>')}</p>
+    detailsContainer.innerHTML = navBarHTML  +  `
+    <div class="details-container">
+      <div class="photo-wrapper">
+        <div class="image-container">
+          <img id="tour-image" />
+          <div id="dot-overlay"></div>        
+          <div class="photo-nav left-nav">❮</div>
+          <div class="photo-nav right-nav">❯</div>
         </div>
-        <div class="details-gallery">
-          ${youtubeEmbed}
-          ${projectMedia}
-        </div>
+        <div class="center-nav" id="toggle-dots">Show Guide</div>        
       </div>
+      <div id="info-overlay">
+        <div class="info-header">
+          <div class="info-left">
+            <h2 id="info-name"></h2>
+            <p id="info-address" class="sub-address"></p>
+            <p id="info-description"></p>
+          </div>
+          <div class="info-right">
+            <div class="eui-label">PROJECT EUI</div>
+            <div class="eui-value" id="info-eui"></div>
+            <div class="eui-eui-line">
+              <div class="eui-percent" id="info-percent"></div>
+              <div class="eui-sentence" id="info-sentence"></div>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="info-sections">
+          <div class="info-column">
+            <div class="section-header">
+              <span class="section-title pink">Project Statistics</span>
+              <button class="toggle-button" data-target="info-basic" onclick="toggleCollapse(this)">▼</button>
+            </div>
+            <div id="info-basic" class="content"></div>
+          </div>
+          <div class="info-column">
+            <div class="section-header">
+              <span class="section-title pink">AWARDS</span>
+              <button class="toggle-button" data-target="info-awards" onclick="toggleCollapse(this)">▼</button>
+            </div>
+            <div id="info-awards" class="content"></div>
+          </div>
+          <div class="info-column">
+            <div class="section-header">
+              <span class="section-title pink">IN THE NEWS</span>
+              <button class="toggle-button" data-target="info-news" onclick="toggleCollapse(this)">▼</button>
+            </div>
+            <div id="info-news" class="content"></div>
+          </div>
+          <div class="info-column">
+            <div class="section-header">
+              <span class="section-title pink">TEAM</span>
+              <button class="toggle-button" data-target="info-team" onclick="toggleCollapse(this)">▼</button>
+            </div>
+            <div id="info-team" class="content"></div>
+          </div>
+        </div>
+
+
+    </div>
+
     `;
 
     if (skipAnimation) {
@@ -597,11 +636,133 @@ document.addEventListener('DOMContentLoaded', function() {
       header.style.display = 'none';
     } else {
       document.querySelector('.back-button').addEventListener('click', () => {
-        // Reset the URL and return to the project index page
         window.location.href = 'project_index.html';
       });
     }
+
+    loadPhotoTour(project.number);
+    loadProjectOverlayData(project.number);
+
+    // 监听滚动触发信息板浮现
+    const overlay = document.getElementById('info-overlay');
+    const container = document.getElementById('details-container');
+
+    setupInfoOverlayScroll();
+
+    const dataPath = `public/Photo/${project.number}/Data.json`;
+    fetch(dataPath)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById('info-name').innerText = data.ProjectName || '';
+        document.getElementById('info-address').innerText = data.Address || '';
+        document.getElementById('info-description').innerText = data.Description || '';
+        document.getElementById('info-eui').innerText = data.EUI || '';
+        document.getElementById('info-percent').innerText = data.Percent || '';
+        document.getElementById('info-sentence').innerText = data.Sentence || '';
+        
+        document.getElementById('info-basic').innerHTML = `
+          <div class="info-block">
+            <div class="info-title">LOCATION</div>
+            <div class="info-text">${data.Location}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">COMPLETED</div>
+            <div class="info-text">${data.Completed}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">TOTAL SQUARE FOOTAGE</div>
+            <div class="info-text">${data.TotalSquareFootage}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">PROGRAM COMPONENTS</div>
+            <div class="info-text">${data.ProgramComponents}</div>
+          </div>
+          <div class="info-block">
+            <div class="info-title">LEED STATUS</div>
+            <div class="info-text">${data.LEEDStatus}</div>
+          </div>
+        `;
+      
+        
+        document.getElementById('info-awards').innerHTML = data.Awards.map(item => `
+          <div class="award-entry">
+            <div class="award-year">${item.AwardsYear}</div>
+            <div class="award-title"><span class="highlight">${item.Award}</span></div>
+          </div>
+        `).join('');
+        
+      
+        document.getElementById('info-news').innerHTML = data.News.map(item => `
+          <div class="news-entry">
+            ${item.NewsLink?.trim()
+              ? `<a href="${item.NewsLink}" target="_blank" class="highlight">${item.NewsTitle}</a>`
+              : `<span>${item.NewsTitle}</span>`}
+          </div>
+        `).join('');
+        
+        
+        document.getElementById('info-team').innerHTML = data.Team.map(member => `
+          <div class="team-entry">
+            <div class="team-name">
+              ${member.PeopleLink?.trim()
+                ? `<a href="${member.PeopleLink}" target="_blank" class="highlight">${member.TeamMember}</a>`
+                : `<span>${member.TeamMember}</span>`}
+            </div>
+            <div class="team-role">${member.Position}</div>
+          </div>
+        `).join('');
+        
+             
+        
+      });
+
+      document.querySelector('.left-nav')?.addEventListener('click', goToPrevPhoto);
+      document.querySelector('.right-nav')?.addEventListener('click', goToNextPhoto);
+      
+  
   }
+
+  async function loadProjectOverlayData(projectNumber) {
+    const overlay = document.getElementById('info-overlay');
+    try {
+      const response = await fetch(`public/Photo/${projectNumber}/Data.json`);
+      const data = await response.json();
+  
+      const newsItems = Array.isArray(data.NewsTitle)
+        ? data.NewsTitle.map((title, i) => {
+            const link = data.NewsLink?.[i];
+            return link
+              ? `<li><a href="${link}" target="_blank">${title}</a></li>`
+              : `<li>${title}</li>`;
+          }).join('')
+        : '<li>No news data available</li>';
+  
+      const teamItems = Array.isArray(data.TeamMember)
+        ? data.TeamMember.map((name, i) => {
+            const link = data.PeopleLink?.[i];
+            const role = data.Position?.[i];
+            return `<li>${link ? `<a href='${link}' target='_blank'>${name}</a>` : name} - ${role || 'N/A'}</li>`;
+          }).join('')
+        : '<li>No team data available</li>';
+  
+      overlay.classList.remove('hidden');
+  
+    } catch (error) {
+      console.error('Failed to load project data:', error);
+    }
+    
+  }
+
+  function generateCollapsibleSection(title, items, isHtml = false) {
+    const content = isHtml ? `<ul>${items}</ul>` : `<ul>${items.map(i => `<li>${i}</li>`).join('')}</ul>`;
+    return `
+      <div class="collapsible">
+        <button class="toggle-button" onclick="toggleCollapse(this)">▼ ${title}</button>
+        <div class="content">${content}</div>
+      </div>
+    `;
+  }
+
 
   async function animateToDetails(project, card) {
     const mainContainer = document.getElementById('main-container');
@@ -613,7 +774,7 @@ document.addEventListener('DOMContentLoaded', function() {
     header.style.display = 'none';
     mainContainer.style.display = 'none';
 
-    const mainImageSrc = await getImagePath(project.imageFolderPath); // 确保路径存在
+
     const expandedImage = document.createElement('img');
     expandedImage.src = mainImageSrc;
     expandedImage.className = 'transition-image';
@@ -641,8 +802,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const currentID = project.number; 
         const relatedID = project.relatedID;  // 从项目数据中获取相关 ID
 
-        // 根据是否存在 relatedID 构造 URL
-        const baseURL = window.location.pathname.includes('project_index.html') ? 'project_index.html' : 'computational_index.html';
+        // 始终使用 project_index.html 作为跳转页面
+        const baseURL = 'project_index.html';
         const url = relatedID ? `${baseURL}?id=${currentID}&related=${relatedID}` : `${baseURL}?id=${currentID}`;
 
         // 显示详情页并更新 URL
@@ -654,41 +815,55 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
+  async function loadProjectsData() {
+    const data = await loadProjectInfoData();
+    const projects = [];
   
+    for (const key in data) {
+      if (data.hasOwnProperty(key)) {
+        const info = data[key][0];
+        const number = key.replace('Project', '');
+        projects.push({
+          number,
+          name: info.ProjectName || '(No Title)',
+          imageFolderPath: `public/Project/${number}`,
+          relatedID: info.RelatedToolID || null,
+        });
+      }
+    }
+  
+    return projects;
+  }
+  
+
   async function main() {
+
+    function updateActiveButton(viewType) {
+      const buttons = ['info', 'awards', 'leed', 'map'];
+      buttons.forEach(btn => {
+        const element = document.getElementById(`${btn}-btn`);
+        if (element) {
+          element.style.color = (btn === viewType) ? '#db1a54' : '#333129';  // 粉色 or 默认
+        }
+      });
+    }
+    
+    const viewType = urlParams.get('view') || 'info';
+    updateActiveButton(viewType);
     
     const projects = await loadProjectsData();
     const filters = { leedfilter: [], type: [], status: [] };
 
     // Ensure the leedfilter, type, and status lists exist before processing
-    const leedfilterCategories = getFilteredTags(projects, 'leedfilter');
-    const typeCategories = getFilteredTags(projects, 'type');
-    const statusCategories = getFilteredTags(projects, 'status');  // Make sure status is defined and checked
+
 
     function updateProjects() {
-        const filteredProjects = filterProjects(projects, filters);
-        displayProjects(filteredProjects);
-        hideLoadingOverlay()
-        const relevant = getRelevantCategories(projects, filters);
-        
-        createCategoryList(document.getElementById('leed-list'), leedfilterCategories, (leedfilter, add) => {
-            filters.leedfilter = add ? [leedfilter] : [];
-            updateProjects();
-        }, filters.leedfilter[0], leedfilterCategories.filter(cat => !relevant.leedfilter.has(cat)));
-
-        createCategoryList(document.getElementById('status-list'), statusCategories, (status, add) => {
-            filters.status = add ? [status] : [];
-            updateProjects();
-        }, filters.status[0], statusCategories.filter(cat => !relevant.status.has(cat)));
-
-        createCategoryList(document.getElementById('type-list'), typeCategories, (type, add) => {
-            filters.type = add ? [type] : [];
-            updateProjects();
-        }, filters.type[0], typeCategories.filter(cat => !relevant.projectType.has(cat)));
+      displayProjects(projects, viewType);
+      hideLoadingOverlay();
     }
+    
 
   
-    const urlParams = new URLSearchParams(window.location.search);
     const projectId = urlParams.get('id');
   
     if (projectId) {
@@ -703,13 +878,7 @@ document.addEventListener('DOMContentLoaded', function() {
       updateProjects();
     }
   
-    document.getElementById('search-input').addEventListener('input', event => {
-      const query = event.target.value.toLowerCase();
-      const filteredProjects = projects.filter(project =>
-        Object.values(project).some(value => value && value.toString().toLowerCase().includes(query))
-      );
-      displayProjects(filteredProjects);
-    });
+    
   
     window.addEventListener('popstate', function(event) {
       if (event.state && event.state.projectId) {

@@ -1,0 +1,134 @@
+{
+  "ProjectName": "NORTHEASTERN UNIVERSITY EXP",
+  "Address": "Northeastern University, Engineering Research Building",
+  "Description": "Situated on an urban brownfield site, the EXP building, along with its award-winning counterparts\u2014ISEC and the Pedestrian Crossing (PedX)\u2014comprise a new academic precinct encompassing over 600,000 square feet of science and engineering space for Northeastern University. Flow and Movement define the form language of the precinct, serving as a dynamic link connecting two Boston neighborhoods, Roxbury and the Fenway, expanding the campus and acting as a catalyst for urban revitalization in the long-neglected Roxbury area.",
+  "Location": "Boston, MA / United States",
+  "Completed": "2023",
+  "TotalSquareFootage": "357,000 GSF",
+  "ProgramComponents": "Research Labs, Robotics, Makerspace",
+  "LEEDStatus": "LEED Platinum Certified",
+  "Awards": [
+    {
+      "AwardsYear": "2024",
+      "Award": "AIA Education Facility Design Award"
+    },
+    {
+      "AwardsYear": "2024",
+      "Award": "Illumination Award for Interior Lighting Design"
+    }
+  ],
+  "News": [
+    {
+      "NewsTitle": "Welcome to EXP",
+      "NewsLink": "https://exp.northeastern.edu"
+    },
+    {
+      "NewsTitle": "PAYETTE’s New EXP Building is Designed for Research and Built to Perform",
+      "NewsLink": "https://metropolismag.com/projects/payette-new-exp-building-in-northeastern-university/"
+    },
+    {
+      "NewsTitle": "The new EXP research center will make for a better university, city, state and nation",
+      "NewsLink": "https://www.youtube.com/watch?v=oNdsRT2ynVw"
+    },
+    {
+      "NewsTitle": "PAYETTE crafts tapering stainless steel fins for the facade of Northeastern’s EXP building",
+      "NewsLink": "https://www.archpaper.com/2023/11/payette-stainless-steel-northeastern-exp-building/"
+    },
+    {
+      "NewsTitle": "NSF Director delivers remarks at Northeastern University’s grand opening celebration alongside Members of the Massachusetts Congressional Delegation",
+      "NewsLink": "https://www.nsf.gov/news/nsf-director-delivers-remarks-northeastern"
+    },
+    {
+      "NewsTitle": "Northeastern University shows ‘experiential robotics’ in new EXP space",
+      "NewsLink": "https://www.therobotreport.com/northeastern-university-shows-experiential-robotics-in-new-exp-space/"
+    },
+    {
+      "NewsTitle": "PAYETTE wraps Boston academic building in ribbons of stainless steel",
+      "NewsLink": "https://www.dezeen.com/2024/11/12/payette-boston-building-ribbons-stainless-steel-northeastern/"
+    }
+  ],
+  "Team": [
+  {
+    "TeamMember": "Robert J. Schaeffner, FAIA, LEED AP",
+    "Position": "Principal-in-Charge",
+    "PeopleLink": "https://www.payette.com/leadership/robert-j-schaeffner/"
+  },
+  {
+    "TeamMember": "Kevin B. Sullivan, FAIA",
+    "Position": "Design Principal",
+    "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/"
+  },
+  {
+    "TeamMember": "Barry Shiel, AIA",
+    "Position": "Project Manager",
+    "PeopleLink": "https://www.payette.com/leadership/barry-shiel/"
+  },
+  {
+    "TeamMember": "Wesley Schwartz, AIA",
+    "Position": "Project Architect",
+    "PeopleLink": "https://www.payette.com/leadership/wesley-schwartz/"
+  },
+  {
+    "TeamMember": "Chris Stansfield, AIA, LEED AP",
+    "Position": "Project Architect",
+    "PeopleLink": "https://www.payette.com/leadership/chris-stansfield/"
+  },
+  {
+    "TeamMember": "Jeff Abramson, AIA, LEED AP",
+    "Position": "Architect",
+    "PeopleLink": "https://www.payette.com/leadership/jeff-abramson/"
+  },
+  {
+    "TeamMember": "Garrett House, AIA",
+    "Position": "Architect",
+    "PeopleLink": "https://www.payette.com/leadership/garrett-house/"
+  },
+  {
+    "TeamMember": "Jessica Jorge, AIA",
+    "Position": "Architect",
+    "PeopleLink": "https://www.payette.com/leadership/jessica-jorge/"
+  },
+  {
+    "TeamMember": "Blake Lam, AIA",
+    "Position": "Architect",
+    "PeopleLink": "https://www.payette.com/leadership/blake-lam/"
+  },
+  {
+    "TeamMember": "James Lanzisero, AIA",
+    "Position": "Architect",
+    "PeopleLink": "https://www.payette.com/leadership/james-lanzisero/"
+  },
+  {
+    "TeamMember": "Parke MacDowell, AIA",
+    "Position": "Architect",
+    "PeopleLink": "https://www.payette.com/leadership/parke-macdowell/"
+  },
+  {
+    "TeamMember": "Michael X. Nie, AIA",
+    "Position": "Architect",
+    "PeopleLink": "https://www.payette.com/leadership/michael-x-nie/"
+  },
+  {
+    "TeamMember": "Melissa Allen",
+    "Position": "Designer",
+    "PeopleLink": ""
+  },
+  {
+    "TeamMember": "Daniel Dudziak",
+    "Position": "Designer",
+    "PeopleLink": ""
+  },
+  {
+    "TeamMember": "Shreeya Shakya",
+    "Position": "Designer",
+    "PeopleLink": ""
+  },
+  {
+    "TeamMember": "Mary Gallagher, IIDA, LEED AP",
+    "Position": "Interior Designer",
+    "PeopleLink": "https://www.payette.com/leadership/mary-gallagher/"
+  }],
+  "EUI": "81 kBtu / SF",
+  "Percent": "78%",
+  "Sentence": "reduction in energy use compared to the 2030 baseline"
+}

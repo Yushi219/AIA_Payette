@@ -2,7 +2,7 @@
 
   body {
     font-family: 'Cabin', sans-serif;
-    background-color: #fffcf5;
+    background-color: #ffffff;
     color: #333129;
     margin: 0;
     padding: 0;
@@ -27,10 +27,10 @@
 .project-card {
   flex: 0 0 calc(100% / 1.5); /* 每行显示4张卡片 */
   overflow: hidden;
-  background-color: #fffcf5;
+  background-color: #ffffff;
   text-align: left;
-  top: 5%; /* 距离顶部20% */
-  height: 75%; /* 设置卡片高度占满父容器 */
+  top: 0%; /* 距离顶部20% */
+  height: 65%; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
   flex-direction: column; /* 垂直布局 */
@@ -61,7 +61,7 @@
   height: calc(100vh - 20px); /* 调整视口高度 */
   gap: 0; /* 移除卡片之间的间距 */
   align-items: stretch; /* 确保卡片高度一致 */
-  padding-left: 40px; 
+  padding-left: 0px; 
 }
 
 /* Project card text content */
@@ -106,7 +106,7 @@
 /* Main person image settings */
 #person-image {
   position: absolute;
-  bottom: 1vh; /* 紧贴视窗底部 */
+  bottom: 10vh; /* 紧贴视窗底部 */
   width: 10vw; /* 按视窗宽度缩放 */
   max-width: 180px; /* 限制最大宽度 */
   min-width: 120px; /* 限制最小宽度 */
@@ -127,18 +127,431 @@
     font-size:11px; 
   }
   
+  
+  /* Close button style */
+  .close-button, .back-button {
+    position: fixed; /* 固定位置 */
+    bottom: 20px; /* 调整顶部间距 */
+    left: 0px;
+    color: #666666; /* 默认文本颜色 */
+    background: transparent; /* 透明背景 */
+    width: 40px;
+    height: 30px;
+    border-radius: 5px; /* 轻微倒角 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    z-index: 10001; /* 确保按钮在其他元素之上 */
+    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
+    border: 2px solid transparent; /* 初始无边框 */
+  }
+
+  /* Hover effect for both buttons */
+  .close-button:hover, .back-button:hover {
+    color: white; /* 悬停时的文本颜色 */
+    background-color: #666666; /* 悬停时的背景颜色 */
+    border-radius: 5px; /* 保持圆角 */
+  }
+
+  /* projectdetail-------------------- */
+  
+  .close-button1 {
+    position: fixed; /* 固定位置 */
+    top: 10px; /* 调整顶部间距 */
+    right: 10px;
+    color:  #b0aca1; /* 默认文本颜色 */
+    background: transparent; /* 透明背景 */
+    width: 40px;
+    height: 30px;
+    border-radius: 5px; /* 轻微倒角 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    z-index: 10001; /* 确保按钮在其他元素之上 */
+    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
+    border: 2px solid transparent; /* 初始无边框 */
+  }
+
+    /* Hover effect for both buttons */
+    .close-button1:hover, .back-button:hover {
+      color: white; /* 悬停时的文本颜色 */
+      background-color: #666666; /* 悬停时的背景颜色 */
+      border-radius: 5px; /* 保持圆角 */
+    }
+  
+  .fixed-header {
+    position: relative; /* 关键：作为子元素 absolute 的参照 */
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+  }
+  
+  .center-nav-bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: bold;
+    color: #333129;
+    white-space: nowrap; /* 避免长标题换行 */
+  }
+  
+
+  
   .details-container {
     display: flex;
     flex-direction: column;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-color: #ffffff;
+    z-index: 9999;
+    border-radius: 12px; /* 可选：圆角 */
+    overflow-y: auto;
+    scroll-behavior: smooth;
+  }
+
+  /* photo-wrapper 固定在上方 */
+  .photo-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    flex-shrink: 0;
+    overflow: hidden;
+  } 
+
+  .image-container {
+    position: relative;
+    justify-content: center;
+    display: flex;
+    align-items: center; /* ✅ 垂直居中 */
     width: 100%;
     height: 100%;
-    overflow-y: auto;
-    background-color: #fffcf5;
-    position: absolute;
+  }
+  
+  
+  #tour-image {
+    position: fixed;          /* ✅ 不要用绝对定位 */
+    max-width: 100%;            /* ✅ 限制宽度 */
+    max-height: 90vh;           /* ✅ 避免图片过高 */
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+  
+  
+  
+  #dot-overlay {
+    position: fixed; 
     top: 0;
     left: 0;
-    z-index: 9999;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
   }
+  
+  .tour-dot {
+    position: fixed; 
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+  }
+  
+  .hand-gif {
+    position: fixed; 
+    width: 100%;
+    height: 100%;
+    opacity: 0.2; /* 初始为 50% */
+    animation: fadeInHold 6s ease forwards;
+  }
+  
+  @keyframes fadeInHold {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+  }
+  
+  .photo-nav {
+    position: fixed; 
+    bottom: 115px; /* ✅ 在图片容器底部悬空一点 */
+    font-size: 25px;
+    color: rgba(160, 160, 160, 0.5);
+    cursor: pointer;
+    z-index: 5;
+    transition: opacity 0.3s;
+    user-select: none;
+  }
+  
+  /* 左右箭头具体位置 */
+  .left-nav {
+    left: 15px;
+  }
+  
+  .right-nav {
+    right: 15px;
+  }
+
+  .center-nav {
+    position: fixed; 
+    left: 50%;
+    bottom: 120px;
+    transform: translateX(-50%);
+    font-size: 14px;
+    color: #999;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+  }
+  
+  .center-nav:hover {
+    color: #e60050; /* Payette主红 */
+  }
+  
+  
+  
+  .photo-nav:hover {
+    opacity: 1;
+    color: #e60050;
+  }
+
+  .photo-nav.disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  #details-container {
+    position: relative;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+
+  /* 样式更新后的 info-overlay 区域 */
+  #info-overlay {
+    background: rgba(240, 240, 240, 0.85);
+    padding: 20px;
+    width: 90%;
+    z-index: 10;
+    font-family: 'Cabin', sans-serif;
+  }
+
+  .info-header {
+    display: flex;
+    flex-direction: column; /* 改为垂直排列 */
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+
+  .info-left {
+    flex: none;
+  }
+
+  .info-left h2 {
+    font-size: 25px;
+    margin: 0 0 5px 0;
+  }
+
+  .sub-address {
+    font-size: 14px;
+    color: #666;
+    margin-top: 0px;
+  }
+
+  #info-description {
+    font-size: 15px;
+    color: #333129;
+    line-height: 1.5;
+    margin-top: 10px;
+    text-align: justify; 
+  }
+
+  .info-right {
+    flex: none;
+    margin-top: 10px;
+    text-align: left;
+    color: #e60050;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .eui-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333129;
+  }
+
+
+
+  .eui-eui-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .eui-percent {
+    font-size: 52px;
+    font-weight: bold;
+    color: #e60050;
+    white-space: nowrap;
+  }
+
+  .eui-sentence {
+    font-size: 14px;
+    max-width: 180px;
+    color: #e60050;
+    text-align: left;
+  }
+
+  /* 改为垂直堆叠 info sections */
+  .info-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+
+  .info-column {
+    padding: 0 10px;
+    border-left: none; /* 移除边框 */
+  }
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #5f5f5f;
+    
+  }
+
+  .toggle-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #5f5f5f;
+  }
+
+  .content {
+    font-size: 15px;
+    color: #222;
+    display: none; /* 默认隐藏 */
+  }
+
+  .content ul {
+    padding-left: 20px;
+    margin: 0;
+  }
+
+  .content li {
+    line-height: 1.6em;
+  }
+
+  /* 展开时显示内容 */
+  .content.collapsed {
+    display: block;
+  }
+
+  .eui-value {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #e60050;
+  }
+
+
+  .info-block {
+    margin-bottom: 20px;
+  }
+
+  .info-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e60050;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+
+  .info-text {
+    font-size: 16px;
+    color: #000;
+    line-height: 1.5;
+  }
+
+  .award-entry {
+    display: flex;
+    margin-bottom: 15px;
+  }
+
+  .award-year {
+    color: #e60050;
+    font-weight: bold;
+    width: 80px; /* 或根据实际需要调整 */
+    flex-shrink: 0;
+  }
+
+  .award-title {
+    color: #000;
+    line-height: 1.5;
+  }
+
+  
+  .highlight {
+    color: inherit;               /* 不要变蓝 */
+    text-decoration: none;        /* 去掉下划线 */
+    background: linear-gradient(to top, yellow 20%, transparent 40%);
+    padding: 0 2px;
+  }
+  
+  
+
+  .news-entry {
+    margin-bottom: 10px;
+  }
+  
+  /* Team Section */
+  .team-entry {
+    margin-bottom: 16px;
+  }
+  .team-name {
+    font-weight: bold;
+  }
+  .team-role {
+    color: #333;
+    font-style: normal;
+  }
+  
+  
+  .pink {
+    color: #5f5f5f;
+  }
+  
+  
+
   
   .details-header {
     height: 400px; /* 封面图固定高度 */
@@ -226,8 +639,8 @@
   .arrow-left {
     width: 12px;
     height: 12px;
-    border-top: 2px solid #fffcf5;
-    border-right: 2px solid #fffcf5;
+    border-top: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
     transform: rotate(-135deg);
   }
   
@@ -257,112 +670,7 @@
     border: none;
   }
   
-  /* Close button positioning */
-  .detailClose-button {
-    color: #666666; /* 默认文本颜色 */
-    background: transparent; /* 透明背景 */
-    width: 30px;
-    height: 30px;
-    border-radius: 5px; /* 轻微倒角 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 17px;
-    font-weight: bold;
-    border: 2px solid transparent; /* 初始无边框 */
-    right: 0px; /* Close 按钮靠右 */
-  }
 
-  /* Back button positioning */
-  .detailBack-button {
-    color: #666666; /* 默认文本颜色 */
-    background: transparent; /* 透明背景 */
-    width: 30px;
-    height: 30px;
-    border-radius: 5px; /* 轻微倒角 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 28px;
-    font-weight: bold;
-    border: 2px solid transparent; /* 初始无边框 */
-    left: 0px; /* Back 按钮靠左 */
-
-  }
-
-  /* Hover effect for both buttons */
-  .detailClose-button:hover, .detailBack-button:hover {
-    color: white; /* 悬停时的文本颜色 */
-    background-color: #666666; /* 悬停时的背景颜色 */
-    border-radius: 5px; /* 保持圆角 */
-  }
-
-
-  /* Close button style */
-  .close-button, .back-button {
-    position: fixed; /* 固定位置 */
-    bottom: 10px; /* 调整底部间距 */
-    left: 0px; /* 调整左侧间距 */
-    color: #666666; /* 默认文本颜色 */
-    background: transparent; /* 透明背景 */
-    width: 40px;
-    height: 30px;
-    border-radius: 5px; /* 轻微倒角 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 17px;
-    font-weight: bold;
-    z-index: 10001; /* 确保按钮在其他元素之上 */
-    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
-    border: 2px solid transparent; /* 初始无边框 */
-  }
-
-
-  /* Close button positioning */
-  .close-button {
-    right: 20px; /* Close 按钮靠右 */
-  }
-
-  /* Back button positioning */
-  .back-button {
-    left: 20px; /* Back 按钮靠左 */
-    width: 100px;
-  }
-
-  /* Hover effect for both buttons */
-  .close-button:hover, .back-button:hover {
-    color: white; /* 悬停时的文本颜色 */
-    background-color: #666666; /* 悬停时的背景颜色 */
-    border-radius: 5px; /* 保持圆角 */
-  }
-
-  /* Fixed header container */
-  .fixed-header {
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    padding: 0 20px;
-    background-color: #fffcf5; /* 背景颜色可自定义 */
-    z-index: 1000;
-
-  }
-
-
-  /* Centered navigation bar */
-  .center-nav-bar {
-    flex: 1;
-    display: flex;
-    justify-content: center;  /* 确保内容居中 */
-    align-items: center;
-  }
 
   /* Custom nav item styling */
   .custom-nav-item {
@@ -390,11 +698,6 @@
     color: #666666;
   }
 
-  /* Close button (X) styling */
-  .close-button {
-    font-size: 18px;
-    cursor: pointer;
-  }
 
   
   /* //////////////////////////// */
@@ -404,7 +707,7 @@
     left: 0;
     width: 40px; /* 确保足够宽度 */
     height: 100%;
-    background-color: #fffcf5;
+    background-color: #ffffff;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -580,3 +883,162 @@
 .hidden {
   display: none !important;
 }
+
+
+#payette-bg {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  object-fit: cover;
+}
+
+
+#dashboard-buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 10px;
+  background-color: white; /* 背景白色 */
+}
+
+.dashboard-button {
+  display: flex; /* 使用 flex 布局 */
+  align-items: center; /* 垂直居中对齐 */
+  color: #b4b4b4; /* 默认字体颜色为浅灰色 */
+  font-family: Arial, sans-serif;
+  font-weight: bold;
+  font-size: calc(12px + 0.5vw); /* 根据屏幕宽度调整字体大小 */
+  background-color: white; /* 按钮背景为白色 */
+  border: none; /* 去掉边框 */
+  cursor: pointer;
+  text-align: center; /* 文本居中 */
+  gap: 5px; /* 设置箭头与文字之间的间距 */
+}
+
+.dashboard-button .icon {
+  flex-shrink: 0; /* 确保箭头不会因为文字换行而缩小 */
+}
+
+.dashboard-button.left {
+  flex-direction: row; /* 左按钮：箭头在左边 */
+  text-align: left;
+  margin-left: 5px;
+}
+
+.dashboard-button.right {
+  flex-direction: row; /* 右按钮：箭头在右边 */
+  text-align: right;
+  margin-right: 15px;
+}
+
+.dashboard-button:hover {
+  color: #7d7d7d; /* 悬停时字体颜色为深灰色 */
+  transform: scale(1.1); /* 悬停时稍微放大 */
+}
+
+@media (max-width: 600px) {
+
+  .dashboard-button {
+    font-size: 10px; /* 固定字体大小 */
+    gap: 5px; /* 减小箭头和文字间距 */
+    flex-direction: column; /* 垂直排列箭头和文字 */
+    text-align: center;
+    width: 100%; /* 占满父容器 */
+  }
+
+
+  .dashboard-button.left {
+    margin-left: 0; /* 移除左边距 */
+  }
+
+  .dashboard-button.right {
+    margin-right: 0; /* 移除右边距 */
+  }
+}
+
+
+#nav-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+  margin: 10px 0;
+  font-weight: bold;
+}
+
+#nav-buttons button {
+  font-family: 'Cabin', sans-serif;
+  font-size: 16px;
+  padding: 6px 14px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+  color: #333;
+  border-bottom: 2px solid transparent;
+  font-weight: bold;
+}
+
+#nav-buttons button:hover {
+  color:#db1a54;
+  border-bottom: 2px solid #666;
+}
+
+@media (max-width: 1000px) {
+  #nav-buttons {
+    gap: 20px; /* 间距变小 */
+    flex-wrap: wrap; /* 如果按钮太多也可以换行 */
+  }
+
+  #nav-buttons button {
+    font-size: 12px; /* 字体变小 */
+    padding: 4px 10px; /* 缩小内边距 */
+  }
+}
+
+
+ /*card text*/
+ .image-stack {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0 auto; /* 添加这一行使其水平居中 */
+}
+
+.image-stack img {
+  width: 100%;
+  display: block;
+  margin: 0 auto; /* 添加这一行使其水平居中 */
+}
+
+.image-stack .info-overlay {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  transition: opacity 1s ease;
+}
+
+.image-stack .text-background {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.image-stack .text-drip {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  width: 100%;
+  height: auto;
+
+  /* 初始裁切：只显示顶部 0%，完全看不见 */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 2s ease;
+}
+
+

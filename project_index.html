@@ -13,33 +13,21 @@
 </head>
 <body>
   <header>
-
-    <!-- Toggle between dashboards -->
-    <div id="dashboard-switch" class="titles">
-        <h1 id="project-dashboard-btn" class="active">Project Dashboard</h1> <!-- Set Project Dashboard as active -->
-        <h1 id="computational-dashboard-btn" class="inactive">Computational Design Dashboard</h1>
+    <!-- Payette section -->
+    <div id="payette-section" style="position: relative; text-align: center; cursor: pointer;">
+      <img id="payette-bg" src="public/payette.png" alt="Payette Background">
+    </div>
+    
+    <!-- 新增导航按钮 -->
+    <div id="nav-buttons">
+      <button id="map-btn" onclick="navigateTo('map')">BOSTON MAP</button>    
+      <button id="info-btn" onclick="navigateTo('info')">PROJECTSS</button>
+      <button id="awards-btn" onclick="navigateTo('awards')">AWARDS</button>
+      <button id="leed-btn" onclick="navigateTo('leed')">LEED</button>
+     
     </div>
 
-    <!-- Search bar and filters -->
-    <div class="search-bar">
-        <div class="category-filter" id="leed-categories">
-          <h3>LEED</h3>
-          <ul id="leed-list"></ul>
-        </div>
-      
-        <div class="category-filter" id="status-categories">
-            <h3>STATUS</h3>
-            <ul id="status-list"></ul>
-        </div>   
-        <div class="category-filter" id="type-categories">
-          <h3>TYPE</h3>
-          <ul id="type-list"></ul>
-        </div class="search-bar">
-        <input type="text" id="search-input" placeholder="Search..." />
-      </div>
-  
-  
-    <button class="close-button">X</button>
+
   </header>
 
   <div class="person-container">
@@ -58,7 +46,7 @@
   <script src="src/scripts_project.js"></script>
 
   <!-- Loading overlay -->
-  <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fffcf5; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+  <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">
     Loading...
   </div>
   

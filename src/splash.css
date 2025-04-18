@@ -1,3 +1,5 @@
+
+
 /* Ensure full height for html and body to allow scrolling */
 body, html {
     height: 100%;
@@ -15,11 +17,22 @@ body, html {
 
 /* Section for the Payette image, horizontally centered */
 #payette-section {
+    width: 30%;
     text-align: center;
-    margin-bottom: 0px;
+    margin: 0 auto;       
     padding-top: 0px;
+    margin-bottom: 0px;
     position: relative;
+    bottom:5px;
 }
+
+/* 手机模式（宽度小于等于768px） */
+@media screen and (max-width: 1000px) {
+#payette-section {
+    width: 100%;
+}
+}
+  
 
 /* Payette image styles */
 #payette-bg {
@@ -61,25 +74,19 @@ body, html {
     right: 0; /* Right side */
 }
 
-/* 容器样式 */
 #map-container {
+    overflow-x: auto;
+    overflow-y: hidden;
     position: relative;
-    width: 100%; /* 全宽 */
-    height: auto; /* 高度根据内容调整 */
-    overflow: hidden; /* 隐藏溢出内容 */
-    cursor: grab; /* 初始鼠标样式 */
-    background-color: #f0f0f0; /* 背景颜色，可选 */
-    touch-action: none; /* 禁用默认触摸行为 */
 }
   
-  /* 地图样式 */
 #map {
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: translate(0, 0) scale(1.2); /* 初始缩放和位移 */
-    transform-origin: center center; /* 初始变换中心为中心点，后续由JS动态调整 */
+    position: relative;
+    height: 100%;
+    /* 不设置 transform，除非桌面模式 */
 }
+  
+  
   
   /* 地图图片样式 */
 #map img:first-child {
@@ -105,58 +112,48 @@ body, html {
   
 /* Individual position and size adjustments for each building */
 #building1 {
-    left: 39.785%;
-    top: 14.30%;
-    width: 9.3%;
+    left: 37.95%;
+    top: 12.3%;
+    width: 26.5%;
 }
 
 #building2 {
-    left: 51.20%;
-    top: 66.40%;
-    width: 9.95%;
+    left: 59.65%;
+    top: 62.5%;
+    width: 20.2%;
 }
 
 #building3 {
-    left: 52.95%;
-    top: 52.80%;
-    width: 13.95%;
+    left: 61.35%;
+    top: 55.35%;
+    width: 37.8%;
 }
 
 #building4 {
-    left: 35.98%;
-    top: 70.9%;
-    width: 12.40%;
+    left: 34.3%;
+    top: 72.05%;
+    width: 18.7%;
 }
 
 #building5 {
-    left: 27.87%;
-    top: 63.9%;
-    width: 8.8%;
+    left: 25.26%;
+    top: 56.71%;
+    width: 13.59%;
 }
 
 #building6 {
-    left: 39.38%;
-    top: 47.08%;
-    width: 8.85%;
+    left: 38.6%;
+    top: 36.7%;
+    width: 15.4%;
 }
 
 #building7 {
-    left: 42.71%;
-    top: 33.80%;
-    width: 11.05%;
+    left: 18.85%;
+    top: 0%;
+    width: 14.85%;
 }
 
-#building8 {
-    left: 29.25%;
-    top: 14.1%;
-    width: 7.85%;
-}
 
-#building9 {
-    left: 52.42%;
-    top: 8.85%;
-    width: 14.90%;
-}
 
 
 /* 容器样式 */
@@ -286,7 +283,43 @@ body, html {
       }
       
 
-
+      #nav-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 150px;
+        margin: 10px 0;
+        font-weight: bold;
+      }
+      
+      #nav-buttons button {
+        font-family: 'Cabin', sans-serif;
+        font-size: 16px;
+        padding: 6px 14px;
+        border: none;
+        background-color: transparent;
+        cursor: pointer;
+        color: #333;
+        border-bottom: 2px solid transparent;
+        font-weight: bold;
+      }
+      
+      #nav-buttons button:hover {
+        color:#db1a54;
+        border-bottom: 2px solid #666;
+      }
+      
+      @media (max-width: 1000px) {
+        #nav-buttons {
+          gap: 20px; /* 间距变小 */
+          flex-wrap: wrap; /* 如果按钮太多也可以换行 */
+        }
+      
+        #nav-buttons button {
+          font-size: 12px; /* 字体变小 */
+          padding: 4px 10px; /* 缩小内边距 */
+        }
+      }
+      
       
 
       

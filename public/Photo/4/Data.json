@@ -1,0 +1,120 @@
+{
+    "ProjectName": "BIDMC",
+    "Address": "Beth Israel Deaconess Medical Center - Klarman Building",
+    "Description": "Beth Israel Deaconess Medical Center’s new inpatient bed tower incorporates the expansion of hospital departments in the adjacent Rosenberg Building, while allowing it to remain in operation throughout construction. Departments will span between the new building and renovated space in Rosenberg. Bridge-like corridors will connect these functions and ease public circulation from the Rosenberg Building, through the inpatient building, to the rest of the West Campus. A palette of materials drawn from the nearby East Campus will link the two campuses.",
+    "Location": "Boston, MA / United States",
+    "Completed": "2023",
+    "TotalSquareFootage": "380,000 GSF",
+    "ProgramComponents": [
+      "158 Inpatient Medical/Surgical Beds",
+      "30 ICU Beds",
+      "ORs",
+      "Radiology",
+      "Cardiology",
+      "New Lobby",
+      "Sterile Processing",
+      "Food Service",
+      "Materials Management",
+      "Pathology"
+    ],
+    "LEEDStatus": "LEED Gold Certified",
+    "Awards": [
+      {
+        "AwardsYear": "2023",
+        "Award": "BSA Built Design Excellence Awards, Technical and Environmental Impact Advancement Commendation, Institutional Facilities"
+      },
+      {
+        "AwardsYear": "2024",
+        "Award": "IIDA New England Design Award"
+      }
+    ],
+    "News": [
+      {
+        "NewsTitle": "The Klarman Building | BIDMC",
+        "NewsLink": "https://www.youtube.com/watch?v=ZkkqW846HP4"
+      },
+      {
+        "NewsTitle": "Welcome to the Klarman Building. Join us as we transform medicine.",
+        "NewsLink": "https://www.youtube.com/watch?v=i8QDBA92AV8"
+      },
+      {
+        "NewsTitle": "Our New, State-of-the-Art Inpatient Building",
+        "NewsLink": "https://www.bidmc.org/patient-and-visitor-information/visiting-bidmc/klarman-building"
+      }
+    ],
+    "Team": [
+      {
+        "TeamMember": "George E. Marsh, Jr., FAIA",
+        "Position": "Principal-in-Charge",
+        "PeopleLink": "https://www.payette.com/leadership/george-e-marsh-jr/"
+      },
+      {
+        "TeamMember": "Kevin B. Sullivan, FAIA",
+        "Position": "Design Principal",
+        "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/"
+      },
+      {
+        "TeamMember": "Scott Parker, AIA, LEED AP",
+        "Position": "Senior Project Architect",
+        "PeopleLink": "https://www.payette.com/leadership/scott-parker/"
+      },
+      {
+        "TeamMember": "Stuart Baur, AIA",
+        "Position": "Project Manager",
+        "PeopleLink": "https://www.payette.com/leadership/stuart-baur/"
+      },
+      {
+        "TeamMember": "Ching-Hua Ho",
+        "Position": "Healthcare Design Principal",
+        "PeopleLink": "https://www.payette.com/leadership/ching-hua-ho/"
+      },
+      {
+        "TeamMember": "Christian Blomquist, AIA",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/christian-blomquist/"
+      },
+      {
+        "TeamMember": "Susan Blomquist, AIA, LEED AP",
+        "Position": "Architect/Healthcare Planner",
+        "PeopleLink": "https://www.payette.com/leadership/susan-blomquist/"
+      },
+      {
+        "TeamMember": "Caitlin Cashner, AIA",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/caitlin-cashner/"
+      },
+      {
+        "TeamMember": "Philippe Genereux, AIA, LEED AP BD+C",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/philippe-genereux/"
+      },
+      {
+        "TeamMember": "Megan van der Linde, AIA, LEED AP BD+C",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/megan-van-der-linde/"
+      },
+      {
+        "TeamMember": "Eamonn Meagher",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/eamonn-meagher/"
+      },
+      {
+        "TeamMember": "Jensen Ying, LEED AP BD+C",
+        "Position": "Designer",
+        "PeopleLink": "https://www.payette.com/leadership/jensen-ying/"
+      },
+      {
+        "TeamMember": "Jonah Prada",
+        "Position": "Designer",
+        "PeopleLink": ""
+      },
+      {
+        "TeamMember": "Yu Pei",
+        "Position": "Landscape Designer",
+        "PeopleLink": "https://www.payette.com/leadership/yu-pei/"
+      }
+    ],
+    "EUI": "156 kBtu/SF",
+    "Percent": "32%",
+    "Sentence": "reduction in energy use compared to 2030 baseline"
+  }

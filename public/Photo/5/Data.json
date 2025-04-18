@@ -1,0 +1,95 @@
+{
+    "ProjectName": "BOSTON COLLEGE",
+    "Address": "Boston College, Institute for Integrated Science and Society",
+    "Description": "Following PAYETTE\u2019s 2012 Master Plan, 245 Beacon Street is a new 150,000 SF facility providing dedicated space for interdisciplinary science and liberal arts programs and is home to the College\u2019s Schiller Institute for Integrated Science and Society. The building includes office and laboratory space, classrooms, maker spaces and common areas. 245 Beacon aligns with Boston College\u2019s mission of supporting collaboration between the arts and humanities. As home to a new general engineering program, the building emphasizes research and student learning applied to complex problems beyond a single discipline, in the realms of energy, environment and health.",
+    "Location": "Newton, MA / United States",
+    "Completed": "2022",
+    "TotalSquareFootage": "150,000 GSF",
+    "ProgramComponents": [
+      "Engineering",
+      "Computer Science",
+      "Interdisciplinary Research Labs",
+      "Core Labs",
+      "Cleanroom",
+      "Classrooms",
+      "Auditorium",
+      "Maker Spaces",
+      "Teaching Labs",
+      "Caf\u00e9",
+      "Offices"
+    ],
+    "LEEDStatus": "LEED Silver Certified",
+    "Awards": [
+      {
+        "AwardsYear": "2023",
+        "Award": "AIA New England Design Awards, Honor Award"
+      }
+    ],
+    "News": [
+      {
+        "NewsTitle": "245 Beacon Street Tour Video",
+        "NewsLink": "https://www.youtube.com/watch?v=ZSyTcwMt6Xk"
+      },
+      {
+        "NewsTitle": "245 Beacon Street",
+        "NewsLink": "https://www.bc.edu/bc-web/sites/245-beacon-st.html"
+      },
+      {
+        "NewsTitle": "Building a Tradition: BC\u2019s Engineering Program Prepares to Graduate its First Class",
+        "NewsLink": "https://www.bc.edu/content/bc-web/sites/bc-news/articles/2025/spring/bc-engineering-program-prepares-to-graduate-first-class.html"
+      },
+      {
+        "NewsTitle": "Boston College Affirmed Among Top Tier of U.S. Research Universities",
+        "NewsLink": "https://www.bc.edu/bc-web/sites/bc-news/articles/2025/spring/boston-college-retains-carnegie-r1-classification.html"
+      },
+      {
+        "NewsTitle": "Integrated Sciences Building at 245 Beacon Street Opens",
+        "NewsLink": "https://www.bc.edu/bc-web/bcnews/campus-community/announcements/integrated-sciences-building-at-245-beacon-st-opens.html"
+      }
+    ],
+    "Team": [
+      {
+        "TeamMember": "Robert Pasersky, AIA",
+        "Position": "Principal-in-Charge",
+        "PeopleLink": "https://www.payette.com/leadership/robert-pasersky/"
+      },
+      {
+        "TeamMember": "Kevin B. Sullivan, FAIA",
+        "Position": "Design Principal",
+        "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/"
+      },
+      {
+        "TeamMember": "Diana Tsang, AIA, LEED AP",
+        "Position": "Project Manager",
+        "PeopleLink": "https://www.payette.com/leadership/diana-tsang/"
+      },
+      {
+        "TeamMember": "Mary Gallagher",
+        "Position": "Interior Designer",
+        "PeopleLink": "https://www.payette.com/leadership/mary-gallagher/"
+      },
+      {
+        "TeamMember": "Jing Yu, AIA",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/jing-yu/"
+      },
+      {
+        "TeamMember": "Lu Zhang",
+        "Position": "Designer",
+        "PeopleLink": "https://www.payette.com/leadership/lu-zhang/"
+      },
+      {
+        "TeamMember": "Edin Kostovic, LEED AP",
+        "Position": "Designer",
+        "PeopleLink": "https://www.payette.com/leadership/edin-kostovic/"
+      },
+      {
+        "TeamMember": "Emilio Cardarelli",
+        "Position": "Designer",
+        "PeopleLink": ""
+      }
+    ],    
+    "EUI": "89 kBtu / SF",
+    "Percent": "78%",
+    "Sentence": "reduction in energy use compared to the 2030 baseline"
+  }

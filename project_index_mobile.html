@@ -13,37 +13,19 @@
 </head>
 <body class="mobile-layout">
   <header>
-    <div class="side-menu">
-      <button id="menu-toggle" class="menu-btn">☰</button>
-      <div class="menu-content">
-        <button id="project-dashboard-btn" class="dashboard-btn active">Project Dashboard</button>
-        <button id="computational-dashboard-btn" class="dashboard-btn inactive">Computational Design Dashboard</button>
-      </div>
-    </div>    
-    
-    <!-- 过滤器和搜索框 -->
-    <div id="filter-overlay" class="filter-overlay hidden">
-      <div class="filter-container">
-        <input type="text" id="search-input" placeholder="Search..." />
-        <div class="category-filter" id="type-categories">
-          <h3>Type</h3>
-          <ul id="type-list"></ul>
-        </div>
-        <div class="category-filter" id="leed-categories">
-          <h3>LEED</h3>
-          <ul id="leed-list"></ul>
-        </div>
-        <div class="category-filter" id="status-categories">
-          <h3>Status</h3>
-          <ul id="status-list"></ul>
-        </div>
-      </div>
-      <div id="filter-close-area">
-        <span class="close-icon">X</span>
-      </div>
+    <!-- Payette section -->
+    <div id="payette-section" style="position: relative; text-align: center; cursor: pointer;">
+      <img id="payette-bg" src="public/payette.png" alt="Payette Background">
     </div>
-
-    <button class="close-button">X</button>
+    
+    <!-- 新增导航按钮 -->
+    <div id="nav-buttons">
+      <button id="map-btn" onclick="navigateTo('map')">BOSTON MAP</button>    
+      <button id="info-btn" onclick="navigateTo('info')">PROJECTSS</button>
+      <button id="awards-btn" onclick="navigateTo('awards')">AWARDS</button>
+      <button id="leed-btn" onclick="navigateTo('leed')">LEED</button>
+     
+    
   </header>
 
   <div class="person-container">
@@ -62,7 +44,7 @@
   <script src="src/scripts_project_mobile.js"></script>
 
   <!-- Loading overlay -->
-  <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fffcf5; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+  <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">
     Loading...
   </div>
   

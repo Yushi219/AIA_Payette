@@ -1,1 +1,0 @@
-Using JavaScript and React develop webpage navigation, filters, shortened URLs, and calculator.

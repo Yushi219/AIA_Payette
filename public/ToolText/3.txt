@@ -1,7 +1,0 @@
-Welcome to our introduction of the Interactive Virtual Mockup, a cutting-edge VR tool designed to enhance collaborative exploration and refinement of OR Room designs. This tool helps users understand the spatial dynamics and operational scope of medical equipment, leading to informed design decisions and improved workflows.
-
-Main Features: Move and Interact with Objects; Viewpoints Jump; Save Design Options; Notes Record.
-
-For healthcare and science projects, consider using our model if your work involves:Handling Multiple or Complex Machines; Feeling the Scope of Work; Comparing Different Layouts; Facilitating Design Discussions.
-
-We can quickly develop VR models based on your needs. Simple models, where you move and rotate objects, take about 3 days. For more interactive models, like those involving moving parts of the equipment, it takes around a week. We encourage you to try this innovative tool in your project to see how it can enhance your design process.

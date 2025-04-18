@@ -1,0 +1,105 @@
+{
+    "ProjectName": "BOSTON UNIVERSITY",
+    "Address": "Boston University, Rajen Kilachand Center for Integrated Life Sciences and Engineering",
+    "Description": "The Kilachand Center is a nine-story, high-intensity academic research building that supports a wide range of research modes to serve existing and future scientific communities. The compact building occupies a prominent location on a tight urban site along Boston\u2019s Commonwealth Avenue. It embraces the notion that collaboration happens everywhere \u2013 in the corridors, at the desks and in the labs.",
+    "Location": "Boston, MA / United States",
+    "Completed": "2017",
+    "TotalSquareFootage": "170,000 SF",
+    "ProgramComponents": "Neuroscience, Synthetic Biology, Human Imaging",
+    "LEEDStatus": "LEED-NC 3 Gold Certified",
+    "Awards": [
+      {
+        "AwardsYear": "2019",
+        "Award": "Boston Society of Architects, Honor Award for Excellence"
+      },
+      {
+        "AwardsYear": "2017",
+        "Award": "AIA New England, Citation Award"
+      }
+    ],
+    "News": [
+      {
+        "NewsTitle": "The Kilachand Center",
+        "NewsLink": "https://www.bu.edu/kilachandcenter/"
+      },
+      {
+        "NewsTitle": "New Kilachand Center Links Key Research Disciplines",
+        "NewsLink": "https://www.bu.edu/bostonia/fall17/kilachand-center/"
+      },
+      {
+        "NewsTitle": "Designing Science: Newest BU Research Center is Built for Collaboration",
+        "NewsLink": "https://www.bu.edu/articles/2017/kilachand-center-for-integrated-life-sciences-and-engineering-science-building-design"
+      },
+      {
+        "NewsTitle": "Boston University Breaks Ground on Science Center",
+        "NewsLink": ""
+      },
+      {
+        "NewsTitle": "Sciences Gets a Front Door on Comm. Ave.",
+        "NewsLink": ""
+      },
+      {
+        "NewsTitle": "Newest BU Research Center is Built For Collaboration",
+        "NewsLink": "https://www.bu.edu/articles/2017/kilachand-center-for-integrated-life-sciences-and-engineering-science-building-design"
+      },
+      {
+        "NewsTitle": "New Kilachand Center Links Key Research Disciplines",
+        "NewsLink": "https://www.bu.edu/articles/2017/kilachand-center-for-integrated-life-sciences-and-engineering"
+      }
+    ],
+    "Team": [
+      {
+        "TeamMember": "James H. Collins, Jr., FAIA, LEED AP",
+        "Position": "Design Principal",
+        "PeopleLink": "https://www.payette.com/leadership/james-h-collins-jr/"
+      },
+      {
+        "TeamMember": "Charles S. Klee, AIA, LEED AP",
+        "Position": "Principal-in-Charge",
+        "PeopleLink": "https://www.payette.com/leadership/charles-s-klee/"
+      },
+      {
+        "TeamMember": "Peter F. Vieira, FAIA, LEED AP",
+        "Position": "Senior Project Architect",
+        "PeopleLink": "https://www.payette.com/leadership/peter-vieira/"
+      },
+      {
+        "TeamMember": "Leon V. Auvil, Jr., AIA, CSI, CDT",
+        "Position": "Project Manager",
+        "PeopleLink": "https://www.payette.com/leadership/leon-auvil/"
+      },
+      {
+        "TeamMember": "Mark Bandzak, AIA, LEED AP",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/mark-bandzak/"
+      },
+      {
+        "TeamMember": "Dane Clark, AIA, LEED AP BD+C",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/dane-clark/"
+      },
+      {
+        "TeamMember": "Sean Hurley, AIA, LEED AP, BD+C",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/sean-hurley/"
+      },
+      {
+        "TeamMember": "Michael J. Quinn, AIA, CSI, CCS, LEED AP",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/michael-quinn/"
+      },
+      {
+        "TeamMember": "Edin Kostovic, LEED AP BD+C",
+        "Position": "Designer",
+        "PeopleLink": "https://www.payette.com/leadership/edin-kostovic/"
+      },
+      {
+        "TeamMember": "Marceli Botticelli, LEED AP",
+        "Position": "Designer",
+        "PeopleLink": "https://www.payette.com/leadership/marceli-botticelli/"
+      }
+    ],
+    "EUI": "134 kBtu/SF",
+    "Percent": "72%",
+    "Sentence": "reduction in energy use compared to the 2030 baseline"
+  }

@@ -1,1 +1,0 @@
-Use Grasshopper to analyze the shadows generated within a fixed range of the building in the Rhino file, and use HumanUI to create linked data visualization char.

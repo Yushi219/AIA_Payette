@@ -1,1 +1,0 @@
-Blocks are completely indispensable when we tackle design options or changing processes.  How could we use Grasshopper to place Blocks on the building smoothly or randomly? Check out the following video~

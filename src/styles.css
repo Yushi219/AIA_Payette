@@ -93,7 +93,7 @@ h1 {
 
 .category-filter li.active {
   background-color: #333129;
-  color: #fffcf5;
+  color: #ffffff;
 }
 
 .category-filter li.disabled {
@@ -121,7 +121,7 @@ h1 {
 .project-card {
   flex: 0 0 calc(100% / 5 - 4px); /* 5 张卡片宽度 + 间距 */
   overflow: hidden;
-  background-color: #fffcf5;
+  background-color: #ffffff;
   text-align: left;
   height: 80%;/* 间隙对应差值 */
   position: relative;
@@ -170,7 +170,7 @@ h1 {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background-color: #fffcf5;
+  background-color: #ffffff;
   position: absolute;
   top: 0;
   left: 0;
@@ -259,8 +259,8 @@ h1 {
 .arrow-left {
   width: 12px;
   height: 12px;
-  border-top: 2px solid #fffcf5;
-  border-right: 2px solid #fffcf5;
+  border-top: 2px solid #ffffff;
+  border-right: 2px solid #ffffff;
   transform: rotate(-135deg);
 }
 

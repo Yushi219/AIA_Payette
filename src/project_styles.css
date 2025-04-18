@@ -33,7 +33,7 @@
   
   body {
     font-family: 'Cabin', sans-serif;
-    background-color: #fffcf5;
+    background-color: #ffffff;
     color: #333129;
     margin: 0;
     padding: 0;
@@ -103,7 +103,7 @@
   
   .category-filter li.active {
     background-color: #333129;
-    color: #fffcf5;
+    color: #ffffff;
   }
   
   .category-filter li.disabled {
@@ -112,12 +112,7 @@
     cursor: not-allowed; /* 禁止点击光标 */
   }
   
-  .search-input {
-    padding: 4  px;
-    font-size: 8px;
-    border-radius: 4px;
-    border: 1px solid #333129;
-  }
+
 /* Container for the person image, positioned at the bottom of the project card */
 .person-container {
   position: absolute;
@@ -131,7 +126,7 @@
 /* Main person image settings */
 #person-image {
   position: absolute;
-  bottom: 1vh; /* Relative to viewport height */
+  bottom: 10vh; /* Relative to viewport height */
   width: 12vw;  /* Scales based on screen width */
   max-width: 180px; /* Ensures it doesn’t get too large */
   min-width: 120px; /* Sets a minimum size for small screens */
@@ -155,8 +150,9 @@
 .project-card {
   flex: 0 0 calc(100% / 4); /* 每行显示4张卡片 */
   overflow: hidden;
-  background-color: #fffcf5;
+  background-color: #ffffff;
   text-align: left;
+  top:0px;
   height: 80%; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
@@ -224,20 +220,428 @@
     color: #b0aca1;
     font-size:11px; 
   }
+
+  /* Close button style */
+  .close-button, .back-button {
+    position: fixed; /* 固定位置 */
+    top: 7px; /* 调整顶部间距 */
+    right: 20px;
+    color: #666666; /* 默认文本颜色 */
+    background: transparent; /* 透明背景 */
+    width: 40px;
+    height: 30px;
+    border-radius: 5px; /* 轻微倒角 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    z-index: 10001; /* 确保按钮在其他元素之上 */
+    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
+    border: 2px solid transparent; /* 初始无边框 */
+  }
+
+  /* Hover effect for both buttons */
+  .close-button:hover, .back-button:hover {
+    color: white; /* 悬停时的文本颜色 */
+    background-color: #666666; /* 悬停时的背景颜色 */
+    border-radius: 5px; /* 保持圆角 */
+  }
+
   
+   /* projectdetail-------------------- */
+  
+  .close-button1 {
+    position: fixed; /* 固定位置 */
+    top: 30px; /* 调整顶部间距 */
+    right: 40px;
+    color: #666666; /* 默认文本颜色 */
+    background: transparent; /* 透明背景 */
+    width: 40px;
+    height: 30px;
+    border-radius: 5px; /* 轻微倒角 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 17px;
+    font-weight: bold;
+    z-index: 10001; /* 确保按钮在其他元素之上 */
+    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
+    border: 2px solid transparent; /* 初始无边框 */
+  }
+
+    /* Hover effect for both buttons */
+    .close-button1:hover, .back-button:hover {
+      color: white; /* 悬停时的文本颜色 */
+      background-color: #666666; /* 悬停时的背景颜色 */
+      border-radius: 5px; /* 保持圆角 */
+    }
+  
+  .fixed-header {
+    position: relative; /* 关键：作为子元素 absolute 的参照 */
+    display: flex;
+    align-items: center;
+    height: 50px;
+    width: 100%;
+    background-color: #ffffff;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    
+  }
+  
+  .center-nav-bar {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 18px;
+    font-weight: bold;
+    color: #333129;
+    white-space: nowrap; /* 避免长标题换行 */
+  }
+  
+
+
+
   .details-container {
     display: flex;
     flex-direction: column;
+    width: calc(100vw - 40px);
+    height: calc(100vh - 40px);
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    background-color: #ffffff;
+    z-index: 9999;
+    box-shadow: 0 0 15px rgba(0,0,0,0.3);
+    border-radius: 6px;
+    overflow-y: auto;  /* ✅ 保留它的滚动能力 */
+    overflow-x: hidden; 
+  }  
+
+  .photo-wrapper {
+    position: relative;
+    width: 100%;
+    height: 100vh; /* ✅ 不再是100vh，而是占详情容器的一部分 */
+    flex-shrink: 0; /* 防止它在滚动时被压缩 */
+    overflow: hidden;
+  }
+
+  .image-container {
+    position: relative;
     width: 100%;
     height: 100%;
-    overflow-y: auto;
-    background-color: #fffcf5;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
   
+  #tour-image {
+    position: fixed;
+    object-fit: contain;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    top: 20px;
+    height: 95%;
+    width: auto;
+    object-fit: contain;
+    display: block;
+    z-index: 0;
+  }
+  
+  #info-overlay {
+    background: rgba(240, 240, 240, 0.85);
+    padding: 20px;
+    width: 97%;
+    z-index: 10;
+  }
+  
+  #dot-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  
+  .tour-dot {
+    position: fixed;
+    width: 60px;
+    height: 60px;
+    transform: translate(-50%, -50%);
+    pointer-events: auto;
+  }
+  
+  .hand-gif {
+    position: fixed;
+    width: 120%;
+    height: 120%;
+    opacity: 0.2; /* 初始为 50% */
+    animation: fadeInHold 6s ease forwards;
+  }
+  
+  @keyframes fadeInHold {
+    from { opacity: 0.5; }
+    to   { opacity: 1; }
+  }
+  
+  .photo-nav {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-10%);
+    font-size: 40px;
+    color: rgba(160, 160, 160, 0.5);
+    cursor: pointer;
+    z-index: 5;
+    transition: opacity 0.3s;
+    user-select: none;
+  }
+  
+  .left-nav {
+    position: fixed;
+    left: 40px;
+  }
+  
+  .right-nav {
+    position: fixed;
+    right: 40px;
+  }
+
+  .center-nav {
+    position: fixed; 
+    left: 94%;
+    font-size: 16px;
+    color: #999;
+    text-transform: uppercase;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    top:93%;
+  }
+  
+  .center-nav:hover {
+    color: #e60050; /* Payette主红 */
+  }
+  
+  .photo-nav:hover {
+    opacity: 1;
+    color: #e60050;
+  }
+
+  .photo-nav.disabled {
+    opacity: 0;
+    pointer-events: none;
+  }
+  
+  #details-container {
+    position: relative;
+    overflow-y: auto;
+    max-height: 100vh;
+  }
+  
+  
+  #info-overlay.visible {
+    transform: translateY(0);
+  }
+  
+  
+  
+  #info-overlay.hidden {
+    transform: translateY(100%);
+  }
+  
+  .info-header {
+    display: flex;
+    justify-content: space-between;
+    gap: 40px;
+    margin-bottom: 30px;
+  }
+  
+  .info-left {
+    flex: 2;
+  }
+  
+  .info-right {
+    flex: 1;
+    text-align: left;
+    color: #e60050;
+    display: flex;
+    flex-direction: column;
+
+  }
+  
+  .eui-label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333129;
+  }
+  
+  .eui-eui-line {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .eui-percent {
+    font-size: 52px;
+    font-weight: bold;
+    color: #e60050;
+    white-space: nowrap;
+  }
+  
+  .eui-sentence {
+    font-size: 14px;
+    max-width: 180px;
+    color: #e60050;
+    text-align: left;
+  }
+  
+  .eui-value {
+    font-size: 28px;
+    font-weight: bold;
+    margin-top: 10px;
+    color: #e60050;
+  }
+  
+  .sub-address {
+    margin-top: -10px;
+    color: #444;
+  }
+
+  .info-block {
+    margin-bottom: 20px;
+  }
+  
+  .info-title {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e60050;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+  }
+  
+  .info-text {
+    font-size: 16px;
+    color: #000;
+    line-height: 1.5;
+  }
+
+  .award-entry {
+    display: flex;
+    margin-bottom: 15px;
+  }
+  
+  .award-year {
+    color: #e60050;
+    font-weight: bold;
+    width: 80px; /* 或根据实际需要调整 */
+    flex-shrink: 0;
+  }
+  
+  .award-title {
+    color: #000;
+    line-height: 1.5;
+  }
+  
+  .highlight {
+    color: inherit;               /* 不要变蓝 */
+    text-decoration: none;        /* 去掉下划线 */
+    background: linear-gradient(to top, yellow 20%, transparent 40%);
+    padding: 0 2px;
+  }
+  
+  
+
+  .news-entry {
+    margin-bottom: 10px;
+  }
+  
+  /* Team Section */
+  .team-entry {
+    margin-bottom: 16px;
+  }
+  .team-name {
+    font-weight: bold;
+  }
+  .team-role {
+    color: #333;
+    font-style: normal;
+  }
+  
+  
+  /* Pink Label */
+  .pink {
+    color: #e60050;
+  }
+  
+  
+  .info-sections {
+    display: flex;
+    justify-content: space-between;
+    gap: 30px;
+    border-top: 1px solid #ccc;
+    padding-top: 20px;
+    margin-top: 20px;
+  }
+  
+  .info-column {
+    flex: 1;
+    padding: 0 10px;
+    border-left: 1px solid #ddd;
+  }
+  
+  .info-column:first-child {
+    border-left: none;
+  }
+  
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  
+  .section-title {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  .pink {
+    color: #5f5f5f;
+  }
+  
+  .toggle-button {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #5f5f5f;
+  }
+  
+  .content {
+    font-size: 15px;
+    color: #222;
+  }
+  
+  .content ul {
+    padding-left: 20px;
+    margin: 0;
+  }
+  
+  .content li {
+    line-height: 1.6em;
+  }
+  
+  
+  
+   
   .details-header {
     height: 100vh;
     background-size: cover;
@@ -248,7 +652,7 @@
   }
   
   .details-header h2{
-    color: #fff;
+    color: #ffffff;
     font-size: 48px;
     font-weight: normal;
   }
@@ -320,8 +724,8 @@
   .arrow-left {
     width: 12px;
     height: 12px;
-    border-top: 2px solid #fffcf5;
-    border-right: 2px solid #fffcf5;
+    border-top: 2px solid #ffffff;
+    border-right: 2px solid #ffffff;
     transform: rotate(-135deg);
   }
   
@@ -353,69 +757,6 @@
   
 
 
-
-  /* Close button style */
-  .close-button, .back-button {
-    position: fixed; /* 固定位置 */
-    top: 7px; /* 调整顶部间距 */
-    color: #666666; /* 默认文本颜色 */
-    background: transparent; /* 透明背景 */
-    width: 40px;
-    height: 30px;
-    border-radius: 5px; /* 轻微倒角 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 17px;
-    font-weight: bold;
-    z-index: 10001; /* 确保按钮在其他元素之上 */
-    transition: background-color 0.3s, color 0.3s; /* 平滑过渡效果 */
-    border: 2px solid transparent; /* 初始无边框 */
-  }
-
-  /* Close button positioning */
-  .close-button {
-    right: 20px; /* Close 按钮靠右 */
-  }
-
-  /* Back button positioning */
-  .back-button {
-    left: 20px; /* Back 按钮靠左 */
-    width: 100px;
-  }
-
-  /* Hover effect for both buttons */
-  .close-button:hover, .back-button:hover {
-    color: white; /* 悬停时的文本颜色 */
-    background-color: #666666; /* 悬停时的背景颜色 */
-    border-radius: 5px; /* 保持圆角 */
-  }
-
-  /* Fixed header container */
-  .fixed-header {
-    display: flex;
-    align-items: center;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 50px;
-    padding: 0 20px;
-    background-color: #fffcf5; /* 背景颜色可自定义 */
-    z-index: 1000;
-
-  }
-
-
-  /* Centered navigation bar */
-  .center-nav-bar {
-    flex: 1;
-    display: flex;
-    justify-content: center;  /* 确保内容居中 */
-    align-items: center;
-  }
-
   /* Custom nav item styling */
   .custom-nav-item {
     font-size: 18px;
@@ -442,11 +783,110 @@
     color: #666666;
   }
 
-  /* Close button (X) styling */
-  .close-button {
-    font-size: 18px;
-    cursor: pointer;
+  .content.collapsed {
+    display: none;
   }
+  
 
   
   /* //////////////////////////// */
+
+  #payette-section {
+    width: 30%;
+    text-align: center;
+    margin: 0 auto;       
+    padding-top: 0px;
+    margin-bottom: 0px;
+    position: relative;
+    bottom:5px;
+}
+
+/* 手机模式（宽度小于等于768px） */
+@media screen and (max-width: 1000px) {
+#payette-section {
+    width: 100%;
+}
+}
+  
+
+/* Payette image styles */
+#payette-bg {
+    width: 100%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: cover;
+}
+
+  
+  #nav-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 150px;
+    margin: 10px 0;
+    font-weight: bold;
+  }
+  
+  #nav-buttons button {
+    font-family: 'Cabin', sans-serif;
+    font-size: 16px;
+    padding: 6px 14px;
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+    color: #333;
+    border-bottom: 2px solid transparent;
+    font-weight: bold;
+  }
+  
+  #nav-buttons button:hover {
+    color:#db1a54;
+
+    border-bottom: 2px solid #666;
+  }
+  
+ /*card text*/
+ .image-stack {
+  position: relative;
+  width: 88%;
+  height: auto;
+  margin: 0 auto; /* 添加这一行使其水平居中 */
+}
+
+.image-stack img {
+  width: 88%;
+  display: block;
+  margin: 0 auto; /* 添加这一行使其水平居中 */
+}
+
+.image-stack .info-overlay {
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  transition: opacity 1s ease;
+}
+
+.image-stack .text-background {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.image-stack .text-drip {
+  position: absolute;
+  top: 0px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  z-index: 2;
+  width: 88%;
+  height: auto;
+
+  /* 初始裁切：只显示顶部 0%，完全看不见 */
+  clip-path: inset(0 0 100% 0);
+  transition: clip-path 2s ease;
+}

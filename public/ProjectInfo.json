@@ -1,0 +1,224 @@
+{
+  "Project1":[
+    {
+      "ProjectName": "RAGON",
+      "Address": "The Ragon Institute of Mass General, MIT, and Harvard",
+      "Location": "600 Main Street|Cambridge · MA",
+      "Completed": "Completed|2024",
+      "TotalSquareFootage": "323,000|GSF",
+      "Awards": [
+        {
+          "AwardsYear": "2024",
+          "Award": "AIA New England Design Awards, Citation"
+        }
+      ],
+      "LEEDStatus": "LEED Gold Certified",
+      "EUI": "136 kBtu / SF",
+      "Percent": "61%",
+      "Sentence": "reduction in energy use compared to the 2030 baseline"
+    }
+  ],
+  "Project2":[
+    {
+      "ProjectName": "NORTHEASTERN UNIVERSITY EXP",
+      "Address": "Northeastern University, Engineering Research Building",
+      "Location": "805 Columbus Ave|Boston · MA",
+      "Completed": "Completed|2023",
+      "TotalSquareFootage": "357,000|GSF",
+      "Awards": [
+        {
+          "AwardsYear": "2024",
+          "Award": "AIA Education Facility Design Award"
+        },
+        {
+          "AwardsYear": "2024",
+          "Award": "Illumination Award for Interior Lighting Design"
+        }
+      ],
+      "LEEDStatus": "LEED Platinum Certified",
+      "EUI": "81 kBtu / SF",
+      "Percent": "78%",
+      "Sentence": "reduction in energy use compared to the 2030 baseline"
+    }
+  ],
+  "Project3":[
+    {
+      "ProjectName": "NORTHEASTERN UNIVERSITY ISEC",
+      "Address": "Northeastern University, Interdisciplinary Science and Engineering Complex",
+      "Location": " 805 Columbus Ave|Boston · MA",
+      "Completed": "Completed|2016",
+      "TotalSquareFootage": "234,000|GSF",
+      "Awards": [
+        {
+          "AwardsYear": "2019",
+          "Award": "AIA New England, Honor Award"
+        },
+        {
+          "AwardsYear": "2019",
+          "Award": "AIA COTE\u00ae Top Ten"
+        },
+        {
+          "AwardsYear": "2018",
+          "Award": "Harleston Parker Medal"
+        },
+        {
+          "AwardsYear": "2018",
+          "Award": "Boston Society of Architects, Sustainable Award, Award"
+        },
+        {
+          "AwardsYear": "2018",
+          "Award": "American Architecture Award"
+        },
+        {
+          "AwardsYear": "2018",
+          "Award": "SCUP/AIA-CAE Excellence in Architecture: New Building, Merit Award"
+        },
+        {
+          "AwardsYear": "2018",
+          "Award": "Illumination Award for Interior Lighting Design"
+        },
+        {
+          "AwardsYear": "2017",
+          "Award": "AIA New York COTE, Merit Award"
+        },
+        {
+          "AwardsYear": "2017",
+          "Award": "I2SL Go Beyond Award, Buildings Category"
+        },
+        {
+          "AwardsYear": "2017",
+          "Award": "Boston Society of Architects, Honor Award for Excellence"
+        },
+        {
+          "AwardsYear": "2017",
+          "Award": "AN Best of Design: Digital Fabrication, Honorable Mention"
+        },
+        {
+          "AwardsYear": "2020",
+          "Award": "Boston Society of Landscape Architects Honor Award"
+        },
+        {
+          "AwardsYear": "2021",
+          "Award": "AIA Regional & Urban Design Award"
+        },
+        {
+          "AwardsYear": "2021",
+          "Award": "AIA Architecture Award"
+        },
+        {
+          "AwardsYear": "2022",
+          "Award": "AIA Education Facility Design Awards"
+        }
+      ],
+      "LEEDStatus": "LEED-NC 3 Gold Certified",
+      "EUI": "91 kBtu / SF",
+      "Percent": "78%",
+      "Sentence": "reduction in energy use compared to the 2030 baseline"
+    }
+  ],
+  "Project4":[
+    {
+      "ProjectName": "BETH ISRAEL DEACONESS MEDICAL CENTER",
+      "Address": "Beth Israel Deaconess Medical Center - Klarman Building",
+      "Location": "111 Francis St|Boston · MA",
+      "Completed": "Completed|2023",
+      "TotalSquareFootage": "380,000|GSF",
+      "LEEDStatus": "LEED Gold Certified",
+      "Awards": [
+        {
+          "AwardsYear": "2023",
+          "Award": "BSA Built Design Excellence Awards, Technical and Environmental Impact Advancement Commendation, Institutional Facilities"
+        },
+        {
+          "AwardsYear": "2024",
+          "Award": "IIDA New England Design Award"
+        }
+      ],
+      "EUI": "156 kBtu/SF",
+      "Percent": "32%",
+      "Sentence": "reduction in energy use compared to 2030 baseline"
+    }
+  ],
+  "Project5":[
+    {
+      "ProjectName": "BOSTON COLLEGE",
+      "Address": "Boston College, Institute for Integrated Science and Society",
+      "Location": "245 Beacon St|Chestnut Hill · MA",
+      "Completed": "Completed|2022",
+      "TotalSquareFootage": "150,000|GSF",
+      "LEEDStatus": "LEED Silver Certified",
+      "Awards": [
+        {
+          "AwardsYear": "2023",
+          "Award": "AIA New England Design Awards, Honor Award"
+        }
+      ],
+      "EUI": "89 kBtu / SF",
+      "Percent": "78%",
+      "Sentence": "reduction in energy use compared to the 2030 baseline"
+    }
+  ],
+  "Project6":[
+    {
+      "ProjectName": "BOSTON UNIVERSITY",
+      "Address": "Boston University, Rajen Kilachand Center for Integrated Life Sciences and Engineering",
+      "Location": "610 Commonwealth Ave|Boston · MA",
+      "Completed": "Completed|2017",
+      "TotalSquareFootage": "170,000|SF",
+      "LEEDStatus": "C",
+      "Awards": [
+        {
+          "AwardsYear": "2019",
+          "Award": "Boston Society of Architects, Honor Award for Excellence"
+        },
+        {
+          "AwardsYear": "2017",
+          "Award": "AIA New England, Citation Award"
+        }
+      ],
+      "EUI": "134 kBtu/SF",
+      "Percent": "72%",
+      "Sentence": "reduction in energy use compared to the 2030 baseline"
+    }
+  ],
+  "Project7":[
+    {
+      "ProjectName": "TUFTS UNIVERSITY",
+      "Address": "Tufts University, Tsungming Tu Complex",
+      "Location": "200 College Ave|Medford · MA",
+      "Completed": "Completed|2017",
+      "TotalSquareFootage": "177,000|GSF",
+      "LEEDStatus": "LEED-NC 3 Gold Certified",
+      "Awards": [
+        {
+          "AwardsYear": "2021",
+          "Award": "BSA Sustainable Design Award"
+        },
+        {
+          "AwardsYear": "2019",
+          "Award": "AIA New England, Merit Award"
+        },
+        {
+          "AwardsYear": "2019",
+          "Award": "IIDA New England, Award, Research Laboratory Category"
+        },
+        {
+          "AwardsYear": "2018",
+          "Award": "BSA Honor Award for Excellence, Citation"
+        },
+        {
+          "AwardsYear": "2018",
+          "Award": "I2SL Go Beyond Award, Buildings Category"
+        },
+        {
+          "AwardsYear": "2022",
+          "Award": "AIA COTE\u00ae Top Ten"
+        }
+      ],
+      "EUI": "112 kBtu/SF",
+      "Percent": "77%",
+      "Sentence": "reduction in energy use compared to the 2030 baseline"
+    }
+  ]  
+
+}

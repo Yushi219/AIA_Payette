@@ -1,0 +1,102 @@
+{
+    "ProjectName": "TUFTS",
+    "Address": "Tufts University, Tsungming Tu Complex",
+    "Description": "The new Tsungming Tu Complex is the product of a strategic infill addition that creates space for interdisciplinary research while connecting two historic buildings to form a dynamic, community focused, academic precinct. The complex addresses the University\u2019s desire for a critical mass of research and teaching space to support cross-departmental collaborations in an environmentally responsible manner. A glass box floats effortlessly between two historic red brick bookends. Its taut skin cradles and reflects its surroundings, complementing the brick and lending quiet dignity to the existing buildings.",
+    "Location": "Medford, MA / United States",
+    "Completed": "2017",
+    "TotalSquareFootage": "177,000 GSF",
+    "ProgramComponents": [
+      "Biology",
+      "Environment and Neuroscience Research Laboratories",
+      "Computation",
+      "Vivarium",
+      "Core Labs",
+      "Teaching Labs"
+    ],
+    "LEEDStatus": "LEED-NC 3 Gold Certified",
+    "Awards": [
+      {
+        "AwardsYear": "2021",
+        "Award": "BSA Sustainable Design Award"
+      },
+      {
+        "AwardsYear": "2019",
+        "Award": "AIA New England, Merit Award"
+      },
+      {
+        "AwardsYear": "2019",
+        "Award": "IIDA New England, Award, Research Laboratory Category"
+      },
+      {
+        "AwardsYear": "2018",
+        "Award": "BSA Honor Award for Excellence, Citation"
+      },
+      {
+        "AwardsYear": "2018",
+        "Award": "I2SL Go Beyond Award, Buildings Category"
+      },
+      {
+        "AwardsYear": "2022",
+        "Award": "AIA COTE\u00ae Top Ten"
+      }
+    ],
+    "News": [
+      {
+        "NewsTitle": "The Science and Engineering Complex",
+        "NewsLink": "https://www.youtube.com/watch?v=ioXijGetsUs"
+      },
+      {
+        "NewsTitle": "New Science and Engineering Complex is Designed for Collaboration",
+        "NewsLink": "https://now.tufts.edu/2015/05/05/new-science-and-engineering-complex-designed-collaboration?utm_source=Tufts+Now+-+External+and+Students&utm_campaign=9c7bce200b-Tufts_Now_external_150506&utm_medium=email&utm_term=0_c17dba3525-9c7bce200b-207356709"
+      },
+      {
+        "NewsTitle": "SEC opens to Tufts Community",
+        "NewsLink": "https://www.tuftsdaily.com/article/2017/08/science-engineering-complex-opens-tufts-community"
+      }
+    ],
+    "Team": [
+      {
+        "TeamMember": "George E. Marsh, Jr., FAIA",
+        "Position": "Principal-in-Charge",
+        "PeopleLink": "https://www.payette.com/leadership/george-e-marsh-jr/"
+      },
+      {
+        "TeamMember": "Kevin B. Sullivan, FAIA",
+        "Position": "Design Principal",
+        "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/"
+      },
+      {
+        "TeamMember": "Robert Pasersky, AIA",
+        "Position": "Project Manager / Architect",
+        "PeopleLink": "https://www.payette.com/leadership/robert-pasersky/"
+      },
+      {
+        "TeamMember": "Diana Tsang, AIA",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/diana-tsang/"
+      },
+      {
+        "TeamMember": "Megan van der Linde, AIA, LEED AP BD+C",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/megan-van-der-linde/"
+      },
+      {
+        "TeamMember": "Sean Hurley, AIA, LEED AP",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/sean-hurley/"
+      },
+      {
+        "TeamMember": "Michael J. Quinn, AIA, CSI, CCS, LEED AP",
+        "Position": "Architect",
+        "PeopleLink": "https://www.payette.com/leadership/michael-j-quinn/"
+      },
+      {
+        "TeamMember": "Mary Gallagher, IIDA, LEED AP",
+        "Position": "Interior Designer",
+        "PeopleLink": "https://www.payette.com/leadership/mary-gallagher/"
+      }
+    ],
+    "EUI": "112 kBtu/SF",
+    "Percent": "77%",
+    "Sentence": "reduction in energy use compared to the 2030 baseline"
+  }

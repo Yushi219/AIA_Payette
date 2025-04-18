@@ -13,40 +13,36 @@
 <body>
   <div id="splash-container">
     <!-- Payette section -->
-    <div id="payette-section" style="position: relative; text-align: center;">
-      <img id="payette-bg" src="public/payette.png" alt="Payette Background"> <!-- Payette Background -->
-    </div>
-
-    <div id="dashboard-buttons">
-      <button id="project-dashboard" class="dashboard-button left">
-        <span class="icon"><</span>
-        <span>Project Dashboard</span>
-      </button>
-      <button id="computational-dashboard" class="dashboard-button right">
-        <span>Computational Design Dashboard</span>
-        <span class="icon">></span>
-      </button>
+    <div id="payette-section" style="position: relative; text-align: center; cursor: pointer;">
+      <img id="payette-bg" src="public/payette.png" alt="Payette Background">
     </div>
     
+    <!-- 新增导航按钮 -->
+    <div id="nav-buttons">
+      <button id="map-btn" onclick="navigateTo('map')">BOSTON MAP</button>    
+      <button id="info-btn" onclick="navigateTo('info')">PROJECTS</button>
+      <button id="awards-btn" onclick="navigateTo('awards')">AWARDS</button>
+      <button id="leed-btn" onclick="navigateTo('leed')">LEED</button>
+  
+    </div>
+
     
     <!-- BG image full width and scrollable -->
     <div id="map-container">
       <div id="map">
-        <img src="public/BG.png" alt="Map Background">
+        <img src="public/base.png" alt="Map Background">
 
       
 
         <!-- Building images -->
-        <img id="building1" src="public/Building/1B.png" alt="Building 1" class="building">
-        <img id="building2" src="public/Building/2B.png" alt="Building 2" class="building">
-        <img id="building3" src="public/Building/3B.png" alt="Building 3" class="building">
-        <img id="building4" src="public/Building/4B.png" alt="Building 4" class="building">
-        <img id="building5" src="public/Building/5B.png" alt="Building 5" class="building">
-        <img id="building6" src="public/Building/6B.png" alt="Building 6" class="building">
-        <img id="building7" src="public/Building/7B.png" alt="Building 7" class="building">
-        <img id="building8" src="public/Building/8B.png" alt="Building 8" class="building">
-        <img id="building9" src="public/Building/9B.png" alt="Building 9" class="building">
-        <img id="payetteL" src="public/Building/payetteL.png" alt="PL" class="building" style="visibility: visible; left: 57.48%; top: 34.704%; width: 13.358%; position: absolute;">
+        <img id="building1" src="public/Building/B1-1.png" alt="Building 1" class="building">
+        <img id="building2" src="public/Building/B2-1.png" alt="Building 2" class="building">
+        <img id="building3" src="public/Building/B3-1.png" alt="Building 3" class="building">
+        <img id="building4" src="public/Building/B4-1.png" alt="Building 4" class="building">
+        <img id="building5" src="public/Building/B5-1.png" alt="Building 5" class="building">
+        <img id="building6" src="public/Building/B6-1.png" alt="Building 6" class="building">
+        <img id="building7" src="public/Building/B7-1.png" alt="Building 7" class="building">
+
       </div>
     </div>
      
@@ -63,7 +59,7 @@
     
     
     <!-- Loading overlay -->
-    <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #fffcf5; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">
+    <div id="loading-overlay" style="display: none; font-family: 'Cabin', sans-serif; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #ffffff; z-index: 10000; display: flex; align-items: center; justify-content: center; font-size: 24px;">
       Loading...
     </div>
 
