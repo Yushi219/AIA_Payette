@@ -305,6 +305,44 @@ document.addEventListener('DOMContentLoaded', function() {
         history.pushState({ projectId: project.number }, `Project ${project.number}`, `?id=${project.number}&view=${viewType}`);
       });
       
+      card.addEventListener('touchstart', e => {
+        touchMoved = false;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+      });
+      
+      card.addEventListener('touchmove', e => {
+        const deltaX = Math.abs(e.touches[0].clientX - touchStartX);
+        const deltaY = Math.abs(e.touches[0].clientY - touchStartY);
+        if (deltaX > 10 || deltaY > 10) {
+          touchMoved = true;
+      
+          // 视觉动画：图层消失、文字替换
+          const stack = card.querySelector('.image-stack');
+          const infoImg = stack.querySelector('.info-overlay');
+          const dripImg = stack.querySelector('.text-drip');
+          infoImg.style.opacity = '0';
+          dripImg.style.clipPath = 'inset(0 0 0% 0)';
+        }
+      });
+      
+      card.addEventListener('touchend', async e => {
+        if (!touchMoved) {
+          e.stopPropagation();
+          localStorage.setItem('previousPage', 'dashboard'); 
+          await displayProjectDetails(project, true);
+          history.pushState({ projectId: project.number }, `Project ${project.number}`, `?id=${project.number}&view=${viewType}`);
+        } else {
+          // 恢复视觉状态
+          setTimeout(() => {
+            const stack = card.querySelector('.image-stack');
+            const infoImg = stack.querySelector('.info-overlay');
+            const dripImg = stack.querySelector('.text-drip');
+            infoImg.style.opacity = '1';
+            dripImg.style.clipPath = 'inset(0 0 100% 0)';
+          }, 1500); // 动画之后恢复
+        }
+      });
       
     
         projectList.appendChild(card);
