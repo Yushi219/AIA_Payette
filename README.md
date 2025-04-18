@@ -23,7 +23,7 @@ This will update the `file-list.json` files for both projects and tools, ensurin
 
 The website is accessible at the following URL:
 
-[https://yushi219.github.io/Payette-AIA-Tour-App/index.html](https://yushi219.github.io/Payette-AIA-Tour-App/index.html)
+[https://yushi219.github.io/AIA_Payette/index.html](https://yushi219.github.io/AIA_Payette/index.html)
 
 ### 3. Copyright Notice
 
