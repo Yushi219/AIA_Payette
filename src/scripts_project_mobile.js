@@ -250,10 +250,10 @@ document.addEventListener('DOMContentLoaded', function() {
         
         if (viewType === 'awards') {
           overlayImagePath = `public/Project/MA${project.number}.png`;
-          overlayStyle = 'position: absolute; top: 200px; left: 50%; transform: translate(-50%, -50%); width: 100%; height: auto;';
+          overlayStyle = 'position: absolute; top: 180px; left: 50%; transform: translate(-50%, -50%); width: 100%; height: auto;';
         } else if (viewType === 'leed') {
           overlayImagePath = `public/Project/L${project.number}.png`;
-          overlayStyle = 'position: absolute; top: 200px; left: 50%; transform: translate(-50%, -50%); width: 100%; height: auto;';
+          overlayStyle = 'position: absolute; top: 150px; left: 50%; transform: translate(-50%, -50%); width: 100%; height: auto;';
         } else {
           overlayImagePath = `public/Project/MT${project.number}.png`;
           overlayStyle = ''; // 默认 Info 不需位置控制

@@ -285,15 +285,21 @@
   }
   
   .photo-nav {
-    position: fixed; 
-    bottom: 115px; /* ✅ 在图片容器底部悬空一点 */
+    position: fixed;
     font-size: 25px;
     color: rgba(160, 160, 160, 0.5);
     cursor: pointer;
     z-index: 5;
     transition: opacity 0.3s;
     user-select: none;
+  
+    width: auto;              /* 限制宽度不要默认撑开 */
+    height: auto;             /* 限制高度避免撑满 */
+    padding: 6px 10px;        /* 明确的大小区域 */
+    background: transparent;  /* 不要浏览器默认的 block 区域 */
+    line-height: 1;
   }
+  
   
   /* 左右箭头具体位置 */
   .left-nav {
@@ -320,7 +326,16 @@
     border: none;
     font-weight: bold;
     transition: color 0.3s ease;
+    
+    /* 添加以下几行来限制点击范围 */
+    padding: 6px 12px;  /* 控制按钮大小 */
+    line-height: 1;     /* 避免扩大高度 */
+    height: auto;
+    width: auto;
+    display: inline-block;
   }
+  
+  
   
   .center-nav:hover {
     color: #e60050; /* Payette主红 */
