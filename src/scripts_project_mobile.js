@@ -1,3 +1,22 @@
+
+(function() {
+  const isMobile = window.innerWidth < 1000;
+  const isOnDesktop = window.location.pathname.includes('project_index.html');
+  const isOnMobile = window.location.pathname.includes('project_index_mobile.html');
+
+  if (isMobile && isOnDesktop) {
+    // 正在 desktop 页面但应为 mobile，跳转
+    const newUrl = window.location.href.replace('project_index.html', 'project_index_mobile.html');
+    window.location.replace(newUrl);
+  } else if (!isMobile && isOnMobile) {
+    // 正在 mobile 页面但应为 desktop，跳转
+    const newUrl = window.location.href.replace('project_index_mobile.html', 'project_index.html');
+    window.location.replace(newUrl);
+  }
+})();
+
+
+
 function navigateTo(viewType) {
   if (viewType === 'map') {
     window.location.href = 'index.html';
@@ -9,6 +28,7 @@ function navigateTo(viewType) {
 }
 
 document.addEventListener('DOMContentLoaded', function() { 
+
 
 
   const menuToggleButton = document.getElementById('menu-toggle');
@@ -503,6 +523,37 @@ document.addEventListener('DOMContentLoaded', function() {
             });
     
             dotOverlay.appendChild(dotEl);
+
+
+            const leftNav = document.querySelector('.left-nav');
+            if (leftNav) {
+              if (photoHistory.length === 0) {
+                leftNav.classList.add('disabled');
+              } else {
+                leftNav.classList.remove('disabled');
+              }
+            }
+
+
+            const rightNav = document.querySelector('.right-nav');
+            if (rightNav) {
+              const nextPhotoPath = `public/Photo/${projectNumber}/${parseInt(photoNumber) + 1}.jpg`;
+
+              fetch(nextPhotoPath, { method: 'HEAD' })
+                .then(res => {
+                  if (res.ok) {
+                    rightNav.classList.remove('disabled');
+                  } else {
+                    rightNav.classList.add('disabled');
+                  }
+                })
+                .catch(err => {
+
+                  rightNav.classList.add('disabled');
+                });
+            }
+
+
           });
     
           // 插入在这里！
@@ -540,10 +591,25 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
   function goToNextPhoto() {
-    photoHistory.push(currentPhotoIndex);
-    currentPhotoIndex++;
-    loadPhotoTour(currentProjectNumber, currentPhotoIndex.toString());
+    const nextIndex = currentPhotoIndex + 1;
+    const nextPhotoPath = `public/Photo/${currentProjectNumber}/${nextIndex}.jpg`;
+  
+    fetch(nextPhotoPath, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          photoHistory.push(currentPhotoIndex);
+          currentPhotoIndex = nextIndex;
+          loadPhotoTour(currentProjectNumber, currentPhotoIndex.toString());
+        } else {
+
+        }
+      })
+      .catch(err => {
+
+      });
   }
+  
+  
 
   function toggleContent(button) {
     const content = button.nextElementSibling;
@@ -738,6 +804,71 @@ document.addEventListener('DOMContentLoaded', function() {
 
       document.querySelector('.left-nav')?.addEventListener('click', goToPrevPhoto);
       document.querySelector('.right-nav')?.addEventListener('click', goToNextPhoto);
+
+
+      // 添加以下代码实现手指滑动切换照片
+      let startX = 0;
+      let currentX = 0;
+      let isDragging = false;
+      
+      const imageContainer = document.querySelector('.image-container');
+      const tourImage = document.getElementById('tour-image');
+      
+      if (imageContainer && tourImage) {
+        imageContainer.addEventListener('touchstart', e => {
+          if (e.touches.length === 1) {
+            startX = e.touches[0].clientX;
+            isDragging = true;
+            tourImage.style.transition = 'none'; // 移除过渡动画
+          }
+        });
+      
+        imageContainer.addEventListener('touchmove', e => {
+          if (!isDragging) return;
+          currentX = e.touches[0].clientX;
+          const deltaX = currentX - startX;
+          tourImage.style.transform = `translateX(${deltaX}px)`; // 实时移动图片
+        });
+      
+        imageContainer.addEventListener('touchend', e => {
+          if (!isDragging) return;
+          isDragging = false;
+        
+          const deltaX = e.changedTouches[0].clientX - startX;
+          const threshold = 80;
+          tourImage.style.transition = 'transform 0.3s ease';
+        
+          if (deltaX < -threshold) {
+            // 向左滑动，当前图向左飞出
+            tourImage.style.transform = 'translateX(-100%)';
+            setTimeout(() => {
+              goToNextPhoto(); // 加载下一张图
+              tourImage.style.transition = 'none';
+              tourImage.style.transform = 'translateX(100%)'; // 下一张从右边开始
+              requestAnimationFrame(() => {
+                tourImage.style.transition = 'transform 0.3s ease';
+                tourImage.style.transform = 'translateX(0)';
+              });
+            }, 300);
+          } else if (deltaX > threshold) {
+            // 向右滑动，当前图向右飞出
+            tourImage.style.transform = 'translateX(100%)';
+            setTimeout(() => {
+              goToPrevPhoto(); // 加载上一张图
+              tourImage.style.transition = 'none';
+              tourImage.style.transform = 'translateX(-100%)'; // 上一张从左边开始
+              requestAnimationFrame(() => {
+                tourImage.style.transition = 'transform 0.3s ease';
+                tourImage.style.transform = 'translateX(0)';
+              });
+            }, 300);
+          } else {
+            tourImage.style.transform = 'translateX(0)';
+          }
+        });
+        
+        
+      }
       
 
   }

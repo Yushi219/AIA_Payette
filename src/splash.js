@@ -16,7 +16,68 @@ function updateActiveButton(viewType) {
   });
 }
 
+function openMap(url) {
+  // 创建弹窗容器
+  const popup = document.createElement('div');
+  popup.classList.add('map-popup');
+  popup.innerHTML = `
+    <div class="popup-content">
+      <button class="popup-close" onclick="document.body.removeChild(this.parentElement.parentElement)">✖</button>
+      <div class="popup-message">
+        <p>Open location in Google Maps?</p>
+        <button class="popup-open-btn">Go to Google Map</button>
+      </div>
+    </div>
+  `;
+
+  // 点击背景关闭
+  popup.addEventListener('click', function (e) {
+    if (e.target === popup) document.body.removeChild(popup);
+  });
+
+  // 绑定跳转逻辑
+  popup.querySelector('.popup-open-btn').addEventListener('click', function () {
+    window.open(url, '_blank');
+    document.body.removeChild(popup);
+  });
+
+  document.body.appendChild(popup);
+}
+
+
+
+async function setupBuildingLabelClicks() {
+  try {
+    const res = await fetch('public/MapLinks.json'); // 如果放在 public 文件夹
+    const mapLinks = await res.json();
+
+    Object.keys(mapLinks).forEach(labelId => {
+      const label = document.getElementById(labelId);
+      if (!label) return;
+
+      const link = mapLinks[labelId];
+
+      // 让 title 和 subtitle 都能点击
+      label.style.cursor = 'pointer';
+      label.addEventListener('click', () => {
+        console.log("Opening map with URL:", link);  // 检查点击是否生效
+        openMap(link);
+      });
+      
+    });
+  } catch (err) {
+    console.error('Failed to load map links:', err);
+  }
+
+
+}
+
+
+
+
 document.addEventListener('DOMContentLoaded', function () {
+  setupBuildingLabelClicks();
+
   updateActiveButton('map'); 
   
   const toggleCircle = document.getElementById('toggle-circle');

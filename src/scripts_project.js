@@ -1,3 +1,22 @@
+
+  (function() {
+    const isMobile = window.innerWidth < 1000;
+    const isOnDesktop = window.location.pathname.includes('project_index.html');
+    const isOnMobile = window.location.pathname.includes('project_index_mobile.html');
+
+    if (isMobile && isOnDesktop) {
+      // 正在 desktop 页面但应为 mobile，跳转
+      const newUrl = window.location.href.replace('project_index.html', 'project_index_mobile.html');
+      window.location.replace(newUrl);
+    } else if (!isMobile && isOnMobile) {
+      // 正在 mobile 页面但应为 desktop，跳转
+      const newUrl = window.location.href.replace('project_index_mobile.html', 'project_index.html');
+      window.location.replace(newUrl);
+    }
+  })();
+
+
+
 const urlParams = new URLSearchParams(window.location.search);
 
 function navigateTo(viewType) {
@@ -75,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
     personImage.src = standingStart;
   }
 }
+
+
 
 
   // Show loading overlay
@@ -258,14 +279,14 @@ document.addEventListener('DOMContentLoaded', function() {
           let overlayStyle = '';
           
           if (viewType === 'awards') {
-            overlayImagePath = `public/Project/A${project.number}.png`;
-            overlayStyle = 'position: absolute; top: 260px; left: 50%; transform: translate(-50%, -50%); width: 600px; height: auto;';
+            overlayImagePath = `public/Project/MA${project.number}.png`;
+            overlayStyle = 'position: absolute; margin-top: 35%; left: 50%; transform: translate(-50%, -50%); width: 90%;';
           } else if (viewType === 'leed') {
             overlayImagePath = `public/Project/L${project.number}.png`;
-            overlayStyle = 'position: absolute; top: 260px; left: 50%; transform: translate(-50%, -50%); width: 500px; height: auto;';
+            overlayStyle = 'position: absolute; margin-top: 33%; left: 50%; transform: translate(-50%, -50%); width: 80%;';
           } else {
-            overlayImagePath = `public/Project/Info${project.number}.png`;
-            overlayStyle = ''; // 默认 Info 不需位置控制
+            overlayImagePath = `public/Project/MT${project.number}.png`;
+            overlayStyle = 'position: absolute; margin-top: 20%; left: 50%; transform: translate(-50%, -50%); width: 80%;'; // 默认 Info 不需位置控制
           }
           
           
@@ -480,6 +501,26 @@ document.addEventListener('DOMContentLoaded', function() {
               }
             }
 
+            const rightNav = document.querySelector('.right-nav');
+            if (rightNav) {
+              const nextPhotoPath = `public/Photo/${projectNumber}/${parseInt(photoNumber) + 1}.jpg`;
+
+              fetch(nextPhotoPath, { method: 'HEAD' })
+                .then(res => {
+                  if (res.ok) {
+                    rightNav.classList.remove('disabled');
+                  } else {
+                    rightNav.classList.add('disabled');
+                  }
+                })
+                .catch(err => {
+                  rightNav.classList.add('disabled');
+                });
+            }
+
+
+            
+
           });
 
           console.log('Current dots:', currentDots);
@@ -517,10 +558,25 @@ document.addEventListener('DOMContentLoaded', function() {
   
   
   function goToNextPhoto() {
-    photoHistory.push(currentPhotoIndex);
-    currentPhotoIndex++;
-    loadPhotoTour(currentProjectNumber, currentPhotoIndex.toString());
+    const nextIndex = currentPhotoIndex + 1;
+    const nextPhotoPath = `public/Photo/${currentProjectNumber}/${nextIndex}.jpg`;
+  
+    fetch(nextPhotoPath, { method: 'HEAD' })
+      .then(response => {
+        if (response.ok) {
+          photoHistory.push(currentPhotoIndex);
+          currentPhotoIndex = nextIndex;
+          loadPhotoTour(currentProjectNumber, currentPhotoIndex.toString());
+        } else {
+
+        }
+      })
+      .catch(err => {
+
+      });
   }
+  
+  
   
   function toggleContent(button) {
     const content = button.nextElementSibling;

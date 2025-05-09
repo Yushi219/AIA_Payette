@@ -62,6 +62,12 @@
   gap: 0; /* 移除卡片之间的间距 */
   align-items: stretch; /* 确保卡片高度一致 */
   padding-left: 0px; 
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.project-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 /* Project card text content */
@@ -304,18 +310,18 @@
   /* 左右箭头具体位置 */
   .left-nav {
     left: 15px;
-    top: 50px;
+    bottom: 150px;
   }
   
   .right-nav {
     right: 15px;
-    top: 50px;
+    bottom: 150px;
   }
 
   .center-nav {
     position: fixed; 
     left: 50%;
-    top: 55px;
+    bottom: 155px;
     transform: translateX(-50%);
     font-size: 14px;
     color: #999;
@@ -352,6 +358,8 @@
     opacity: 0;
     pointer-events: none;
   }
+
+  
   
   #details-container {
     position: relative;
@@ -546,7 +554,7 @@
   .highlight {
     color: inherit;               /* 不要变蓝 */
     text-decoration: none;        /* 去掉下划线 */
-    background: linear-gradient(to top, yellow 20%, transparent 40%);
+    background: linear-gradient(to top, rgb(255, 203, 34) 20%, transparent 40%);
     padding: 0 2px;
   }
   
@@ -985,12 +993,12 @@
   display: flex;
   justify-content: center;
   gap: 150px;
-  margin: 10px 0;
+  margin: 0;
   font-weight: bold;
 }
 
 #nav-buttons button {
-  font-family: 'Cabin', sans-serif;
+  font-family: 'Gotham', sans-serif;
   font-size: 16px;
   padding: 6px 14px;
   border: none;
@@ -1010,6 +1018,7 @@
   #nav-buttons {
     gap: 20px; /* 间距变小 */
     flex-wrap: wrap; /* 如果按钮太多也可以换行 */
+    margin-bottom: 10px;
   }
 
   #nav-buttons button {

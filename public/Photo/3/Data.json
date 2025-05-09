@@ -1,6 +1,6 @@
 {
-    "ProjectName": "NORTHEASTERN UNIVERSITY ISEC",
-    "Address": "Northeastern University, Interdisciplinary Science and Engineering Complex",
+    "ProjectName": "NORTHEASTERN UNIVERSITY",
+    "Address": "Interdisciplinary Science and Engineering Complex",
     "Description": "The Interdisciplinary Science and Engineering Complex (ISEC) launches Northeastern University\u2019s long-term goal of linking its Huntington Avenue Campus with a new academic precinct along Columbus Avenue, connecting the Fenway and Roxbury neighborhoods of Boston. A new pedestrian bridge\u2014PedX\u2014spans the intervening MBTA and Amtrak rail lines, leading students to the ISEC\u2019s six-story atrium, a new hub for the expanded campus.",
     "Location": "Boston, MA / United States",
     "Completed": "2016",
@@ -19,32 +19,41 @@
     "LEEDStatus": "LEED-NC 3 Gold Certified",
     "Awards": [
       {
-        "AwardsYear": "2019",
-        "Award": "AIA New England, Honor Award"
+        "AwardsYear": "2021",
+        "Award": "AIA Architecture Award"
+      },
+      {
+        "AwardsYear": "2021",
+        "Award": "AIA Regional & Urban Design Award"
       },
       {
         "AwardsYear": "2019",
         "Award": "AIA COTE\u00ae Top Ten"
+      },      
+      {
+        "AwardsYear": "2022",
+        "Award": "AIA Education Facility Design Awards"
       },
       {
         "AwardsYear": "2018",
         "Award": "Harleston Parker Medal"
-      },
-      {
-        "AwardsYear": "2018",
-        "Award": "Boston Society of Architects, Sustainable Award, Award"
-      },
+      },      
       {
         "AwardsYear": "2018",
         "Award": "American Architecture Award"
+      },      
+      {
+        "AwardsYear": "2019",
+        "Award": "AIA New England, Honor Award"
       },
       {
         "AwardsYear": "2018",
         "Award": "SCUP/AIA-CAE Excellence in Architecture: New Building, Merit Award"
       },
+
       {
         "AwardsYear": "2018",
-        "Award": "Illumination Award for Interior Lighting Design"
+        "Award": "Boston Society of Architects, Sustainable Award, Award"
       },
       {
         "AwardsYear": "2017",
@@ -52,32 +61,26 @@
       },
       {
         "AwardsYear": "2017",
-        "Award": "I2SL Go Beyond Award, Buildings Category"
-      },
-      {
-        "AwardsYear": "2017",
         "Award": "Boston Society of Architects, Honor Award for Excellence"
       },
       {
         "AwardsYear": "2017",
-        "Award": "AN Best of Design: Digital Fabrication, Honorable Mention"
+        "Award": "I2SL Go Beyond Award, Buildings Category"
       },
       {
         "AwardsYear": "2020",
         "Award": "Boston Society of Landscape Architects Honor Award"
       },
       {
-        "AwardsYear": "2021",
-        "Award": "AIA Regional & Urban Design Award"
+        "AwardsYear": "2018",
+        "Award": "Illumination Award for Interior Lighting Design"
       },
       {
-        "AwardsYear": "2021",
-        "Award": "AIA Architecture Award"
-      },
-      {
-        "AwardsYear": "2022",
-        "Award": "AIA Education Facility Design Awards"
+        "AwardsYear": "2017",
+        "Award": "AN Best of Design: Digital Fabrication, Honorable Mention"
       }
+
+
     ],
     
     "News": [

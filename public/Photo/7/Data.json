@@ -1,6 +1,6 @@
 {
     "ProjectName": "TUFTS",
-    "Address": "Tufts University, Tsungming Tu Complex",
+    "Address": "Tsungming Tu Complex",
     "Description": "The new Tsungming Tu Complex is the product of a strategic infill addition that creates space for interdisciplinary research while connecting two historic buildings to form a dynamic, community focused, academic precinct. The complex addresses the University\u2019s desire for a critical mass of research and teaching space to support cross-departmental collaborations in an environmentally responsible manner. A glass box floats effortlessly between two historic red brick bookends. Its taut skin cradles and reflects its surroundings, complementing the brick and lending quiet dignity to the existing buildings.",
     "Location": "Medford, MA / United States",
     "Completed": "2017",
@@ -16,29 +16,32 @@
     "LEEDStatus": "LEED-NC 3 Gold Certified",
     "Awards": [
       {
+        "AwardsYear": "2022",
+        "Award": "AIA COTE\u00ae Top Ten"
+      },      
+      
+      {
         "AwardsYear": "2021",
         "Award": "BSA Sustainable Design Award"
       },
+
       {
         "AwardsYear": "2019",
         "Award": "AIA New England, Merit Award"
       },
       {
-        "AwardsYear": "2019",
-        "Award": "IIDA New England, Award, Research Laboratory Category"
-      },
-      {
         "AwardsYear": "2018",
         "Award": "BSA Honor Award for Excellence, Citation"
-      },
+      },      
       {
         "AwardsYear": "2018",
         "Award": "I2SL Go Beyond Award, Buildings Category"
-      },
+      },      
       {
-        "AwardsYear": "2022",
-        "Award": "AIA COTE\u00ae Top Ten"
+        "AwardsYear": "2019",
+        "Award": "IIDA New England, Award, Research Laboratory Category"
       }
+
     ],
     "News": [
       {

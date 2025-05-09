@@ -183,6 +183,12 @@
   height: calc(100vh - 200px); /* 调整视口高度 */
   gap: 0; /* 移除卡片之间的间距 */
   align-items: stretch; /* 确保卡片高度一致 */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;  /* IE and Edge */
+}
+
+.project-list::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
 
 .project-info {
@@ -413,9 +419,9 @@
 
   .center-nav {
     position: fixed; 
-    left: 94%;
+    left: 50%;
     font-size: 16px;
-    color: #999;
+    color: #ffffff;
     text-transform: uppercase;
     cursor: pointer;
     background: none;
@@ -553,7 +559,7 @@
   .highlight {
     color: inherit;               /* 不要变蓝 */
     text-decoration: none;        /* 去掉下划线 */
-    background: linear-gradient(to top, yellow 20%, transparent 40%);
+    background: linear-gradient(to top, rgb(255, 203, 34) 20%, transparent 40%);
     padding: 0 2px;
   }
   
@@ -823,12 +829,13 @@
     display: flex;
     justify-content: center;
     gap: 150px;
-    margin: 10px 0;
+    margin: 0;
+    margin-bottom: 20px;
     font-weight: bold;
   }
   
   #nav-buttons button {
-    font-family: 'Cabin', sans-serif;
+    font-family: 'Gotham', sans-serif;
     font-size: 16px;
     padding: 6px 14px;
     border: none;

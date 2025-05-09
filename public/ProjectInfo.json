@@ -2,7 +2,7 @@
   "Project1":[
     {
       "ProjectName": "RAGON",
-      "Address": "The Ragon Institute of Mass General, MIT, and Harvard",
+      "Address": "The Ragon Institute of Mass General Brigham, MIT, and Harvard",
       "Location": "600 Main Street|Cambridge · MA",
       "Completed": "Completed|2024",
       "TotalSquareFootage": "323,000|GSF",
@@ -20,8 +20,8 @@
   ],
   "Project2":[
     {
-      "ProjectName": "NORTHEASTERN UNIVERSITY EXP",
-      "Address": "Northeastern University, Engineering Research Building",
+      "ProjectName": "NORTHEASTERN UNIVERSITY",
+      "Address": "EXP - Engineering Research Building",
       "Location": "805 Columbus Ave|Boston · MA",
       "Completed": "Completed|2023",
       "TotalSquareFootage": "357,000|GSF",
