@@ -112,7 +112,7 @@
 /* Main person image settings */
 #person-image {
   position: absolute;
-  bottom: 0vh; /* 紧贴视窗底部 */
+  bottom: 11vh; /* 紧贴视窗底部 */
   width: 10vw; /* 按视窗宽度缩放 */
   max-width: 180px; /* 限制最大宽度 */
   min-width: 120px; /* 限制最小宽度 */
