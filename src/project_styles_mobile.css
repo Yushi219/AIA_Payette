@@ -99,26 +99,29 @@
   z-index: 5;
 }
 
-/* Container for the person image */
+/* 小人容器 */
 .person-container {
-  position: fixed; /* 固定在窗口底部 */
-  bottom: 0; /* 与窗口底部对齐 */
+  position: absolute;
+  bottom: 4vh; /* 离容器底部 2% */
   left: 0;
-  width: 10vw; /* 随窗口宽度缩放 */
+  width: 100%;
   z-index: 10;
-  transition: left 0.5s ease, opacity 0.5s ease; /* 平滑移动效果 */
+  pointer-events: none; /* 避免挡住卡片点击 */
 }
 
-/* Main person image settings */
+/* 小人图像 */
+/* 小人图像 */
 #person-image {
   position: absolute;
-  bottom: 11vh; /* 紧贴视窗底部 */
-  width: 10vw; /* 按视窗宽度缩放 */
-  max-width: 180px; /* 限制最大宽度 */
-  min-width: 120px; /* 限制最小宽度 */
+  bottom: 0;
+  left: 10vw; /* 由 JS 控制横向位置 */
+  width: 35vw; /* 从 12vw 增加到 20vw 更醒目 */
+  max-width: 200px; /* 原来是 120px，适当放大 */
+  min-width: 100px; /* 原来是 80px，适当放大 */
   z-index: 10;
   display: block;
 }
+
 
 
   .tags {

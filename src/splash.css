@@ -302,6 +302,7 @@ body, html {
         margin: 10px;
         text-align: center;
         line-height: 1.5;
+        font-weight: bold;
       }
       
       /* 移动版下将文字移到地图后面 */
@@ -310,6 +311,7 @@ body, html {
           order: 2;
           font-size: 10px;
           margin: 15px 20px;
+          font-weight: bold;
         }
       
       }

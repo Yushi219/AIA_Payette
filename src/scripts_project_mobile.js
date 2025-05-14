@@ -29,13 +29,7 @@ function navigateTo(viewType) {
 
 document.addEventListener('DOMContentLoaded', function() { 
 
-  // 设置真实可视高度变量
-  function setRealViewportHeight() {
-    const vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-  setRealViewportHeight();
-  window.addEventListener('resize', setRealViewportHeight);
+
 
   const menuToggleButton = document.getElementById('menu-toggle');
   const typeList = document.getElementById("type-list");
@@ -657,15 +651,17 @@ document.addEventListener('DOMContentLoaded', function() {
       <button class="close-button1" onclick="goBackSmart()">✖</button>
     `;
 
+    //<div class="photo-nav left-nav">❮</div>
+    // <div class="photo-nav right-nav">❯</div>
     detailsContainer.innerHTML = navBarHTML  +  `
     <div class="details-container">
       <div class="photo-wrapper">
         <div class="image-container">
           <img id="tour-image" />
           <div id="dot-overlay"></div>        
-          <div class="photo-nav left-nav">❮</div>
+
           <div class="photo-nav center-nav" id="toggle-dots">Show Guide</div>
-          <div class="photo-nav right-nav">❯</div>
+
         </div>        
       </div>
       <div id="info-overlay">
