@@ -102,7 +102,7 @@
 /* 小人容器 */
 .person-container {
   position: absolute;
-  bottom: 4vh; /* 离容器底部 2% */
+  bottom: 12vh; /* 离容器底部 2% */
   left: 0;
   width: 100%;
   z-index: 10;
