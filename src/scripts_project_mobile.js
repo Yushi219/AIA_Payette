@@ -1054,7 +1054,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     hideLoadingOverlay();
 
+
+    
   }
+
+  function alignPersonToImageBottom() {
+    const firstImage = document.querySelector('.section-image');
+    const person = document.getElementById('person-image');
+    const container = document.querySelector('.person-container');
+  
+    if (!firstImage || !person || !container) return;
+  
+    const imageRect = firstImage.getBoundingClientRect();
+  
+    // imageRect.bottom 是相对视口的底部距离
+    // 但你只想让小人底边对齐这个位置 → top = bottom - 小人高度
+    const targetTop = imageRect.bottom - person.offsetHeight;
+  
+    // 如果超出屏幕范围就限制一下（可选）
+    if (targetTop >= 0 && targetTop < window.innerHeight) {
+      container.style.top = `${targetTop}px`;
+    } else {
+      container.style.top = `${window.innerHeight - person.offsetHeight}px`; // fallback 到底部
+    }
+  }
+  
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    alignPersonToImageBottom();
+  });
+  
+  window.addEventListener('load', () => {
+    alignPersonToImageBottom();
+  });
+  
+  
 
   main();
 
