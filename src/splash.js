@@ -376,9 +376,11 @@ document.addEventListener('DOMContentLoaded', function () {
   // 触摸移动事件
   mapContainer.addEventListener('touchmove', (event) => {
     if (isDesktop) return; // 如果是桌面模式，退出
-    event.preventDefault(); // 阻止默认滚动行为
+    event.preventDefault(); // 阻止默认滚动行为    
   
     if (event.touches.length === 1 && isDragging) {
+      const touch = event.touches[0];
+      buildings.forEach(building => toggleTouchVisibility(touch, building));
       return;
  
     } else if (event.touches.length === 2) {
@@ -451,17 +453,38 @@ document.addEventListener('DOMContentLoaded', function () {
   for (let i = 0; i <= 12; i++) {
     const building = document.getElementById(`building${i}`);
     if (building) {
-      building.style.visibility = 'hidden'; // 初始隐藏
+      building.classList.remove('visible'); // 默认不可见，但允许动画控制
       buildings.push(building);
     }
+    
   }
 
 
-  // 为建筑物绑定跳转逻辑
+  // 为建筑物绑定移动端点击判断和 hover 替换逻辑
   buildings.forEach((building, index) => {
-    if (building) {
-      building.addEventListener('click', function () {
-        // 检查是否有相关 ID
+    if (!building) return;
+
+    let touchStartTime = 0;
+    let startX = 0;
+    let startY = 0;
+
+    // 记录 touch 起点
+    building.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartTime = Date.now();
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    // 判断是否为轻点（非滑动）
+    building.addEventListener('touchend', (e) => {
+      const touchEndTime = Date.now();
+      const duration = touchEndTime - touchStartTime;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (duration < 300 && distance < 10) {
         let relatedID;
         if (index === 9) relatedID = 3;
         else if (index === 10) relatedID = 2;
@@ -471,11 +494,31 @@ document.addEventListener('DOMContentLoaded', function () {
         const url = relatedID
           ? `${base}?id=${index + 1}&related=${relatedID}`
           : `${base}?id=${index + 1}`;
-        window.location.href = url; // 跳转到相应页面
+        window.location.href = url;
         showLoadingOverlay();
-      });
-    }
+      }
+    });
   });
+
+  // 桌面模式点击跳转逻辑
+  buildings.forEach((building, index) => {
+    building.addEventListener('click', () => {
+      if (!isDesktop) return;
+
+      let relatedID;
+      if (index === 9) relatedID = 3;
+      else if (index === 10) relatedID = 2;
+      else if (index === 11) relatedID = 6;
+
+      const url = relatedID
+        ? `project_index.html?id=${index + 1}&related=${relatedID}`
+        : `project_index.html?id=${index + 1}`;
+      
+      window.location.href = url;
+      showLoadingOverlay();
+    });
+  });
+
 
   // 显示加载动画
   function showLoadingOverlay() {
@@ -494,7 +537,15 @@ document.addEventListener('DOMContentLoaded', function () {
     buildings.forEach(building => toggleVisibility(event, building));
   });
 
-  // 根据鼠标位置切换建筑图片显示状态
+  function fadeIn(element) {
+    element.classList.add('visible');
+  }
+  
+  function fadeOut(element) {
+    element.classList.remove('visible');
+  }
+  
+
   function toggleVisibility(event, element) {
     const rect = element.getBoundingClientRect();
     if (
@@ -503,11 +554,28 @@ document.addEventListener('DOMContentLoaded', function () {
       event.clientY >= rect.top &&
       event.clientY <= rect.bottom
     ) {
-      element.style.visibility = 'visible';
+      fadeIn(element);
     } else {
-      element.style.visibility = 'hidden';
+      fadeOut(element);
     }
   }
+  
+  
+  function toggleTouchVisibility(touch, element) {
+    const rect = element.getBoundingClientRect();
+    if (
+      touch.clientX >= rect.left &&
+      touch.clientX <= rect.right &&
+      touch.clientY >= rect.top &&
+      touch.clientY <= rect.bottom
+    ) {
+      fadeIn(element);
+    } else {
+      fadeOut(element);
+    }
+  }
+  
+
 
   // 页面加载时隐藏加载动画
   window.onload = function () {

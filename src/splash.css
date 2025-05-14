@@ -98,11 +98,20 @@ body, html {
 }
   
   /* 如果有建筑标记（如额外图片），统一样式 */
-.building {
-    position: absolute; /* 使用绝对定位 */
-    transform-origin: center center; /* 缩放中心 */
-    cursor: pointer; /* 鼠标样式 */
-}
+  .building {
+    position: absolute;
+    transform-origin: center center;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+    z-index: 10; /* 确保在最前层 */
+  }
+  .building.visible {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  
   
 
 #PL {
