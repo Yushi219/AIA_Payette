@@ -19,6 +19,9 @@
 
 const urlParams = new URLSearchParams(window.location.search);
 
+let dotsVisible = true;
+
+
 function navigateTo(viewType) {
   if (viewType === 'map') {
     window.location.href = 'index.html';
@@ -492,54 +495,62 @@ document.addEventListener('DOMContentLoaded', function() {
 
             dotOverlay.appendChild(dotEl);
 
-            const leftNav = document.querySelector('.left-nav');
-            if (leftNav) {
-              if (photoHistory.length === 0) {
-                leftNav.classList.add('disabled');
-              } else {
-                leftNav.classList.remove('disabled');
-              }
-            }
-
-            const rightNav = document.querySelector('.right-nav');
-            if (rightNav) {
-              const nextPhotoPath = `public/Photo/${projectNumber}/${parseInt(photoNumber) + 1}.jpg`;
-
-              fetch(nextPhotoPath, { method: 'HEAD' })
-                .then(res => {
-                  if (res.ok) {
-                    rightNav.classList.remove('disabled');
-                  } else {
-                    rightNav.classList.add('disabled');
-                  }
-                })
-                .catch(err => {
-                  rightNav.classList.add('disabled');
-                });
-            }
-
-
-            
-
           });
+
+          const leftNav = document.querySelector('.left-nav');
+          if (leftNav) {
+            if (photoHistory.length === 0) {
+              leftNav.classList.add('disabled');
+            } else {
+              leftNav.classList.remove('disabled');
+            }
+          }
+
+          const rightNav = document.querySelector('.right-nav');
+          if (rightNav) {
+            const nextPhotoPath = `public/Photo/${projectNumber}/${parseInt(photoNumber) + 1}.jpg`;
+
+            fetch(nextPhotoPath, { method: 'HEAD' })
+              .then(res => {
+                if (res.ok) {
+                  rightNav.classList.remove('disabled');
+                } else {
+                  rightNav.classList.add('disabled');
+                }
+              })
+              .catch(err => {
+                rightNav.classList.add('disabled');
+              });
+          }
 
           console.log('Current dots:', currentDots);
 
           // 插入在这里！
-          let dotsVisible = true;
           const toggleButton = document.getElementById('toggle-dots');
-          toggleButton.textContent = 'Hide Guide';
-    
-          toggleButton.addEventListener('click', () => {
-            dotsVisible = !dotsVisible;
-            const allDots = document.querySelectorAll('.tour-dot');
-    
-            allDots.forEach(dot => {
-              dot.style.display = dotsVisible ? 'block' : 'none';
+          toggleButton.textContent = dotsVisible ? 'Hide Guide' : 'Show Guide';
+          
+          // 给按钮绑定一次点击事件（避免重复绑定）
+          if (!toggleButton.dataset.bound) {
+            toggleButton.addEventListener('click', () => {
+              dotsVisible = !dotsVisible;
+              const allDots = document.querySelectorAll('.tour-dot');
+          
+              allDots.forEach(dot => {
+                dot.style.display = dotsVisible ? 'block' : 'none';
+              });
+          
+              toggleButton.textContent = dotsVisible ? 'Hide Guide' : 'Show Guide';
             });
-    
-            toggleButton.textContent = dotsVisible ? 'Hide Guide' : 'Show Guide';
+          
+            toggleButton.dataset.bound = true; // 标记为已绑定，避免重复
+          }
+          
+          // 初始设置当前所有 dot 是否显示
+          const allDots = document.querySelectorAll('.tour-dot');
+          allDots.forEach(dot => {
+            dot.style.display = dotsVisible ? 'block' : 'none';
           });
+          
         });
     };
   }

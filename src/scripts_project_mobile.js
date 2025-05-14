@@ -15,6 +15,7 @@
   }
 })();
 
+let dotsVisible = true;
 
 
 function navigateTo(viewType) {
@@ -557,20 +558,31 @@ document.addEventListener('DOMContentLoaded', function() {
           });
     
           // 插入在这里！
-          let dotsVisible = true;
           const toggleButton = document.getElementById('toggle-dots');
-          toggleButton.textContent = 'Hide Guide';
-    
-          toggleButton.addEventListener('click', () => {
-            dotsVisible = !dotsVisible;
-            const allDots = document.querySelectorAll('.tour-dot');
-    
-            allDots.forEach(dot => {
-              dot.style.display = dotsVisible ? 'block' : 'none';
+          toggleButton.textContent = dotsVisible ? 'Hide Guide' : 'Show Guide';
+          
+          // 给按钮绑定一次点击事件（避免重复绑定）
+          if (!toggleButton.dataset.bound) {
+            toggleButton.addEventListener('click', () => {
+              dotsVisible = !dotsVisible;
+              const allDots = document.querySelectorAll('.tour-dot');
+          
+              allDots.forEach(dot => {
+                dot.style.display = dotsVisible ? 'block' : 'none';
+              });
+          
+              toggleButton.textContent = dotsVisible ? 'Hide Guide' : 'Show Guide';
             });
-    
-            toggleButton.textContent = dotsVisible ? 'Hide Guide' : 'Show Guide';
+          
+            toggleButton.dataset.bound = true; // 标记为已绑定，避免重复
+          }
+          
+          // 初始设置当前所有 dot 是否显示
+          const allDots = document.querySelectorAll('.tour-dot');
+          allDots.forEach(dot => {
+            dot.style.display = dotsVisible ? 'block' : 'none';
           });
+          
         });
     };
     
@@ -1058,30 +1070,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
   }
 
-  function alignPersonToImageBottom() {
-    const firstImage = document.querySelector('.section-image');
-    const person = document.getElementById('person-image');
-    const container = document.querySelector('.person-container');
-  
-    if (!firstImage || !person || !container) return;
-  
-    const imageOffsetBottom = firstImage.offsetTop + firstImage.offsetHeight;
-    container.style.top = `${imageOffsetBottom - person.offsetHeight}px`;
-  }
-  
-  
-  
-  document.addEventListener('DOMContentLoaded', () => {
-    alignPersonToImageBottom();
-  });
-  
-  window.addEventListener('load', () => {
-    alignPersonToImageBottom();
-    setTimeout(alignPersonToImageBottom, 500); // double check
-  });
-  
-  window.addEventListener('resize', alignPersonToImageBottom);
-  
 
   
 
