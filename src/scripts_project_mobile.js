@@ -29,7 +29,13 @@ function navigateTo(viewType) {
 
 document.addEventListener('DOMContentLoaded', function() { 
 
-
+  // 设置真实可视高度变量
+  function setRealViewportHeight() {
+    const vh = window.innerHeight * 0.01;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
+  }
+  setRealViewportHeight();
+  window.addEventListener('resize', setRealViewportHeight);
 
   const menuToggleButton = document.getElementById('menu-toggle');
   const typeList = document.getElementById("type-list");
