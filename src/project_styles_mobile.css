@@ -100,12 +100,13 @@
 }
 
 .person-container {
-  position: fixed;   /* 关键：固定在视口 */
+  position: absolute; /* ❗ 不要 fixed */
   left: 0;
   width: 100%;
-  z-index: 9999;
+  z-index: 999;
   pointer-events: none;
 }
+
 
 #person-image {
   position: fixed;

@@ -1065,19 +1065,10 @@ document.addEventListener('DOMContentLoaded', function() {
   
     if (!firstImage || !person || !container) return;
   
-    const imageRect = firstImage.getBoundingClientRect();
-  
-    // imageRect.bottom 是相对视口的底部距离
-    // 但你只想让小人底边对齐这个位置 → top = bottom - 小人高度
-    const targetTop = imageRect.bottom - person.offsetHeight;
-  
-    // 如果超出屏幕范围就限制一下（可选）
-    if (targetTop >= 0 && targetTop < window.innerHeight) {
-      container.style.top = `${targetTop}px`;
-    } else {
-      container.style.top = `${window.innerHeight - person.offsetHeight}px`; // fallback 到底部
-    }
+    const imageOffsetBottom = firstImage.offsetTop + firstImage.offsetHeight;
+    container.style.top = `${imageOffsetBottom - person.offsetHeight}px`;
   }
+  
   
   
   document.addEventListener('DOMContentLoaded', () => {
@@ -1086,8 +1077,12 @@ document.addEventListener('DOMContentLoaded', function() {
   
   window.addEventListener('load', () => {
     alignPersonToImageBottom();
+    setTimeout(alignPersonToImageBottom, 500); // double check
   });
   
+  window.addEventListener('resize', alignPersonToImageBottom);
+  
+
   
 
   main();
