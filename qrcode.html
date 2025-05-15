@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>QR Code with Logo</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding-top: 40px;
+    }
+
+    #qrcode-container {
+      position: relative;
+      width: 256px;
+      height: 256px;
+      margin: 0 auto;
+    }
+
+    #qrcode-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    #logo-img {
+      position: absolute;
+      width: 64px;
+      height: 64px;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+  <h2>Welcome to Payette Places</h2>
+  <div id="qrcode-container">
+    <canvas id="qrcode-canvas"></canvas>
+    <img id="logo-img" src="public/Plogo.png" alt="Logo" />
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    const canvas = document.getElementById('qrcode-canvas');
+    const url = "https://www.payette.com/payetteplaces";
+
+    QRCode.toCanvas(canvas, url, {
+      errorCorrectionLevel: 'H', // 高容错率允许中间部分被遮挡
+      width: 256,
+      margin: 1
+    }, function (error) {
+      if (error) {
+        console.error("QR code generation failed:", error);
+      } else {
+        console.log("QR code generated!");
+      }
+    });
+  </script>
+</body>
+</html>
