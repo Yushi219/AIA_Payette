@@ -17,32 +17,32 @@ body, html {
 }
 
 /* Section for the Payette image, horizontally centered */
+/* —— 强制统一 payette-section & payette-bg 在所有页面的表现 —— */
 #payette-section {
-    width: 30%;
-    text-align: center;
-    margin: 0 auto;       
-    padding-top: 0px;
-    margin-bottom: 0px;
-    position: relative;
-    bottom:5px;
+  width: 30vw !important;
+  margin: 0 auto !important;
+  padding-top: 0 !important;
+  margin-bottom: 0 !important;
+  position: relative !important;
+  bottom: 5px !important;
 }
 
-/* 手机模式（宽度小于等于768px） */
+/* 手机模式下拉满 */
 @media screen and (max-width: 1025px) {
-#payette-section {
-    width: 100%;
+  #payette-section {
+    width: 100% !important;
+  }
 }
-}
-  
 
-/* Payette image styles */
 #payette-bg {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+  object-fit: cover !important;
 }
+
+
 
 /* Wood and Pen images */
 #wood, #pen {

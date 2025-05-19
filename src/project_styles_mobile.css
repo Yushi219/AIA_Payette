@@ -1,3 +1,11 @@
+/* CSS Reset: 让所有页面起点一致 */
+html, body, header, main, footer, section, div {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
 /* Titles style for dashboard toggle */
 
   body {
@@ -15,13 +23,39 @@
   header {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+
   }
   
   h1 {
     font-size:18px;
-    margin-left: 30px;
   }
+
+/* —— 强制统一 payette-section & payette-bg 在所有页面的表现 —— */
+#payette-section {
+  width: 30vw !important;
+  margin: 0 auto !important;
+  padding-top: 0 !important;
+  margin-bottom: 0 !important;
+  position: relative !important;
+  bottom: 5px !important;
+}
+
+/* 手机模式下拉满 */
+@media screen and (max-width: 1025px) {
+  #payette-section {
+    width: 100% !important;
+  }
+}
+
+#payette-bg {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+  object-fit: cover !important;
+}
+
+  
 
 
 .project-card {

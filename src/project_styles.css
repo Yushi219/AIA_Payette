@@ -47,7 +47,7 @@
   header {
     display: flex;
     flex-direction: column;
-    padding: 10px;
+    margin-left: -15px;
   }
   
   h1 {
@@ -153,7 +153,7 @@
   background-color: #ffffff;
   text-align: left;
   top:0px;
-  height: 85%; /* 设置卡片高度占满父容器 */
+  height: 70vh; /* 设置卡片高度占满父容器 */
   position: relative;
   display: flex;
   flex-direction: column; /* 垂直布局 */
@@ -797,32 +797,32 @@
   
   /* //////////////////////////// */
 
-  #payette-section {
-    width: 30%;
-    text-align: center;
-    margin: 0 auto;       
-    padding-top: 0px;
-    margin-bottom: 0px;
-    position: relative;
-    bottom:5px;
-}
-
-/* 手机模式（宽度小于等于768px） */
-@media screen and (max-width: 1025px) {
+/* —— 强制统一 payette-section & payette-bg 在所有页面的表现 —— */
 #payette-section {
-    width: 100%;
+  width: 30vw !important;
+  margin: 0 auto !important;
+  padding-top: 0 !important;
+  margin-bottom: 0 !important;
+  position: relative !important;
+  bottom: 5px !important;
 }
-}
-  
 
-/* Payette image styles */
-#payette-bg {
-    width: 100%;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-    object-fit: cover;
+/* 手机模式下拉满 */
+@media screen and (max-width: 1025px) {
+  #payette-section {
+    width: 100% !important;
+  }
 }
+
+#payette-bg {
+  width: 100% !important;
+  height: auto !important;
+  display: block !important;
+  margin: 0 auto !important;
+  object-fit: cover !important;
+}
+
+
 
   
   #nav-buttons {
