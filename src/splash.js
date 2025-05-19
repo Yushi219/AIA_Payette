@@ -44,6 +44,43 @@ function openMap(url) {
   document.body.appendChild(popup);
 }
 
+// 引入 QRCode 库
+// 创建弹窗函数（使用静态图片）
+function showQRPopup() {
+  const popup = document.createElement('div');
+  popup.id = 'qr-popup';
+
+  popup.innerHTML = `
+    <div id="qr-popup-content">
+      <button id="qr-close-btn">✖</button>
+      <div id="qr-message">Copied QR Code. Share with friends!</div>
+      <img id="qr-static-img" src="public/QR.png" alt="QR Code">
+    </div>
+  `;
+
+  popup.addEventListener('click', (e) => {
+    if (e.target.id === 'qr-popup' || e.target.id === 'qr-close-btn') {
+      popup.remove();
+    }
+  });
+
+  document.body.appendChild(popup);
+
+  // 复制图片到剪贴板
+  fetch('public/QR.png')
+    .then(res => res.blob())
+    .then(blob => {
+      const item = new ClipboardItem({ 'image/png': blob });
+      navigator.clipboard.write([item]);
+    })
+    .catch(err => console.error('Failed to copy image:', err));
+}
+
+// 绑定点击事件
+document.getElementById('share-button').addEventListener('click', showQRPopup);
+
+
+
 
 
 async function setupBuildingLabelClicks() {
@@ -323,11 +360,11 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   // ✅ 移动模式横向滑动地图（手指拖动 => 向右滑动）
-  let startTouchX = 0;
-  let startScrollLeft = 0;
-
   let hasDirection = false;
   let isHorizontal = false;
+  let startTouchX = 0;
+  let startTouchY = 0;
+  let startScrollLeft = 0;
   
   mapContainer.addEventListener('touchstart', function (event) {
     if (isDesktop || event.touches.length !== 1) return;
@@ -335,6 +372,7 @@ document.addEventListener('DOMContentLoaded', function () {
     startTouchY = event.touches[0].clientY;
     startScrollLeft = mapContainer.scrollLeft;
     hasDirection = false;
+    isHorizontal = false;
   }, { passive: true });
   
   mapContainer.addEventListener('touchmove', function (event) {
@@ -351,12 +389,13 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   
     if (isHorizontal) {
-      event.preventDefault(); // ✅ 只在横向滑动时阻止默认滚动
+
       const maxScrollLeft = mapContainer.scrollWidth - mapContainer.clientWidth;
       const newScrollLeft = startScrollLeft - deltaX;
       mapContainer.scrollLeft = Math.max(0, Math.min(maxScrollLeft, newScrollLeft));
     }
   }, { passive: false });
+  
   
   
 //////////////////////////////////////////////////
@@ -417,7 +456,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // 触摸移动事件
   mapContainer.addEventListener('touchmove', (event) => {
     if (isDesktop) return; // 如果是桌面模式，退出
-    event.preventDefault(); // 阻止默认滚动行为    
+
   
     if (event.touches.length === 1 && isDragging) {
       const touch = event.touches[0];
