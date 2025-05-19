@@ -396,8 +396,8 @@ body, html {
         }
       
         #nav-buttons button {
-          font-size: 12px; /* 字体变小 */
-          padding: 4px 10px; /* 缩小内边距 */
+          font-size: 11px; /* 字体变小 */
+          padding: 1px 1px; /* 缩小内边距 */
         }
       }
 
