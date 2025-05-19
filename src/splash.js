@@ -68,12 +68,13 @@ function showQRPopup() {
 
   // 复制图片到剪贴板
   fetch('public/QR.png')
-    .then(res => res.blob())
-    .then(blob => {
-      const item = new ClipboardItem({ 'image/png': blob });
-      navigator.clipboard.write([item]);
-    })
-    .catch(err => console.error('Failed to copy image:', err));
+  .then(res => res.blob())
+  .then(blob => {
+    const item = new ClipboardItem({ 'image/png': blob });
+    return navigator.clipboard.write([item]);
+  })
+  .catch(console.error);
+
 }
 
 // 绑定点击事件
