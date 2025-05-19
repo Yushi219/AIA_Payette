@@ -363,22 +363,35 @@ document.addEventListener('DOMContentLoaded', function () {
   let startTouchX = 0;
   let startScrollLeft = 0;
 
+  let hasDirection = false;
+  let isHorizontal = false;
+  
   mapContainer.addEventListener('touchstart', function (event) {
     if (isDesktop || event.touches.length !== 1) return;
     startTouchX = event.touches[0].clientX;
+    startTouchY = event.touches[0].clientY;
     startScrollLeft = mapContainer.scrollLeft;
+    hasDirection = false;
   }, { passive: true });
-
+  
   mapContainer.addEventListener('touchmove', function (event) {
     if (isDesktop || event.touches.length !== 1) return;
+  
     const touchX = event.touches[0].clientX;
-    const deltaX = startTouchX - touchX;
-    const maxScrollLeft = mapContainer.scrollWidth - mapContainer.clientWidth;
-
-    if ((deltaX > 0 && mapContainer.scrollLeft < maxScrollLeft) ||
-        (deltaX < 0 && mapContainer.scrollLeft > 0)) {
-      event.preventDefault(); // 阻止页面跟随拖动
-      mapContainer.scrollLeft = startScrollLeft + deltaX;
+    const touchY = event.touches[0].clientY;
+    const deltaX = touchX - startTouchX;
+    const deltaY = touchY - startTouchY;
+  
+    if (!hasDirection) {
+      hasDirection = true;
+      isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
+    }
+  
+    if (isHorizontal) {
+      event.preventDefault(); // 只在横向滑动时阻止默认滚动
+      const maxScrollLeft = mapContainer.scrollWidth - mapContainer.clientWidth;
+      const newScrollLeft = startScrollLeft - deltaX;
+      mapContainer.scrollLeft = Math.max(0, Math.min(maxScrollLeft, newScrollLeft));
     }
   }, { passive: false });
   
