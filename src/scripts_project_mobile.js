@@ -820,9 +820,8 @@ document.addEventListener('DOMContentLoaded', function() {
       document.querySelector('.right-nav')?.addEventListener('click', goToNextPhoto);
 
 
-      // 添加以下代码实现手指滑动切换照片
       let startX = 0;
-      let currentX = 0;
+      let startY = 0;
       let isDragging = false;
       
       const imageContainer = document.querySelector('.image-container');
@@ -832,45 +831,46 @@ document.addEventListener('DOMContentLoaded', function() {
         imageContainer.addEventListener('touchstart', e => {
           if (e.touches.length === 1) {
             startX = e.touches[0].clientX;
+            startY = e.touches[0].clientY;
             isDragging = true;
-            tourImage.style.transition = 'none'; // 移除过渡动画
+            tourImage.style.transition = 'none';
+            document.body.style.overflowY = 'hidden'; // 🔒 禁止页面上下滚动
           }
         });
       
         imageContainer.addEventListener('touchmove', e => {
           if (!isDragging) return;
-          currentX = e.touches[0].clientX;
+          const currentX = e.touches[0].clientX;
           const deltaX = currentX - startX;
-          tourImage.style.transform = `translateX(${deltaX}px)`; // 实时移动图片
+          tourImage.style.transform = `translateX(${deltaX}px)`;
         });
       
         imageContainer.addEventListener('touchend', e => {
           if (!isDragging) return;
           isDragging = false;
-        
+          document.body.style.overflowY = 'auto'; // 🔓 恢复页面滚动
+      
           const deltaX = e.changedTouches[0].clientX - startX;
           const threshold = 80;
           tourImage.style.transition = 'transform 0.3s ease';
-        
+      
           if (deltaX < -threshold) {
-            // 向左滑动，当前图向左飞出
             tourImage.style.transform = 'translateX(-100%)';
             setTimeout(() => {
-              goToNextPhoto(); // 加载下一张图
+              goToNextPhoto();
               tourImage.style.transition = 'none';
-              tourImage.style.transform = 'translateX(100%)'; // 下一张从右边开始
+              tourImage.style.transform = 'translateX(100%)';
               requestAnimationFrame(() => {
                 tourImage.style.transition = 'transform 0.3s ease';
                 tourImage.style.transform = 'translateX(0)';
               });
             }, 300);
           } else if (deltaX > threshold) {
-            // 向右滑动，当前图向右飞出
             tourImage.style.transform = 'translateX(100%)';
             setTimeout(() => {
-              goToPrevPhoto(); // 加载上一张图
+              goToPrevPhoto();
               tourImage.style.transition = 'none';
-              tourImage.style.transform = 'translateX(-100%)'; // 上一张从左边开始
+              tourImage.style.transform = 'translateX(-100%)';
               requestAnimationFrame(() => {
                 tourImage.style.transition = 'transform 0.3s ease';
                 tourImage.style.transform = 'translateX(0)';
@@ -880,9 +880,8 @@ document.addEventListener('DOMContentLoaded', function() {
             tourImage.style.transform = 'translateX(0)';
           }
         });
-        
-        
       }
+      
       
 
   }

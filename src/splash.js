@@ -78,6 +78,33 @@ async function setupBuildingLabelClicks() {
 document.addEventListener('DOMContentLoaded', function () {
   setupBuildingLabelClicks();
 
+  // 初始化所有建筑元素并隐藏
+  const buildings = [];
+  for (let i = 0; i <= 12; i++) {
+    const building = document.getElementById(`building${i}`);
+    if (building) {
+      building.classList.remove('visible');
+      buildings.push(building);
+    }
+    
+  }
+
+  const payetteLogo = document.getElementById('payetteLogo');
+  if (payetteLogo) {
+    payetteLogo.classList.remove('visible');
+    payetteLogo.dataset.isLogo = 'true'; // ✅ 标记为 logo，用于后续排除
+    buildings.push(payetteLogo);
+  
+    // ✅ 只在此处设置点击跳转为外链
+    payetteLogo.addEventListener('click', (e) => {
+      e.stopPropagation(); // 防止触发其他事件
+      window.open('https://www.payette.com', '_blank');
+    });
+  }
+  
+
+
+  
   updateActiveButton('map'); 
   
   const toggleCircle = document.getElementById('toggle-circle');
@@ -448,17 +475,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 /////////////////////////////////  
 
-  // 初始化所有建筑元素并隐藏
-  const buildings = [];
-  for (let i = 0; i <= 12; i++) {
-    const building = document.getElementById(`building${i}`);
-    if (building) {
-      building.classList.remove('visible'); // 默认不可见，但允许动画控制
-      buildings.push(building);
-    }
-    
-  }
-
 
   // 为建筑物绑定移动端点击判断和 hover 替换逻辑
   buildings.forEach((building, index) => {
@@ -502,6 +518,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // 桌面模式点击跳转逻辑
   buildings.forEach((building, index) => {
+    if (building.dataset.isLogo === 'true') return; // ✅ 跳过 logo
+
     building.addEventListener('click', () => {
       if (!isDesktop) return;
 
@@ -513,11 +531,12 @@ document.addEventListener('DOMContentLoaded', function () {
       const url = relatedID
         ? `project_index.html?id=${index + 1}&related=${relatedID}`
         : `project_index.html?id=${index + 1}`;
-      
+
       window.location.href = url;
       showLoadingOverlay();
     });
   });
+
 
 
   // 显示加载动画

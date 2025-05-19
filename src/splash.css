@@ -164,6 +164,20 @@ body, html {
     width:10%;
 }
 
+#payetteLogo {
+  left: 69%;
+  top: 29%;
+  width: 8%;
+  position: absolute;
+  transition: opacity 0.01s ease;
+  opacity: 0;
+  pointer-events: auto;
+}
+
+#payetteLogo.visible {
+  opacity: 1;
+}
+
 
 
 
