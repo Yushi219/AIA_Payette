@@ -359,40 +359,26 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  // ✅ 移动模式横向滑动地图（手指拖动 => 向右滑动）
-  let hasDirection = false;
-  let isHorizontal = false;
+  // 移动模式横向滑动地图（手指拖动 => 向右滑动）
   let startTouchX = 0;
-  let startTouchY = 0;
   let startScrollLeft = 0;
-  
+
   mapContainer.addEventListener('touchstart', function (event) {
     if (isDesktop || event.touches.length !== 1) return;
     startTouchX = event.touches[0].clientX;
-    startTouchY = event.touches[0].clientY;
     startScrollLeft = mapContainer.scrollLeft;
-    hasDirection = false;
-    isHorizontal = false;
   }, { passive: true });
-  
+
   mapContainer.addEventListener('touchmove', function (event) {
     if (isDesktop || event.touches.length !== 1) return;
-  
     const touchX = event.touches[0].clientX;
-    const touchY = event.touches[0].clientY;
-    const deltaX = touchX - startTouchX;
-    const deltaY = touchY - startTouchY;
-  
-    if (!hasDirection) {
-      hasDirection = true;
-      isHorizontal = Math.abs(deltaX) > Math.abs(deltaY);
-    }
-  
-    if (isHorizontal) {
+    const deltaX = startTouchX - touchX;
+    const maxScrollLeft = mapContainer.scrollWidth - mapContainer.clientWidth;
 
-      const maxScrollLeft = mapContainer.scrollWidth - mapContainer.clientWidth;
-      const newScrollLeft = startScrollLeft - deltaX;
-      mapContainer.scrollLeft = Math.max(0, Math.min(maxScrollLeft, newScrollLeft));
+    if ((deltaX > 0 && mapContainer.scrollLeft < maxScrollLeft) ||
+        (deltaX < 0 && mapContainer.scrollLeft > 0)) {
+      event.preventDefault(); // 阻止页面跟随拖动
+      mapContainer.scrollLeft = startScrollLeft + deltaX;
     }
   }, { passive: false });
   
