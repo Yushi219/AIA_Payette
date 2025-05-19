@@ -822,65 +822,88 @@ document.addEventListener('DOMContentLoaded', function() {
 
       let startX = 0;
       let startY = 0;
-      let isDragging = false;
+
       
       const imageContainer = document.querySelector('.image-container');
       const tourImage = document.getElementById('tour-image');
       
-      if (imageContainer && tourImage) {
-        imageContainer.addEventListener('touchstart', e => {
-          if (e.touches.length === 1) {
-            startX = e.touches[0].clientX;
-            startY = e.touches[0].clientY;
-            isDragging = true;
-            tourImage.style.transition = 'none';
-            document.body.style.overflowY = 'hidden'; // 🔒 禁止页面上下滚动
-          }
-        });
+      let isDragging = false;
+      let hasDirection = false;
+      let isHorizontal = false;
       
-        imageContainer.addEventListener('touchmove', e => {
-          if (!isDragging) return;
-          const currentX = e.touches[0].clientX;
-          const deltaX = currentX - startX;
-          tourImage.style.transform = `translateX(${deltaX}px)`;
-        });
+      imageContainer.addEventListener('touchstart', e => {
+        if (e.touches.length === 1) {
+          startX = e.touches[0].clientX;
+          startY = e.touches[0].clientY;
+          isDragging = true;
+          hasDirection = false; // 每次开始都重置方向锁
+          tourImage.style.transition = 'none';
+          document.body.style.overflowY = 'hidden'; // 先禁掉滚动
+        }
+      });
       
-        imageContainer.addEventListener('touchend', e => {
-          if (!isDragging) return;
-          isDragging = false;
-          document.body.style.overflowY = 'auto'; // 🔓 恢复页面滚动
+      imageContainer.addEventListener('touchmove', e => {
+        if (!isDragging) return;
       
-          const deltaX = e.changedTouches[0].clientX - startX;
-          const threshold = 80;
-          tourImage.style.transition = 'transform 0.3s ease';
+        const currentX = e.touches[0].clientX;
+        const currentY = e.touches[0].clientY;
+        const deltaX = currentX - startX;
+        const deltaY = currentY - startY;
       
-          if (deltaX < -threshold) {
-            tourImage.style.transform = 'translateX(-100%)';
-            setTimeout(() => {
-              goToNextPhoto();
-              tourImage.style.transition = 'none';
-              tourImage.style.transform = 'translateX(100%)';
-              requestAnimationFrame(() => {
-                tourImage.style.transition = 'transform 0.3s ease';
-                tourImage.style.transform = 'translateX(0)';
-              });
-            }, 300);
-          } else if (deltaX > threshold) {
-            tourImage.style.transform = 'translateX(100%)';
-            setTimeout(() => {
-              goToPrevPhoto();
-              tourImage.style.transition = 'none';
-              tourImage.style.transform = 'translateX(-100%)';
-              requestAnimationFrame(() => {
-                tourImage.style.transition = 'transform 0.3s ease';
-                tourImage.style.transform = 'translateX(0)';
-              });
-            }, 300);
+        // 只判断一次滑动方向
+        if (!hasDirection) {
+          if (Math.abs(deltaX) > Math.abs(deltaY)) {
+            isHorizontal = true;
           } else {
-            tourImage.style.transform = 'translateX(0)';
+            isHorizontal = false;
+            document.body.style.overflowY = 'auto'; // 恢复页面滚动
           }
-        });
-      }
+          hasDirection = true;
+        }
+      
+        if (isHorizontal) {
+          e.preventDefault(); // 阻止页面滑动
+          tourImage.style.transform = `translateX(${deltaX}px)`;
+        }
+      });
+      
+      imageContainer.addEventListener('touchend', e => {
+        if (!isDragging || !hasDirection || !isHorizontal) return;
+      
+        isDragging = false;
+        document.body.style.overflowY = 'auto'; // 恢复页面滚动
+      
+        const deltaX = e.changedTouches[0].clientX - startX;
+        const threshold = 80;
+        tourImage.style.transition = 'transform 0.3s ease';
+      
+        if (deltaX < -threshold) {
+          tourImage.style.transform = 'translateX(-100%)';
+          setTimeout(() => {
+            goToNextPhoto();
+            tourImage.style.transition = 'none';
+            tourImage.style.transform = 'translateX(100%)';
+            requestAnimationFrame(() => {
+              tourImage.style.transition = 'transform 0.3s ease';
+              tourImage.style.transform = 'translateX(0)';
+            });
+          }, 300);
+        } else if (deltaX > threshold) {
+          tourImage.style.transform = 'translateX(100%)';
+          setTimeout(() => {
+            goToPrevPhoto();
+            tourImage.style.transition = 'none';
+            tourImage.style.transform = 'translateX(-100%)';
+            requestAnimationFrame(() => {
+              tourImage.style.transition = 'transform 0.3s ease';
+              tourImage.style.transform = 'translateX(0)';
+            });
+          }, 300);
+        } else {
+          tourImage.style.transform = 'translateX(0)';
+        }
+      });
+      
       
       
 

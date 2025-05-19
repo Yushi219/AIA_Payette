@@ -34,7 +34,12 @@
   </style>
 </head>
 <body>
-  <h2>Welcome to Payette Places</h2>
+  <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 20px;">
+    <span style="font-weight: bold; font-size: 24px;">Welcome to</span>
+    <img src="public/Payette Places.png" alt="Payette Places Logo" style="height: 35px; vertical-align: middle;" />
+  </div>
+  
+  
   <div id="qrcode-container">
     <canvas id="qrcode-canvas"></canvas>
     <img id="logo-img" src="public/Plogo.png" alt="Logo" />
@@ -43,7 +48,7 @@
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
     const canvas = document.getElementById('qrcode-canvas');
-    const url = "https://www.payette.com/payetteplaces";
+    const url = "https://www.payette.com/payette-places";
 
     QRCode.toCanvas(canvas, url, {
       errorCorrectionLevel: 'H', // 高容错率允许中间部分被遮挡
