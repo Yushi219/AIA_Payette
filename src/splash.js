@@ -355,7 +355,8 @@ document.addEventListener('DOMContentLoaded', function () {
   let isTouching = false; // 是否正在触摸（防止移动过程中地图消失）
 
   // 禁用默认触摸行为
-  mapContainer.style.touchAction = 'none';
+  mapContainer.style.touchAction = 'pan-y';
+
 
   // 计算双指之间的距离
   function getDistance(touches) {
