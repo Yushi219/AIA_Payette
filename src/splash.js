@@ -53,7 +53,7 @@ function showQRPopup() {
   popup.innerHTML = `
     <div id="qr-popup-content">
       <button id="qr-close-btn">✖</button>
-      <div id="qr-message">Copied QR Code. Share with friends!</div>
+      <div id="qr-message">Share with friends!</div>
       <img id="qr-static-img" src="public/QR.png" alt="QR Code">
     </div>
   `;
