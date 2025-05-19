@@ -165,9 +165,9 @@ body, html {
 }
 
 #payetteLogo {
-  left: 70.50%;
-  top: 28.05%;
-  width: 3.55%;
+  left: 68.5%;
+  top: 28.7%;
+  width: 9%;
   position: absolute;
   transition: opacity 0.01s ease;
   opacity: 0;
