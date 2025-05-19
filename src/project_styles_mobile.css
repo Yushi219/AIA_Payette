@@ -1017,7 +1017,7 @@
   border-bottom: 2px solid #666;
 }
 
-@media (max-width: 1000px) {
+@media (max-width: 1025px) {
   #nav-buttons {
     gap: 20px; /* 间距变小 */
     flex-wrap: wrap; /* 如果按钮太多也可以换行 */

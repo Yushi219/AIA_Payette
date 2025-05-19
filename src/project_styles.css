@@ -808,7 +808,7 @@
 }
 
 /* 手机模式（宽度小于等于768px） */
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 1025px) {
 #payette-section {
     width: 100%;
 }
