@@ -283,7 +283,7 @@ document.addEventListener('DOMContentLoaded', function() {
           
           if (viewType === 'awards') {
             overlayImagePath = `public/Project/MA${project.number}.png`;
-            overlayStyle = 'position: absolute; margin-top: 35%; left: 50%; transform: translate(-50%, -50%); width: 90%;';
+            overlayStyle = 'position: absolute; margin-top: 65%; left: 50%; transform: translate(-50%, -50%); width: 90%;';
           } else if (viewType === 'leed') {
             overlayImagePath = `public/Project/L${project.number}.png`;
             overlayStyle = 'position: absolute; margin-top: 33%; left: 50%; transform: translate(-50%, -50%); width: 80%;';
