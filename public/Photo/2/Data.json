@@ -1,134 +1,158 @@
 {
-  "ProjectName": "NORTHEASTERN UNIVERSITY",
-  "Address": "EXP - Engineering Research Building",
-  "Description": "Situated on an urban brownfield site, the EXP building, along with its award-winning counterparts\u2014ISEC and the Pedestrian Crossing (PedX)\u2014comprise a new academic precinct encompassing over 600,000 square feet of science and engineering space for Northeastern University. Flow and Movement define the form language of the precinct, serving as a dynamic link connecting two Boston neighborhoods, Roxbury and the Fenway, expanding the campus and acting as a catalyst for urban revitalization in the long-neglected Roxbury area.",
-  "Location": "Boston, MA / United States",
-  "Completed": "2023",
-  "TotalSquareFootage": "357,000 GSF",
-  "ProgramComponents": "Research Labs, Robotics, Makerspace",
-  "LEEDStatus": "LEED Platinum Certified",
-  "Awards": [
-    {
-      "AwardsYear": "2024",
-      "Award": "AIA Education Facility Design Award"
-    },
-    {
-      "AwardsYear": "2024",
-      "Award": "Illumination Award for Interior Lighting Design"
-    }
-  ],
-  "News": [
-    {
-      "NewsTitle": "Welcome to EXP",
-      "NewsLink": "https://exp.northeastern.edu"
-    },
-    {
-      "NewsTitle": "PAYETTE’s New EXP Building is Designed for Research and Built to Perform",
-      "NewsLink": "https://metropolismag.com/projects/payette-new-exp-building-in-northeastern-university/"
-    },
-    {
-      "NewsTitle": "The new EXP research center will make for a better university, city, state and nation",
-      "NewsLink": "https://www.youtube.com/watch?v=oNdsRT2ynVw"
-    },
-    {
-      "NewsTitle": "PAYETTE crafts tapering stainless steel fins for the facade of Northeastern’s EXP building",
-      "NewsLink": "https://www.archpaper.com/2023/11/payette-stainless-steel-northeastern-exp-building/"
-    },
-    {
-      "NewsTitle": "NSF Director delivers remarks at Northeastern University’s grand opening celebration alongside Members of the Massachusetts Congressional Delegation",
-      "NewsLink": "https://www.nsf.gov/news/nsf-director-delivers-remarks-northeastern"
-    },
-    {
-      "NewsTitle": "Northeastern University shows ‘experiential robotics’ in new EXP space",
-      "NewsLink": "https://www.therobotreport.com/northeastern-university-shows-experiential-robotics-in-new-exp-space/"
-    },
-    {
-      "NewsTitle": "PAYETTE wraps Boston academic building in ribbons of stainless steel",
-      "NewsLink": "https://www.dezeen.com/2024/11/12/payette-boston-building-ribbons-stainless-steel-northeastern/"
-    }
-  ],
-  "Team": [
-  {
-    "TeamMember": "Robert J. Schaeffner, FAIA, LEED AP",
-    "Position": "Principal-in-Charge",
-    "PeopleLink": "https://www.payette.com/leadership/robert-j-schaeffner/"
-  },
-  {
-    "TeamMember": "Kevin B. Sullivan, FAIA",
-    "Position": "Design Principal",
-    "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/"
-  },
-  {
-    "TeamMember": "Barry Shiel, AIA",
-    "Position": "Project Manager",
-    "PeopleLink": "https://www.payette.com/leadership/barry-shiel/"
-  },
-  {
-    "TeamMember": "Wesley Schwartz, AIA",
-    "Position": "Project Architect",
-    "PeopleLink": "https://www.payette.com/leadership/wesley-schwartz/"
-  },
-  {
-    "TeamMember": "Chris Stansfield, AIA, LEED AP",
-    "Position": "Project Architect",
-    "PeopleLink": "https://www.payette.com/leadership/chris-stansfield/"
-  },
-  {
-    "TeamMember": "Jeff Abramson, AIA, LEED AP",
-    "Position": "Architect",
-    "PeopleLink": "https://www.payette.com/leadership/jeff-abramson/"
-  },
-  {
-    "TeamMember": "Garrett House, AIA",
-    "Position": "Architect",
-    "PeopleLink": "https://www.payette.com/leadership/garrett-house/"
-  },
-  {
-    "TeamMember": "Jessica Jorge, AIA",
-    "Position": "Architect",
-    "PeopleLink": "https://www.payette.com/leadership/jessica-jorge/"
-  },
-  {
-    "TeamMember": "Blake Lam, AIA",
-    "Position": "Architect",
-    "PeopleLink": "https://www.payette.com/leadership/blake-lam/"
-  },
-  {
-    "TeamMember": "James Lanzisero, AIA",
-    "Position": "Architect",
-    "PeopleLink": "https://www.payette.com/leadership/james-lanzisero/"
-  },
-  {
-    "TeamMember": "Parke MacDowell, AIA",
-    "Position": "Architect",
-    "PeopleLink": "https://www.payette.com/leadership/parke-macdowell/"
-  },
-  {
-    "TeamMember": "Michael X. Nie, AIA",
-    "Position": "Architect",
-    "PeopleLink": "https://www.payette.com/leadership/michael-x-nie/"
-  },
-  {
-    "TeamMember": "Melissa Allen",
-    "Position": "Designer",
-    "PeopleLink": ""
-  },
-  {
-    "TeamMember": "Daniel Dudziak",
-    "Position": "Designer",
-    "PeopleLink": ""
-  },
-  {
-    "TeamMember": "Shreeya Shakya",
-    "Position": "Designer",
-    "PeopleLink": ""
-  },
-  {
-    "TeamMember": "Mary Gallagher, IIDA, LEED AP",
-    "Position": "Interior Designer",
-    "PeopleLink": "https://www.payette.com/leadership/mary-gallagher/"
-  }],
-  "EUI": "81 kBtu / SF",
-  "Percent": "78%",
-  "Sentence": "reduction in energy use compared to the 2030 baseline"
-}
+    "ProjectName": "NORTHEASTERN UNIVERSITY",
+    "Address": "Interdisciplinary Science and Engineering Complex",
+    "Description": "The Interdisciplinary Science and Engineering Complex (ISEC) launches Northeastern University\u2019s long-term goal of linking its Huntington Avenue Campus with a new academic precinct along Columbus Avenue, connecting the Fenway and Roxbury neighborhoods of Boston. A new pedestrian bridge\u2014PedX\u2014spans the intervening MBTA and Amtrak rail lines, leading students to the ISEC\u2019s six-story atrium, a new hub for the expanded campus.",
+    "Location": "Boston, MA / United States",
+    "Completed": "2016",
+    "TotalSquareFootage": "234,000 GSF",
+    "ProgramComponents": [
+      "Biology",
+      "Bioengineering",
+      "Computational Biology",
+      "Genomics",
+      "High Through-Put Screening",
+      "Imaging",
+      "Materials Characterization",
+      "Metabolomics",
+      "Teaching labs"
+    ],
+    "LEEDStatus": "LEED-NC 3 Gold Certified",
+    "Awards": [
+      {
+        "AwardsYear": "2021",
+        "Award": "AIA Architecture Award"
+      },
+      {
+        "AwardsYear": "2021",
+        "Award": "AIA Regional & Urban Design Award"
+      },
+      {
+        "AwardsYear": "2019",
+        "Award": "AIA COTE\u00ae Top Ten"
+      },      
+      {
+        "AwardsYear": "2022",
+        "Award": "AIA Education Facility Design Awards"
+      },
+      {
+        "AwardsYear": "2018",
+        "Award": "Harleston Parker Medal"
+      },      
+      {
+        "AwardsYear": "2018",
+        "Award": "American Architecture Award"
+      },      
+      {
+        "AwardsYear": "2019",
+        "Award": "AIA New England, Honor Award"
+      },
+      {
+        "AwardsYear": "2018",
+        "Award": "SCUP/AIA-CAE Excellence in Architecture: New Building, Merit Award"
+      },
+
+      {
+        "AwardsYear": "2018",
+        "Award": "Boston Society of Architects, Sustainable Award, Award"
+      },
+      {
+        "AwardsYear": "2017",
+        "Award": "AIA New York COTE, Merit Award"
+      },
+      {
+        "AwardsYear": "2017",
+        "Award": "Boston Society of Architects, Honor Award for Excellence"
+      },
+      {
+        "AwardsYear": "2017",
+        "Award": "I2SL Go Beyond Award, Buildings Category"
+      },
+      {
+        "AwardsYear": "2020",
+        "Award": "Boston Society of Landscape Architects Honor Award"
+      },
+      {
+        "AwardsYear": "2018",
+        "Award": "Illumination Award for Interior Lighting Design"
+      },
+      {
+        "AwardsYear": "2017",
+        "Award": "AN Best of Design: Digital Fabrication, Honorable Mention"
+      }
+
+
+    ],
+    
+    "News": [
+      {
+        "NewsTitle": "Show-Stopping Bronze Fins Breathe Life Into Northeastern University’s Science Complex",
+        "NewsLink": "https://facadesplus.com/show-stopping-bronze-fins-breathe-life-into-northeastern-universitys-science-complex/"
+      },
+      {
+        "NewsTitle": "ISEC Pedestrian Crossing at Northeastern University by PAYETTE and Arup",
+        "NewsLink": "https://www.architecturalrecord.com/articles/14864-isec-pedestrian-crossing-at-northeastern-university-by-payette-and-arup"
+      },
+      {
+        "NewsTitle": "Construction Progresses at ISEC",
+        "NewsLink": "https://builtenvironmentplus.org/"
+      },
+      {
+        "NewsTitle": "A Curved Walkway Highlights University’s Building Project",
+        "NewsLink": "https://www.northeastern.edu/news/2013/12/interdisciplinary-science-and-engineering-complex/"
+      },
+      {
+        "NewsTitle": "Science, engineering center is latest Northeastern project",
+        "NewsLink": "https://www.bostonglobe.com/metro/2013/12/05/northeastern-hopes-break-ground-science-engineering-complex-next-month/UYzCJznVqAVDH1KWDLGJtL/story.html"
+      },
+      {
+        "NewsTitle": "Northeastern to build state-of-the-art science and engineering complex",
+        "NewsLink": "https://www.dezeen.com/2019/09/14/pedx-payette-bridge-northeastern-university/"
+      },
+      {
+        "NewsTitle": "The Science of Lab Design",
+        "NewsLink": "https://issuu.com/highprofile/docs/highprofile201603/27"
+      },
+      {
+        "NewsTitle": "Continuing Education: Lighting Controls",
+        "NewsLink": "https://www.architecturalrecord.com/articles/12878-continuing-education-lighting-controls"
+      },
+      {
+        "NewsTitle": "PAYETTE integrates building physics research with design at Northeastern University",
+        "NewsLink": "https://www.archpaper.com/2016/07/payettes-high-performance-aluminum-sun-shading-system-takes-shape-northeastern-university/#gallery-0-slide-7"
+      },
+      {
+        "NewsTitle": "Northeastern ISEC Building",
+        "NewsLink": "https://www.youtube.com/watch?v=mPPOz-c_fgQ&themeRefresh=1"
+      },
+      {
+        "NewsTitle": "Opening ISEC: The dawn of a new era of discovery",
+        "NewsLink": "https://www.youtube.com/watch?v=Dx1WFbKzih8"
+      },
+      {
+        "NewsTitle": "Boundless: Northeastern’s Interdisciplinary Science and Engineering Complex",
+        "NewsLink": "https://www.youtube.com/watch?v=MGer4HsXSjw"
+      }
+    ],
+    "Team": [
+      { "TeamMember": "Robert J. Schaeffner, FAIA, LEED AP", "Position": "Principal-in-Charge", "PeopleLink": "https://www.payette.com/leadership/robert-j-schaeffner/" },
+      { "TeamMember": "Kevin B. Sullivan, FAIA", "Position": "Design Principal", "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/" },
+      { "TeamMember": "Barry Shiel, AIA", "Position": "Project Manager / Lab Planner", "PeopleLink": "https://www.payette.com/leadership/barry-shiel/" },
+      { "TeamMember": "Wesley Schwartz, AIA", "Position": "Project Architect", "PeopleLink": "https://www.payette.com/leadership/wesley-schwartz/" },
+      { "TeamMember": "Christopher Stansfield, AIA, LEED AP", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/christopher-stansfield/" },
+      { "TeamMember": "Sean Hurley, AIA, LEED AP", "Position": "Architect", "PeopleLink": "" },
+      { "TeamMember": "Nicholas Lavita, AIA, LEED AP", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/nicholas-lavita/" },
+      { "TeamMember": "Blake Lam, AIA", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/blake-lam/" },
+      { "TeamMember": "James Lanzisero, AIA", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/james-lanzisero/" },
+      { "TeamMember": "Megan van der Linde, AIA, LEED AP BD+C", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/megan-van-der-linde/" },
+      { "TeamMember": "Michael X. Nie, AIA", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/michael-x-nie/" },
+      { "TeamMember": "David Pawlak, AIA", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/david-pawlak/" },
+      { "TeamMember": "Melissa Allen", "Position": "Designer", "PeopleLink": "" },
+      { "TeamMember": "Jensen Ying", "Position": "Designer", "PeopleLink": "https://www.payette.com/leadership/jensen-ying/" },
+      { "TeamMember": "Garrett House", "Position": "Designer", "PeopleLink": "https://www.payette.com/leadership/garrett-house/" },
+      { "TeamMember": "Mary Gallagher, IIDA, LEED AP", "Position": "Interior Designer", "PeopleLink": "https://www.payette.com/leadership/mary-gallagher/" }
+    ],
+    
+    "EUI": "91 kBtu / SF",
+    "Percent": "78%",
+    "Sentence": "reduction in energy use compared to the 2030 baseline"
+  }
