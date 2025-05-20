@@ -2,65 +2,97 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>QR Code with Logo</title>
+  <title>High‑Res QR Code with Logo</title>
   <style>
     body {
       font-family: sans-serif;
       text-align: center;
       padding-top: 40px;
+      background: #fff;
     }
 
-    #qrcode-container {
-      position: relative;
+    /* flex 容器，让文字和图片同行 */
+    #qrcode-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    #qrcode-header h1 {
+      font-size: 1.2rem;
+      margin: 0;
+    }
+
+    /* 缩小 header 中的 logo */
+    #logo-img {
+      max-width: 120px;
+      max-height: 60px;
+      width: auto;
+      height: auto;
+    }
+
+    /* 让高分辨率 canvas 显示为 256×256 */
+/*    如果你想要更大的展示尺寸，把下面两个值改成 512px、384px 等 */
+    #qrcode-canvas {
       width: 256px;
       height: 256px;
+      display: block;
       margin: 0 auto;
-    }
-
-    #qrcode-canvas {
-      width: 100%;
-      height: 100%;
-    }
-
-    #logo-img {
-      position: absolute;
-      width: 64px;
-      height: 64px;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
     }
   </style>
 </head>
 <body>
-  <div style="display: flex; justify-content: center; align-items: center; gap: 8px; margin-bottom: 20px;">
-    <span style="font-weight: bold; font-size: 24px;">Welcome to</span>
-    <img src="public/Payette Places.png" alt="Payette Places Logo" style="height: 35px; vertical-align: middle;" />
+
+  <div id="qrcode-header">
+    <h1>Scan to Visit</h1>
+    <img id="logo-img" src="public/Payette Places.png" alt="Logo" />
   </div>
-  
-  
-  <div id="qrcode-container">
-    <canvas id="qrcode-canvas"></canvas>
-    <img id="logo-img" src="public/Plogo.png" alt="Logo" />
-  </div>
+
+  <!-- 注意：这里把 canvas 真正像素设为 512×512 -->
+  <canvas id="qrcode-canvas" width="512" height="512"></canvas>
 
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <script>
-    const canvas = document.getElementById('qrcode-canvas');
-    const url = "https://www.payette.com/payette-places";
+    (function(){
+      const canvas = document.getElementById('qrcode-canvas');
+      const ctx = canvas.getContext('2d');
+      const url = "https://www.payette.com/payette-places";
 
-    QRCode.toCanvas(canvas, url, {
-      errorCorrectionLevel: 'H', // 高容错率允许中间部分被遮挡
-      width: 256,
-      margin: 1
-    }, function (error) {
-      if (error) {
-        console.error("QR code generation failed:", error);
-      } else {
-        console.log("QR code generated!");
-      }
-    });
+      // 在 512×512 的高分辨率画布上生成二维码
+      QRCode.toCanvas(canvas, url, {
+        errorCorrectionLevel: 'H',
+        width: 512,
+        margin: 2
+      }, (err) => {
+        if (err) {
+          console.error("二维码生成失败：", err);
+          return;
+        }
+
+        // 把 logo 绘制到高分辨率画布中心
+        const img = new Image();
+        img.src = 'public/Payette Places.png';
+        img.onload = () => {
+          // logo 占画布宽度的 30%
+          const scale = 0.70;
+          const logoW = canvas.width * scale;  // 512 * 0.3 = 153.6px
+          const logoH = logoW * (img.height / img.width);
+          const dx = (canvas.width - logoW) / 2;
+          const dy = (canvas.height - logoH) / 2;
+
+          // 可选：在 logo 下方画一块微小白底，提升对比度
+          const pad = 4; 
+          ctx.fillStyle = '#fff';
+          ctx.fillRect(dx - pad, dy - pad, logoW + pad*2, logoH + pad*2);
+
+          // 再绘制 logo
+          ctx.drawImage(img, dx, dy, logoW, logoH);
+        };
+        img.onerror = () => console.error("Logo 加载失败，请检查路径。");
+      });
+    })();
   </script>
 </body>
 </html>
