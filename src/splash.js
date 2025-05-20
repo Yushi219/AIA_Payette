@@ -81,7 +81,43 @@ function showQRPopup() {
 document.getElementById('share-button').addEventListener('click', showQRPopup);
 
 
+// // 引入 QRCode 库
+// // 创建弹窗函数（使用静态图片）
+// function showARPopup() {
+//   const popup = document.createElement('div');
+//   popup.id = 'qr-popup';
 
+//   popup.innerHTML = `
+//     <div id="qr-popup-content">
+//       <button id="qr-close-btn">✖</button>
+//       <div id="qr-message">Scan the QR Code</div>
+//       <img id="qr-static-img" src="public/AR.png" alt="QR Code">
+//       <div id="qr-message">Then Use the Camera Scan PAYETTE Logo</div>
+//       <img id="qr-static-img" src="public/Payettelogo.png" alt="QR Code">
+//     </div>
+//   `;
+
+//   popup.addEventListener('click', (e) => {
+//     if (e.target.id === 'qr-popup' || e.target.id === 'qr-close-btn') {
+//       popup.remove();
+//     }
+//   });
+
+//   document.body.appendChild(popup);
+
+//   // 复制图片到剪贴板
+//   fetch('public/AR.png')
+//   .then(res => res.blob())
+//   .then(blob => {
+//     const item = new ClipboardItem({ 'image/png': blob });
+//     return navigator.clipboard.write([item]);
+//   })
+//   .catch(console.error);
+
+// }
+
+// // 绑定点击事件
+// document.getElementById('ar-button').addEventListener('click', showARPopup);
 
 
 async function setupBuildingLabelClicks() {
