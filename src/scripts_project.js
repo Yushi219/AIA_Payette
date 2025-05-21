@@ -446,7 +446,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const dotOverlay = document.getElementById('dot-overlay');
     
     dotOverlay.innerHTML = '';
-    
+
     const csvPath = `public/Photo/${projectNumber}/PL.csv`;
     const imagePath = `public/Photo/${projectNumber}/${photoNumber}.jpg`;
 
@@ -927,8 +927,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function updateProjects() {
+
       displayProjects(projects, viewType);
       hideLoadingOverlay();
+      adjustContainerHeight();
     }
     
 
@@ -958,6 +960,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         updateProjects();
         history.replaceState(null, null, 'index.html');
+        adjustContainerHeight();
       }
     });
   }
