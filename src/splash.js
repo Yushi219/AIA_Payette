@@ -163,18 +163,52 @@ document.addEventListener('DOMContentLoaded', function () {
     
   }
 
+  
   const payetteLogo = document.getElementById('payetteLogo');
   if (payetteLogo) {
     payetteLogo.classList.remove('visible');
-    payetteLogo.dataset.isLogo = 'true'; // ✅ 标记为 logo，用于后续排除
+    payetteLogo.dataset.isLogo = 'true';
     buildings.push(payetteLogo);
-  
-    // ✅ 只在此处设置点击跳转为外链
-    payetteLogo.addEventListener('click', (e) => {
-      e.stopPropagation(); // 防止触发其他事件
+
+    function handlePayetteClick() {
+      // 打开官网
       window.open('https://www.payette.com', '_blank');
+
+      // 清除所有 URL 参数并刷新 map 页
+      window.location.replace('index.html');
+    }
+
+    // 桌面点击
+    payetteLogo.addEventListener('click', (e) => {
+      e.stopPropagation();
+      handlePayetteClick();
+    });
+
+    // 移动端轻点
+    let touchStartTime = 0;
+    let startX = 0;
+    let startY = 0;
+
+    payetteLogo.addEventListener('touchstart', (e) => {
+      if (e.touches.length !== 1) return;
+      touchStartTime = Date.now();
+      startX = e.touches[0].clientX;
+      startY = e.touches[0].clientY;
+    });
+
+    payetteLogo.addEventListener('touchend', (e) => {
+      const touchEndTime = Date.now();
+      const duration = touchEndTime - touchStartTime;
+      const dx = e.changedTouches[0].clientX - startX;
+      const dy = e.changedTouches[0].clientY - startY;
+      const distance = Math.sqrt(dx * dx + dy * dy);
+
+      if (duration < 300 && distance < 10) {
+        handlePayetteClick();
+      }
     });
   }
+
   
 
 
@@ -241,18 +275,17 @@ document.addEventListener('DOMContentLoaded', function () {
   
     if (isDesktop) {
       // 桌面模式
-      const containerWidth = window.innerWidth;
-      const containerHeight = containerWidth * aspectRatio;
-  
-      mapContainer.style.width = `${containerWidth}px`;
-      mapContainer.style.height = `${containerHeight}px`;
-  
+      const aspectRatio = imageHeight / imageWidth;
+    
+      mapContainer.style.width = '100vw'; // ✅ 改为 viewport 宽度
+      mapContainer.style.height = `${window.innerWidth * aspectRatio}px`;
+    
       map.style.width = '100%';
       map.style.height = '100%';
       map.style.transform = 'none';
-  
+    
       mapContainer.scrollLeft = 0; // scroll 到最左侧
-    } else {
+    }else {
       // 移动模式
       const containerHeight = window.innerHeight * 0.8;
       const aspectRatio = mapImage.naturalWidth / mapImage.naturalHeight;
@@ -659,6 +692,10 @@ document.addEventListener('DOMContentLoaded', function () {
   // 页面加载时隐藏加载动画
   window.onload = function () {
     hideLoadingOverlay();
+    ensureImageLoaded();  // 确保重新触发高度和宽度计算
+    setDefaultMode();     // 重新设置 viewMode 和 UI 状态
+    adjustContainerHeight(); // 强制恢复 mapContainer 和 map 尺寸
   };
+  
 
 });

@@ -1030,8 +1030,8 @@ document.addEventListener('DOMContentLoaded', function() {
     displayProjects(projects, viewType);
   }
   
-  async function main() {
 
+  async function main() {
     const viewType = urlParams.get('view') || 'info';
     updateActiveButton(viewType);
 
@@ -1040,27 +1040,26 @@ document.addEventListener('DOMContentLoaded', function() {
       buttons.forEach(btn => {
         const element = document.getElementById(`${btn}-btn`);
         if (element) {
-          element.style.color = (btn === viewType) ? '#db1a54' : '#333129'; 
+          element.style.color = (btn === viewType) ? '#db1a54' : '#333129';
         }
       });
     }
 
-    
     const projects = await loadProjectsData();
-
     const projectId = urlParams.get('id');
+    const project = projects.find(p => String(p.number) === projectId);
+
+    if (projectId && !project) {
+      console.warn('Invalid project ID detected. Redirecting to map view.');
+      window.location.href = 'index.html?view=map';
+      return;
+    }
 
     if (projectId) {
-      const project = projects.find(p => p.number.toString() === projectId);
-      if (project) {
-        await displayProjectDetails(project, true); // 直接展示详情页
-        hideLoadingOverlay()
-      } else {
-        console.warn('Project not found for ID:', projectId); // 如果项目未找到，添加警告日志
-      }
+      await displayProjectDetails(project, true); // 直接展示详情页
+      hideLoadingOverlay();
     } else {
       updateProjects(viewType);
-
     }
 
     const searchInput = document.getElementById('search-input');
@@ -1073,25 +1072,20 @@ document.addEventListener('DOMContentLoaded', function() {
         displayProjects(filteredProjects, viewType);
       });
     }
-    
 
-    window.addEventListener('popstate', function(event) {
+    window.addEventListener('popstate', function (event) {
       if (event.state && event.state.projectId) {
-        const project = projects.find(p => p.number.toString() === event.state.projectId);
+        const project = projects.find(p => String(p.number) === event.state.projectId);
         if (project) {
           displayProjectDetails(project, false); // 正常情况下展示详情页
         }
       } else {
         updateProjects(viewType);
-
         history.replaceState(null, null, 'index.html');
       }
     });
 
     hideLoadingOverlay();
-
-
-    
   }
 
 
