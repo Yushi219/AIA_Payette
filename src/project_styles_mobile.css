@@ -319,7 +319,7 @@ html, body, header, main, footer, section, div {
     width: 100%;
     height: 100%;
     opacity: 0.2; /* 初始为 50% */
-    animation: fadeInHold 6s ease forwards;
+    animation: fadeInHold 3s ease forwards;
   }
   
   @keyframes fadeInHold {

@@ -444,7 +444,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     const tourImage = document.getElementById('tour-image');
     const dotOverlay = document.getElementById('dot-overlay');
-
+    
+    dotOverlay.innerHTML = '';
+    
     const csvPath = `public/Photo/${projectNumber}/PL.csv`;
     const imagePath = `public/Photo/${projectNumber}/${photoNumber}.jpg`;
 
@@ -460,7 +462,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const displayWidth = (naturalWidth / naturalHeight) * displayHeight;
       const imageLeft = (tourImage.parentElement.clientWidth - displayWidth) / 2;
 
-      dotOverlay.innerHTML = '';
+      
 
       fetch(csvPath)
         .then(res => res.text())
