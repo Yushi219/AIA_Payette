@@ -135,7 +135,9 @@
     ],
     "Team": [
       { "TeamMember": "Robert J. Schaeffner, FAIA, LEED AP", "Position": "Principal-in-Charge", "PeopleLink": "https://www.payette.com/leadership/robert-j-schaeffner/" },
-      { "TeamMember": "Kevin B. Sullivan, FAIA", "Position": "Design Principal", "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/" },
+      {         "TeamMember": "Kevin B. Sullivan, FAIA",
+      "Position": "Design Principal",
+      "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/" },
       { "TeamMember": "Barry Shiel, AIA", "Position": "Project Manager / Lab Planner", "PeopleLink": "https://www.payette.com/leadership/barry-shiel/" },
       { "TeamMember": "Wesley Schwartz, AIA", "Position": "Project Architect", "PeopleLink": "https://www.payette.com/leadership/wesley-schwartz/" },
       { "TeamMember": "Christopher Stansfield, AIA, LEED AP", "Position": "Architect", "PeopleLink": "https://www.payette.com/leadership/christopher-stansfield/" },

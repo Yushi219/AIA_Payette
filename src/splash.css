@@ -164,8 +164,14 @@ body, html {
     width:10%;
 }
 
+#building8 {
+  left: 73.7%;
+  top: 32%;
+  width:8.9%;
+}
+
 #payetteLogo {
-  left: 68.5%;
+  left: 66.5%;
   top: 28.7%;
   width: 9%;
   position: absolute;
@@ -439,6 +445,7 @@ body, html {
       #label5 { left: 47%; top: 47.5%; transform: rotate(-90deg); }
       #label6 { left: 35%; top: 69%; transform: rotate(-90deg); }
       #label7 { left: 50.5%; top: 94%; transform: rotate(-90deg); }
+      #label8 { left: 81%; top: 33%; transform: rotate(-90deg); }
       
       @media (max-width: 768px) {
         .label-title {

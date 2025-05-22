@@ -24,13 +24,21 @@ let dotsVisible = true;
 
 function navigateTo(viewType) {
   if (viewType === 'map') {
+    // 跳转到主页，不保存滚动位置
     window.location.href = 'index.html';
-  } else {
-    const newUrl = new URL(window.location.href);
-    newUrl.searchParams.set('view', viewType);
-    window.location.href = newUrl.toString();
+    return;
   }
+
+  // 只对 info / awards / leed 保存滚动位置
+  const scrollLeft = document.getElementById('project-list')?.scrollLeft || 0;
+  localStorage.setItem('savedScrollLeft', scrollLeft);
+
+  const newUrl = new URL(window.location.href);
+  newUrl.searchParams.set('view', viewType);
+  window.location.href = newUrl.toString(); // 刷新到指定分页
 }
+
+
 
 document.addEventListener('DOMContentLoaded', function() { 
 
@@ -236,137 +244,135 @@ document.addEventListener('DOMContentLoaded', function() {
       return {};
     }
   }
-    
+
+  let savedScrollLeft = 0;
+
   // Display the filtered projects
   async function displayProjects(projects, viewType = 'info') {
-      const projectList = document.getElementById('project-list');
-      projectList.innerHTML = '';  // Clear the list before rendering
+    const projectList = document.getElementById('project-list');
+  
+    // 保存当前滚动位置
+    // 读取 localStorage 中保存的位置
+    const saved = localStorage.getItem('savedScrollLeft');
+    savedScrollLeft = saved ? parseInt(saved) : 0;
+    localStorage.removeItem('savedScrollLeft'); // 清理
 
-      const cardWidth = 300;  // Set to match the CSS class `.project-card` width
-      const minVisibleCards = 5;
-      const totalVisibleWidth = cardWidth * minVisibleCards;
-
-      const infoData = await loadProjectInfoData();
-
-      for (const project of projects) {
-          const card = document.createElement('div');
-          card.className = 'project-card';
-          card.dataset.projectNumber = project.number;
-
-          // Fetch the image based on the project number
-          const imagePath = `public/Project/Section${project.number}.jpg`;
-          const hoverImagePath = `public/Project/Section${project.number}R.jpg`;
-          const info = infoData[`Project${project.number}`]?.[0];
-
-          // 构造 info 下部内容
-          let detailContent = '';
-      
-          if (viewType === 'info') {
-            detailContent = ''; // 已经改成用图片表示，无需再生成文字内容
-          } else if (viewType === 'awards') {
-            const awards = info?.Awards || [];
-            detailContent = awards.slice(0, 15).map(a => `
-              <h5>${a.AwardsYear} - ${a.Award}</h5>
-            `).join('');
-          } else if (viewType === 'leed') {
-            detailContent = `
-              <h5>${info?.LEEDStatus || ''}</h5>
-              <h5>${info?.EUI || ''}</h5>
-              <h5>${info?.Percent || ''}</h5>
-              <h5>${info?.Sentence || ''}</h5>
-            `;
-          }
-          
-      
-          let overlayImagePath = '';
-          let overlayStyle = '';
-          
-          if (viewType === 'awards') {
-            overlayImagePath = `public/Project/MA${project.number}.png`;
-            overlayStyle = 'position: absolute; margin-top: 65%; left: 50%; transform: translate(-50%, -50%); width: 90%;';
-          } else if (viewType === 'leed') {
-            overlayImagePath = `public/Project/L${project.number}.png`;
-            overlayStyle = 'position: absolute; margin-top: 33%; left: 50%; transform: translate(-50%, -50%); width: 80%;';
-          } else {
-            overlayImagePath = `public/Project/MT${project.number}.png`;
-            overlayStyle = 'position: absolute; margin-top: 20%; left: 50%; transform: translate(-50%, -50%); width: 80%;'; // 默认 Info 不需位置控制
-          }
-          
-          
-          card.innerHTML = `
-          <div class="project-info">
-            <div class="image-stack" data-project="${project.number}" style="position: relative;">
-              <img class="info-overlay" src="${overlayImagePath}" style="${overlayStyle}" />
-              <img class="text-background" src="public/Project/T${project.number}.png" />
-              <img class="text-drip" src="public/Project/T${project.number}C.png" />
-            </div>
-          </div>
-          <img class="section-image"
-               src="${imagePath}" 
-               alt="${project.name}" />
+  
+    projectList.innerHTML = '';  // 清空项目卡片
+  
+    const cardWidth = 300;
+    const minVisibleCards = 5;
+    const totalVisibleWidth = cardWidth * minVisibleCards;
+  
+    const infoData = await loadProjectInfoData();
+  
+    for (const project of projects) {
+      const card = document.createElement('div');
+      card.className = 'project-card';
+      card.dataset.projectNumber = project.number;
+  
+      const imagePath = `public/Project/Section${project.number}.jpg`;
+      const hoverImagePath = `public/Project/Section${project.number}R.jpg`;
+      const info = infoData[`Project${project.number}`]?.[0];
+  
+      let detailContent = '';
+      if (viewType === 'info') {
+        detailContent = '';
+      } else if (viewType === 'awards') {
+        const awards = info?.Awards || [];
+        detailContent = awards.slice(0, 15).map(a => `
+          <h5>${a.AwardsYear} - ${a.Award}</h5>
+        `).join('');
+      } else if (viewType === 'leed') {
+        detailContent = `
+          <h5>${info?.LEEDStatus || ''}</h5>
+          <h5>${info?.EUI || ''}</h5>
+          <h5>${info?.Percent || ''}</h5>
+          <h5>${info?.Sentence || ''}</h5>
         `;
-        
-        
-        card.addEventListener('mouseenter', () => {
-          const stack = card.querySelector('.image-stack');
-          const infoImg = stack.querySelector('.info-overlay');
-          const dripImg = stack.querySelector('.text-drip');
-        
-          console.log('[Hover] Enter');
-          infoImg.style.opacity = '0';
-        
-          // 从上到下 reveal：clip 从完全裁掉到底部全显示
-          dripImg.style.clipPath = 'inset(0 0 0% 0)';
-        });
-        
-        card.addEventListener('mouseleave', () => {
-          const stack = card.querySelector('.image-stack');
-          const infoImg = stack.querySelector('.info-overlay');
-          const dripImg = stack.querySelector('.text-drip');
-        
-          console.log('[Hover] Leave');
-          infoImg.style.opacity = '1';
-        
-          // 再次裁切为完全隐藏
-          dripImg.style.clipPath = 'inset(0 0 100% 0)';
-        });
-        
-        card.addEventListener('click', async e => {
-          e.stopPropagation();
-          localStorage.setItem('previousPage', 'dashboard'); 
-          await displayProjectDetails(project, true);
-          history.pushState({ projectId: project.number }, `Project ${project.number}`, `?id=${project.number}&view=${viewType}`);
-        });
-        
-        
-      
-          projectList.appendChild(card);
       }
-
-      // Initialize smooth scrolling behavior
-      let isScrolling = false;
-      projectList.scrollLeft = 0;
-
-      // Wheel event with debouncing
-      let wheelTimeout;
-      projectList.addEventListener('wheel', e => {
-          e.preventDefault();
-          if (!isScrolling) {
-              isScrolling = true;
-              const scrollAmount = cardWidth * (e.deltaY > 0 ? 1 : -1);
-
-              projectList.scrollBy({
-                  left: scrollAmount,
-                  behavior: 'smooth',
-              });
-
-              clearTimeout(wheelTimeout);
-              wheelTimeout = setTimeout(() => {
-                  isScrolling = false;
-              }, 200);
-          }
+  
+      let overlayImagePath = '';
+      let overlayStyle = '';
+  
+      if (viewType === 'awards') {
+        overlayImagePath = `public/Project/MA${project.number}.png`;
+        overlayStyle = 'position: absolute; margin-top: 65%; left: 50%; transform: translate(-50%, -50%); width: 90%;';
+      } else if (viewType === 'leed') {
+        overlayImagePath = `public/Project/L${project.number}.png`;
+        overlayStyle = 'position: absolute; margin-top: 33%; left: 50%; transform: translate(-50%, -50%); width: 80%;';
+      } else {
+        overlayImagePath = `public/Project/MT${project.number}.png`;
+        overlayStyle = 'position: absolute; margin-top: 20%; left: 50%; transform: translate(-50%, -50%); width: 80%;';
+      }
+  
+      card.innerHTML = `
+        <div class="project-info">
+          <div class="image-stack" data-project="${project.number}" style="position: relative;">
+            <img class="info-overlay" src="${overlayImagePath}" style="${overlayStyle}" />
+            <img class="text-background" src="public/Project/T${project.number}.png" />
+            <img class="text-drip" src="public/Project/T${project.number}C.png" />
+          </div>
+        </div>
+        <img class="section-image"
+             src="${imagePath}" 
+             alt="${project.name}" />
+      `;
+  
+      card.addEventListener('mouseenter', () => {
+        const stack = card.querySelector('.image-stack');
+        const infoImg = stack.querySelector('.info-overlay');
+        const dripImg = stack.querySelector('.text-drip');
+        infoImg.style.opacity = '0';
+        dripImg.style.clipPath = 'inset(0 0 0% 0)';
       });
+  
+      card.addEventListener('mouseleave', () => {
+        const stack = card.querySelector('.image-stack');
+        const infoImg = stack.querySelector('.info-overlay');
+        const dripImg = stack.querySelector('.text-drip');
+        infoImg.style.opacity = '1';
+        dripImg.style.clipPath = 'inset(0 0 100% 0)';
+      });
+  
+      card.addEventListener('click', async e => {
+        e.stopPropagation();
+        localStorage.setItem('previousPage', 'dashboard');
+        await displayProjectDetails(project, true);
+        history.pushState({ projectId: project.number }, `Project ${project.number}`, `?id=${project.number}&view=${viewType}`);
+      });
+  
+      projectList.appendChild(card);
+    }
+  
+    // 恢复滚动位置并更新小人
+    requestAnimationFrame(() => {
+      projectList.scrollLeft = savedScrollLeft;
+      updatePersonPosition();
+    });
+  
+    // 滚轮事件（保留原逻辑）
+    let isScrolling = false;
+    let wheelTimeout;
+    projectList.addEventListener('wheel', e => {
+      e.preventDefault();
+      if (!isScrolling) {
+        isScrolling = true;
+        const scrollAmount = cardWidth * (e.deltaY > 0 ? 1 : -1);
+  
+        projectList.scrollBy({
+          left: scrollAmount,
+          behavior: 'smooth',
+        });
+  
+        clearTimeout(wheelTimeout);
+        wheelTimeout = setTimeout(() => {
+          isScrolling = false;
+        }, 200);
+      }
+    });
   }
+  
 
   
 
@@ -927,10 +933,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
     function updateProjects() {
-
       displayProjects(projects, viewType);
       hideLoadingOverlay();
-      adjustContainerHeight();
     }
     
 

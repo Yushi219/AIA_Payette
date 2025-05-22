@@ -1,0 +1,63 @@
+{
+    "ProjectName": "The 105 by Breakthrough",
+    "Address": "Breakthrough Properties",
+    "Description": "Coined simply as The 105 by Breakthrough, Breakthrough Properties’ flagship development in the biotechnology research and development market leverages Tishman Speyer’s global real estate platform and Bellco Capital’s industry-making entrepreneurship. This is a project that sets the bar for a new quality of experience-centric approach to a research facility. This is a project that diffuses boundaries, welcomes the community, combines endeavors of all scales and brings a hospitality mentality to biotech.",
+    "Location": "Boston, MA / United States",
+    "Completed": "2022",
+    "TotalSquareFootage": "263,500 GSF",
+    "ProgramComponents": [
+      "42,000 RSF Leasable laboratory floor plates",
+      "14’-6’ floor-to-floor height",
+      "Café, fitness center, locker room with showers and indoor bicycle storage room",
+      "Meeting space (50+ person capacity)",
+      "Outdoor terrace access on the 2nd & 3rd floors"
+    ],
+    "LEEDStatus": "LEED Gold Certified",
+    "Awards": [
+
+
+    ],
+    "News": [
+
+    ],
+    "Team": [
+      {
+        "TeamMember": "Charles Klee, AIA, LEED AP",
+        "Position": "Principal-in-Charge",
+        "PeopleLink": "https://www.payette.com/leadership/charles-s-klee/"
+      },
+      {
+        "TeamMember": "James H. Collins, Jr., FAIA, LEED AP",
+        "Position": "Design Principal",
+        "PeopleLink": "https://www.payette.com/leadership/james-h-collins-jr/"
+      },
+      {
+        "TeamMember": "Kevin B. Sullivan, FAIA",
+        "Position": "Design Principal",
+        "PeopleLink": "https://www.payette.com/leadership/kevin-b-sullivan/"
+      },
+      {
+        "TeamMember": "R. Craig Mutter, AIA, LEED AP",
+        "Position": "Project Manager",
+        "PeopleLink": "https://www.payette.com/leadership/craig-mutter/"
+      },
+      {
+        "TeamMember": "Mary Gallagher, IIDA, LEED AP",
+        "Position": "Interior Designer",
+        "PeopleLink": "https://www.payette.com/leadership/mary-gallagher/"
+      },
+      {
+        "TeamMember": "Yu Pei",
+        "Position": "Landscape Designer",
+        "PeopleLink": "https://www.payette.com/leadership/yu-pei/"
+      },
+      {
+        "TeamMember": "Gunn Chaiyapatranun",
+        "Position": "Designer",
+        "PeopleLink": ""
+      }
+    ],
+    "EUI": "167 kBtu/SF",
+    "Percent": "43%",
+    "Sentence": "reduction in energy use compared to the 2030 baseline"
+  }

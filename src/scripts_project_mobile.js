@@ -20,12 +20,18 @@ let dotsVisible = true;
 
 function navigateTo(viewType) {
   if (viewType === 'map') {
+    // 跳转到主页，不保存滚动位置
     window.location.href = 'index.html';
-  } else {
-    const newUrl = new URL(window.location.href);
-    newUrl.searchParams.set('view', viewType);
-    window.location.href = newUrl.toString();
+    return;
   }
+
+  // 只对 info / awards / leed 保存滚动位置
+  const scrollLeft = document.getElementById('project-list')?.scrollLeft || 0;
+  localStorage.setItem('savedScrollLeft', scrollLeft);
+
+  const newUrl = new URL(window.location.href);
+  newUrl.searchParams.set('view', viewType);
+  window.location.href = newUrl.toString(); // 刷新到指定分页
 }
 
 document.addEventListener('DOMContentLoaded', function() { 
@@ -225,15 +231,24 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   }
   
+  let savedScrollLeft = 0;
 
   async function displayProjects(projects, viewType = 'info') {
     const projectList = document.getElementById('project-list');
-    projectList.innerHTML = '';  // Clear the list before rendering
+  
+    // 保存当前滚动位置
+    // 读取 localStorage 中保存的位置
+    const saved = localStorage.getItem('savedScrollLeft');
+    savedScrollLeft = saved ? parseInt(saved) : 0;
+    localStorage.removeItem('savedScrollLeft'); // 清理
 
-    const cardWidth = 300;  // Set to match the CSS class `.project-card` width
+  
+    projectList.innerHTML = '';  // 清空项目卡片
+  
+    const cardWidth = 300;
     const minVisibleCards = 5;
     const totalVisibleWidth = cardWidth * minVisibleCards;
-
+  
     const infoData = await loadProjectInfoData();
 
     for (const project of projects) {
@@ -367,7 +382,13 @@ document.addEventListener('DOMContentLoaded', function() {
       
     
         projectList.appendChild(card);
-    }
+      }
+
+          // 恢复滚动位置并更新小人
+      requestAnimationFrame(() => {
+        projectList.scrollLeft = savedScrollLeft;
+        updatePersonPosition();
+      });
 
       // Initialize smooth scrolling behavior
       let isScrolling = false;

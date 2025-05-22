@@ -219,6 +219,21 @@
       "Percent": "77%",
       "Sentence": "reduction in energy use compared to the 2030 baseline"
     }
-  ]  
+  ],
+  "Project8":[
+    {
+      "ProjectName": "The 105 by Breakthrough",
+      "Address": "Breakthrough Properties",
+      "Location": "105 W First St|Boston · MA",
+      "Completed": "Completed|2022",
+      "TotalSquareFootage": "263,500|GSF",
+      "LEEDStatus": "LEED Gold Certified",
+      "Awards": [
+      ],
+      "EUI": "167 kBtu/SF",
+      "Percent": "43%",
+      "Sentence": "reduction in energy use compared to the 2030 baseline"
+    }
+  ]    
 
 }
